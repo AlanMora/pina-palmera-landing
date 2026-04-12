@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piña Palmera — Aguas Frescas · Concentrados | Guadalajara</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Piña Palmera — Aguas frescas 100% naturales para eventos en Guadalajara. Vitroleros, concentrados y carrito para eventos. ¡Buena vibra líquida! Sin conservadores, desde 2014.">
+  <meta name="keywords" content="aguas frescas guadalajara, vitroleros para eventos, aguas naturales jalisco, piña palmera, concentrados aguas frescas, eventos guadalajara">
+  <meta name="author" content="Piña Palmera">
+  <meta property="og:title" content="Piña Palmera — ¡Buena vibra líquida!">
+  <meta property="og:description" content="Aguas frescas 100% naturales para eventos. Orgullosamente tapatías, hechas por manos de mujeres mexicanas desde 2014.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+  <link rel="canonical" href="https://pinapalmera.mx/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: #1A1A1A;
+      background: #fff;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ─────────────────────────────────────────────
+       DESIGN TOKENS
+    ───────────────────────────────────────────── */
+    :root {
+      --green-dark:  #1B6B35;
+      --green-mid:   #4CAF6E;
+      --green-light: #7DC96A;
+      --yellow:      #E8D44D;
+      --orange:      #F4A83A;
+      --pink:        #E8546A;
+      --white:       #FFFFFF;
+      --black:       #1A1A1A;
+      --gray-100:    #F7FAF8;
+      --gray-200:    #EAEEEB;
+      --gray-500:    #6B7280;
+
+      --radius-sm:  10px;
+      --radius-md:  18px;
+      --radius-lg:  26px;
+      --radius-xl:  36px;
+
+      --shadow-card: 0 2px 24px rgba(27, 107, 53, 0.09);
+      --shadow-hover: 0 12px 40px rgba(27, 107, 53, 0.16);
+
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ─────────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section { padding: 6rem 0; position: relative; overflow: hidden; }
+    .section-dark  { background: var(--green-dark); color: var(--white); }
+    .section-mid   { background: var(--green-mid);  color: var(--white); }
+    .section-white { background: #ffffff; }
+    .section-gray  { background: var(--gray-100); }
+
+    /* ─────────────────────────────────────────────
+       SCROLL ANIMATIONS
+    ───────────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      transition: opacity 0.65s var(--ease-smooth),
+                  transform 0.65s var(--ease-smooth);
+    }
+    .anim.up    { transform: translateY(44px); }
+    .anim.left  { transform: translateX(-44px); }
+    .anim.right { transform: translateX(44px); }
+    .anim.pop   { transform: scale(0.82); }
+
+    .anim.d1 { transition-delay: 0.10s; }
+    .anim.d2 { transition-delay: 0.20s; }
+    .anim.d3 { transition-delay: 0.30s; }
+    .anim.d4 { transition-delay: 0.40s; }
+    .anim.d5 { transition-delay: 0.50s; }
+    .anim.d6 { transition-delay: 0.60s; }
+
+    .anim.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─────────────────────────────────────────────
+       TYPOGRAPHY
+    ───────────────────────────────────────────── */
+    .pacifico { font-family: 'Pacifico', cursive; }
+
+    .section-heading {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      line-height: 1.15;
+      margin-bottom: 0.875rem;
+    }
+
+    .section-lead {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      line-height: 1.8;
+      color: var(--gray-500);
+      max-width: 660px;
+    }
+
+    /* ─────────────────────────────────────────────
+       BUTTONS
+    ───────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 100px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.22s var(--ease-spring),
+                  box-shadow 0.22s ease,
+                  background 0.2s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn:hover  { transform: translateY(-3px) scale(1.04); }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--yellow);
+      color: var(--green-dark);
+      box-shadow: 0 4px 24px rgba(232, 212, 77, 0.45);
+    }
+    .btn-primary:hover { box-shadow: 0 10px 36px rgba(232, 212, 77, 0.55); }
+
+    .btn-dark {
+      background: var(--green-dark);
+      color: var(--yellow);
+      box-shadow: 0 4px 20px rgba(27,107,53,0.3);
+    }
+    .btn-dark:hover { box-shadow: 0 10px 32px rgba(27,107,53,0.4); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(4px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: white;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    }
+    .btn-whatsapp:hover { box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55); }
+
+    .btn-lg {
+      padding: 1.125rem 2.75rem;
+      font-size: 1.1rem;
+    }
+
+    /* ─────────────────────────────────────────────
+       IMAGE PLACEHOLDER
+    ───────────────────────────────────────────── */
+    .img-ph {
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      min-height: 260px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-ph::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.12));
+      pointer-events: none;
+    }
+
+    .img-ph .ph-icon { font-size: 3.5rem; }
+    .img-ph .ph-label { color: rgba(255,255,255,0.75); }
+    .img-ph .ph-hint  { font-size: 0.78rem; color: rgba(255,255,255,0.4); font-weight: 600; }
+
+    /* ─────────────────────────────────────────────
+       NAVBAR
+    ───────────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      transition: box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      padding: 0 1.5rem;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    #navbar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(27, 107, 53, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: -1;
+    }
+
+    #navbar.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.22); }
+
+    .nav-logo {
+      font-family: 'Pacifico', cursive;
+      color: var(--yellow);
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.82);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--yellow);
+      background: rgba(232, 212, 77, 0.1);
+    }
+
+    .nav-cta-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-phone {
+      color: var(--yellow);
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 2.5px;
+      background: white;
+      border-radius: 3px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    #mobile-drawer {
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--green-dark);
+      border-bottom: 2px solid rgba(232,212,77,0.3);
+      padding: 1.25rem 1.5rem 1.75rem;
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+
+    #mobile-drawer.open { display: flex; }
+
+    #mobile-drawer a {
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    #mobile-drawer a:last-child { border-bottom: none; margin-top: 0.5rem; }
+
+    /* ─────────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────────── */
+    #hero {
+      min-height: 100svh;
+      background: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 68px;
+    }
+
+    /* Gradient blobs */
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-blob-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(76,175,110,0.22) 0%, transparent 70%);
+      top: -100px; left: -150px;
+    }
+
+    .hero-blob-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(125,201,106,0.14) 0%, transparent 70%);
+      bottom: -80px; right: -100px;
+    }
+
+    /* SVG Leaf decorations */
+    .leaf-deco {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.13;
+    }
+
+    .leaf-tl { top: -30px; left: -40px; width: 300px; transform: rotate(-20deg); }
+    .leaf-tr { top: -20px; right: -50px; width: 280px; transform: rotate(18deg) scaleX(-1); }
+    .leaf-bl { bottom: -40px; left: -30px; width: 240px; transform: rotate(12deg); }
+    .leaf-br { bottom: -30px; right: -40px; width: 260px; transform: rotate(-15deg) scaleX(-1); }
+
+    /* Hibiscus flowers */
+    .hibiscus-deco {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.18;
+      font-size: 5rem;
+    }
+
+    .hibiscus-tr { top: 90px; right: 60px; transform: rotate(25deg); }
+    .hibiscus-bl { bottom: 80px; left: 50px; transform: rotate(-15deg); }
+
+    .hero-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      padding: 3rem 1.5rem;
+      max-width: 700px;
+    }
+
+    .hero-pineapple {
+      font-size: 5.5rem;
+      display: block;
+      margin-bottom: 1.25rem;
+      filter: drop-shadow(0 6px 24px rgba(232,212,77,0.28));
+      animation: float 3.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    .hero-brand {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(3.25rem, 9vw, 5.75rem);
+      color: var(--yellow);
+      line-height: 1.05;
+      text-shadow: 0 6px 40px rgba(232, 212, 77, 0.22);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      color: rgba(255,255,255,0.6);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tagline {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      color: var(--white);
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-phone-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+
+    .hero-phone-link span { color: var(--yellow); }
+    .hero-phone-link:hover { color: white; }
+
+    /* ─────────────────────────────────────────────
+       PROPUESTA / NUESTRAS AGUAS
+    ───────────────────────────────────────────── */
+    #nuestras-aguas {
+      background: #ffffff;
+      padding: 7rem 0;
+    }
+
+    .nuestras-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+      margin-top: 2rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.125rem;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 0.875rem;
+    }
+
+    .badge-dark   { background: var(--green-dark);  color: white; }
+    .badge-yellow { background: var(--yellow);       color: var(--green-dark); }
+    .badge-orange { background: var(--orange);       color: white; }
+    .badge-pink   { background: var(--pink);         color: white; }
+
+    /* ─────────────────────────────────────────────
+       MENÚ
+    ───────────────────────────────────────────── */
+    #menu {
+      background: var(--gray-100);
+      padding: 7rem 0;
+    }
+
+    .menu-header { text-align: center; margin-bottom: 3.5rem; }
+    .menu-header .section-lead { margin: 0.75rem auto 0; }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s var(--ease-smooth),
+                  box-shadow 0.3s ease;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-head {
+      padding: 1.75rem 1.625rem 1.375rem;
+      color: white;
+      position: relative;
+    }
+
+    .card-head-clasicos   { background: linear-gradient(135deg, #1B6B35, #2d8b4e); }
+    .card-head-piquete    { background: linear-gradient(135deg, #6B1B3B, #8B2550); }
+    .card-head-kids       { background: linear-gradient(135deg, #E06920, #F4A83A); }
+    .card-head-infusiones { background: linear-gradient(135deg, #2E7D52, #4CAF6E); }
+
+    .card-icon {
+      font-size: 2.75rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+
+    .card-name {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.625rem;
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      opacity: 0.75;
+      font-weight: 600;
+      margin-bottom: 0.875rem;
+    }
+
+    .price-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .price-pill {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 100px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-body {
+      padding: 1.375rem 1.625rem 1.75rem;
+      flex: 1;
+    }
+
+    .sabores-label {
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray-500);
+      margin-bottom: 0.75rem;
+    }
+
+    .sabores-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .sabor {
+      background: var(--gray-100);
+      color: var(--green-dark);
+      padding: 0.22rem 0.625rem;
+      border-radius: 100px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .sabor:hover {
+      background: #d4edd9;
+    }
+
+    .menu-footnote {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray-500);
+      font-style: italic;
+      margin-top: 2.5rem;
+    }
+
+    /* ─────────────────────────────────────────────
+       LA EXPERIENCIA
+    ───────────────────────────────────────────── */
+    #experiencia {
+      background: var(--green-mid);
+      padding: 7rem 0;
+      color: white;
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+
+    .exp-checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .exp-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      font-size: 1.0rem;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .check-icon {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--yellow);
+      color: var(--green-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin-top: 1px;
+    }
+
+    .stat-card {
+      background: var(--green-dark);
+      border-radius: var(--radius-md);
+      padding: 2rem 2.25rem;
+      text-align: center;
+      margin-top: 2.25rem;
+      border: 1px solid rgba(232,212,77,0.2);
+    }
+
+    .stat-number {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.9rem;
+      color: var(--yellow);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-note {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.5;
+    }
+
+    /* ─────────────────────────────────────────────
+       ENVÍOS
+    ───────────────────────────────────────────── */
+    #envios {
+      background: white;
+      padding: 7rem 0;
+    }
+
+    .envios-header { text-align: center; margin-bottom: 3.5rem; }
+    .envios-header .section-lead { margin: 0.75rem auto 0; }
+
+    .envios-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+    }
+
+    .envio-card {
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .envio-pickup {
+      background: var(--green-dark);
+      color: white;
+    }
+
+    .envio-delivery {
+      background: var(--gray-100);
+      border: 2px solid var(--green-light);
+      color: var(--black);
+    }
+
+    .envio-icon-wrap {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .envio-pickup .envio-icon-wrap { background: rgba(255,255,255,0.12); }
+    .envio-delivery .envio-icon-wrap { background: rgba(27,107,53,0.1); }
+
+    .envio-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .envio-price-tag {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--green-dark);
+      font-weight: 900;
+      padding: 0.3rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .envio-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .envio-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .envio-pickup .envio-list li::before {
+      content: '→';
+      color: var(--yellow);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .envio-delivery .envio-list li::before {
+      content: '→';
+      color: var(--green-dark);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────
+       CARRITO EVENTOS
+    ───────────────────────────────────────────── */
+    #carrito {
+      background: var(--green-dark);
+      padding: 7rem 0;
+    }
+
+    .carrito-card {
+      background: var(--yellow);
+      border-radius: var(--radius-xl);
+      padding: 3.5rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      max-width: 940px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carrito-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(27,107,53,0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .carrito-content h2 {
+      font-family: 'Pacifico', cursive;
+      color: var(--green-dark);
+      font-size: clamp(1.7rem, 3.5vw, 2.25rem);
+      line-height: 1.2;
+      margin-bottom: 0.875rem;
+    }
+
+    .carrito-content p {
+      color: rgba(27,107,53,0.75);
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .carrito-price {
+      font-family: 'Pacifico', cursive;
+      font-size: 4rem;
+      color: var(--green-dark);
+      line-height: 1;
+      display: block;
+    }
+
+    .carrito-cap {
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: rgba(27,107,53,0.65);
+      margin-top: 0.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ─────────────────────────────────────────────
+       CONCENTRADOS
+    ───────────────────────────────────────────── */
+    #concentrados {
+      background: var(--gray-100);
+      padding: 7rem 0;
+    }
+
+    .conc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .conc-content .section-heading { color: var(--green-dark); }
+
+    .conc-content p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--gray-500);
+      margin-bottom: 1rem;
+    }
+
+    .conc-content p strong { color: var(--green-dark); font-weight: 800; }
+
+    /* ─────────────────────────────────────────────
+       FORMULARIO — APARTA TU FECHA
+    ───────────────────────────────────────────── */
+    #contacto {
+      background: var(--green-dark);
+      padding: 7rem 0;
+    }
+
+    .contacto-header { text-align: center; margin-bottom: 3.5rem; }
+
+    .form-main-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Form fields */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.25rem;
+    }
+
+    .field-full { grid-column: 1 / -1; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.16);
+      border-radius: var(--radius-sm);
+      padding: 0.875rem 1rem;
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      width: 100%;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(255,255,255,0.3); font-weight: 400; }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--yellow);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .field input.err,
+    .field textarea.err { border-color: var(--pink); }
+
+    .field-error {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--pink);
+      display: none;
+    }
+
+    .field-error.show { display: block; }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    input[type="date"],
+    input[type="time"] { color-scheme: dark; }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.875rem;
+      margin-top: 1.5rem;
+    }
+
+    .success-msg {
+      display: none;
+      background: rgba(232,212,77,0.12);
+      border: 1.5px solid rgba(232,212,77,0.4);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.5rem;
+      color: var(--yellow);
+      font-weight: 700;
+      margin-top: 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .success-msg.show { display: block; }
+
+    /* Payment sidebar */
+    .pago-card {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+
+    .pago-title {
+      font-family: 'Pacifico', cursive;
+      color: var(--yellow);
+      font-size: 1.375rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pago-subtitle {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .pago-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .pago-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .pago-row:last-child { border-bottom: none; }
+
+    .pago-key {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .pago-val {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: white;
+      text-align: right;
+    }
+
+    .pago-clabe {
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--yellow);
+    }
+
+    .pago-anticipo {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+
+    .pago-wa {
+      margin-top: 1.5rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    footer {
+      background: #0d3d1e;
+      color: rgba(255,255,255,0.6);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .pacifico {
+      font-size: 2rem;
+      color: var(--yellow);
+      display: block;
+      margin-bottom: 0.375rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.9rem;
+      opacity: 0.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-links a:hover { color: var(--yellow); }
+
+    .footer-social-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover { color: var(--yellow); }
+
+    .social-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      background: rgba(255,255,255,0.07);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .social-link:hover .social-icon { background: rgba(232,212,77,0.15); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1.75rem;
+      text-align: center;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.6;
+    }
+
+    /* ─────────────────────────────────────────────
+       WHATSAPP FLOAT BUTTON
+    ───────────────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 1.875rem;
+      right: 1.875rem;
+      z-index: 998;
+      width: 62px; height: 62px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37, 211, 102, 0.5);
+      transition: transform 0.22s var(--ease-spring),
+                  box-shadow 0.22s ease;
+      animation: wa-pulse 2.5s ease-in-out infinite;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 36px rgba(37, 211, 102, 0.65);
+      animation: none;
+    }
+
+    .wa-float svg {
+      width: 33px; height: 33px;
+      fill: white;
+    }
+
+    .wa-tooltip {
+      position: absolute;
+      right: calc(100% + 14px);
+      background: #111;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.45rem 0.875rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .wa-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-left-color: #111;
+    }
+
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 4px 24px rgba(37, 211, 102, 0.45); }
+      50%       { box-shadow: 0 4px 40px rgba(37, 211, 102, 0.7); }
+    }
+
+    /* ─────────────────────────────────────────────
+       LEAF SVG (reutilizado inline)
+    ───────────────────────────────────────────── */
+    .leaf-svg-template { display: none; }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE — TABLET
+    ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links,
+      .nav-phone { display: none; }
+      .hamburger { display: flex; }
+
+      .nuestras-grid,
+      .exp-grid,
+      .envios-grid,
+      .carrito-card,
+      .conc-grid,
+      .form-main-grid,
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .carrito-card { max-width: 100%; }
+      .menu-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE — MOBILE
+    ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .section { padding: 4.5rem 0; }
+
+      .menu-grid { grid-template-columns: 1fr; }
+
+      .fields-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-pineapple { font-size: 4rem; }
+      .hero-brand { font-size: 2.75rem; }
+
+      .form-actions { flex-direction: column; }
+      .form-actions .btn { width: 100%; }
+
+      .envio-card { padding: 2rem 1.5rem; }
+      .carrito-card { padding: 2.25rem 1.5rem; }
+      .pago-card { padding: 1.5rem; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+
+      .wa-float { bottom: 1.25rem; right: 1.25rem; width: 56px; height: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span>🍍</span> Piña Palmera
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#nuestras-aguas">Nuestras aguas</a></li>
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#envios">Envíos</a></li>
+        <li><a href="#carrito">Carrito</a></li>
+        <li><a href="#concentrados">Concentrados</a></li>
+      </ul>
+
+      <div class="nav-cta-area">
+        <a href="tel:3318041630" class="nav-phone">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          3318 04 1630
+        </a>
+        <a href="#contacto" class="btn btn-primary" style="padding: 0.6rem 1.25rem; font-size: 0.875rem;">
+          📅 Aparta tu fecha
+        </a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div id="mobile-drawer" role="navigation" aria-label="Menú móvil">
+    <a href="#nuestras-aguas" class="drawer-link">🌿 Nuestras aguas</a>
+    <a href="#menu" class="drawer-link">🍋 Menú y precios</a>
+    <a href="#experiencia" class="drawer-link">✨ La experiencia</a>
+    <a href="#envios" class="drawer-link">🚐 Envíos y pick up</a>
+    <a href="#carrito" class="drawer-link">🛒 Carrito eventos</a>
+    <a href="#concentrados" class="drawer-link">🍶 Concentrados</a>
+    <a href="#contacto" style="color: var(--yellow) !important;">📅 Aparta tu fecha →</a>
+    <a href="tel:3318041630" style="color: var(--yellow) !important;">📞 3318 04 1630</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       1. HERO
+  ══════════════════════════════════════ -->
+  <section id="hero" aria-label="Inicio">
+
+    <!-- Background blobs -->
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+
+    <!-- Decorative leaves -->
+    <svg class="leaf-deco leaf-tl" viewBox="0 0 220 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M110 12 C44 44 8 118 18 196 C28 268 88 318 110 325 C132 318 192 268 202 196 C212 118 176 44 110 12Z" fill="#7DC96A"/>
+      <line x1="110" y1="12" x2="110" y2="325" stroke="#4CAF6E" stroke-width="3"/>
+      <path d="M110 70 Q145 90 165 118" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+      <path d="M110 120 Q150 138 168 162" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+      <path d="M110 170 Q150 185 165 206" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+      <path d="M110 70 Q75 90 55 118" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+      <path d="M110 120 Q70 138 52 162" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+    </svg>
+
+    <svg class="leaf-deco leaf-tr" viewBox="0 0 220 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M110 12 C44 44 8 118 18 196 C28 268 88 318 110 325 C132 318 192 268 202 196 C212 118 176 44 110 12Z" fill="#7DC96A"/>
+      <line x1="110" y1="12" x2="110" y2="325" stroke="#4CAF6E" stroke-width="3"/>
+      <path d="M110 80 Q148 100 164 128" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+      <path d="M110 80 Q72 100 56 128" stroke="#4CAF6E" stroke-width="2" fill="none"/>
+    </svg>
+
+    <svg class="leaf-deco leaf-bl" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="150" cy="100" rx="130" ry="72" fill="#4CAF6E"/>
+      <line x1="20" y1="100" x2="280" y2="100" stroke="#1B6B35" stroke-width="3"/>
+      <path d="M150 40 Q195 68 210 100" stroke="#1B6B35" stroke-width="2" fill="none"/>
+      <path d="M150 40 Q105 68 90 100" stroke="#1B6B35" stroke-width="2" fill="none"/>
+      <path d="M150 60 Q185 80 196 100" stroke="#1B6B35" stroke-width="1.5" fill="none"/>
+    </svg>
+
+    <svg class="leaf-deco leaf-br" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="150" cy="100" rx="130" ry="72" fill="#4CAF6E"/>
+      <line x1="20" y1="100" x2="280" y2="100" stroke="#1B6B35" stroke-width="3"/>
+      <path d="M150 30 Q200 65 218 100" stroke="#1B6B35" stroke-width="2" fill="none"/>
+      <path d="M150 30 Q100 65 82 100" stroke="#1B6B35" stroke-width="2" fill="none"/>
+    </svg>
+
+    <!-- Hibiscus decorations -->
+    <span class="hibiscus-deco hibiscus-tr" aria-hidden="true">🌺</span>
+    <span class="hibiscus-deco hibiscus-bl" aria-hidden="true">🌸</span>
+
+    <!-- Hero content -->
+    <div class="hero-content">
+      <span class="hero-pineapple" role="img" aria-label="piña">🍍</span>
+
+      <h1 class="hero-brand">Piña Palmera</h1>
+      <p class="hero-subtitle">Aguas frescas · Concentrados</p>
+      <p class="hero-tagline">¡Buena vibra líquida!</p>
+
+      <a href="tel:3318041630" class="hero-phone-link">
+        <svg width="14" height="14" fill="currentColor" style="opacity:.6" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        <span>3318 04 1630</span>
+      </a>
+
+      <div>
+        <a href="#contacto" class="btn btn-primary btn-lg">
+          📅 Aparta tu fecha
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       2. NUESTRAS AGUAS
+  ══════════════════════════════════════ -->
+  <section id="nuestras-aguas" class="section section-white" aria-label="Nuestras aguas">
+    <div class="container">
+      <div class="nuestras-grid">
+
+        <div>
+          <h2 class="section-heading text-green-dark anim up" style="color: var(--green-dark);">
+            Nuestras Aguas
+          </h2>
+          <p class="section-lead anim up d1">
+            Orgullosamente tapatías. Aprovechamos lo que la madre tierra nos brinda en cada temporada y transformamos la fruta en pura <strong>¡Buena vibra líquida!</strong>
+          </p>
+          <p class="section-lead anim up d2" style="margin-top: 1rem;">
+            Hechas al día · por manos de mujeres mexicanas · con azúcar morena · sin conservadores · para que cada sorbo sea una experiencia auténtica.
+          </p>
+
+          <div class="badges-row">
+            <span class="badge badge-dark anim pop d2">🌿 100% Natural</span>
+            <span class="badge badge-yellow anim pop d3">✨ Sin conservadores</span>
+            <span class="badge badge-orange anim pop d4">🌺 Desde 2014</span>
+            <span class="badge badge-pink anim pop d5">💚 Hecho por mujeres</span>
+          </div>
+        </div>
+
+        <div class="anim right">
+          <div class="img-ph" style="background: linear-gradient(145deg, var(--green-mid), var(--green-dark));">
+            <span class="ph-icon">🫙</span>
+            <span class="ph-label">Foto vitroleros</span>
+            <span class="ph-hint">Reemplazar con foto real</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       3. EL MENÚ
+  ══════════════════════════════════════ -->
+  <section id="menu" class="section" aria-label="Menú y precios">
+    <div class="container">
+
+      <div class="menu-header anim up">
+        <h2 class="section-heading" style="color: var(--green-dark);">El Menú</h2>
+        <p class="section-lead">Cada vitrolero contiene 20 litros. Elige tu categoría y endulzante favorito.</p>
+      </div>
+
+      <div class="menu-grid">
+
+        <!-- CLÁSICOS -->
+        <article class="menu-card anim up d1">
+          <div class="card-head card-head-clasicos">
+            <span class="card-icon">🍋</span>
+            <div class="card-name">Clásicos</div>
+            <p class="card-desc">Aguas frescas de temporada</p>
+            <div class="price-pills">
+              <span class="price-pill">Morena $750</span>
+              <span class="price-pill">Splenda $850</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="sabores-label">Sabores disponibles</div>
+            <div class="sabores-wrap">
+              <span class="sabor">Horchata fresa berries</span>
+              <span class="sabor">Limonada frutos rojos</span>
+              <span class="sabor">Naranja fresa</span>
+              <span class="sabor">Limonada lavanda chía</span>
+              <span class="sabor">Limonada blueberries</span>
+              <span class="sabor">Hierbabuena limón</span>
+              <span class="sabor">Mango maracuyá</span>
+              <span class="sabor">Mandarina fresa</span>
+              <span class="sabor">Naranja maracuyá</span>
+              <span class="sabor">Horchata plátano</span>
+              <span class="sabor">Horchata coco</span>
+              <span class="sabor">Pink lemonade</span>
+              <span class="sabor">Black lemonade</span>
+              <span class="sabor">Guanábana pétalos de rosa</span>
+              <span class="sabor">Guayaba fresa</span>
+              <span class="sabor">Guanábana fresa</span>
+              <span class="sabor">Tamarindo jengibre</span>
+              <span class="sabor">Piña colada</span>
+              <span class="sabor">Tamarindo mango</span>
+              <span class="sabor">Jamaica fresa</span>
+              <span class="sabor">Pepino limón menta</span>
+              <span class="sabor">Guayaba maracuyá</span>
+              <span class="sabor">Fresas con crema</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- CON PIQUETE -->
+        <article class="menu-card anim up d2">
+          <div class="card-head card-head-piquete">
+            <span class="card-icon">🍹</span>
+            <div class="card-name">Con Piquete</div>
+            <p class="card-desc">Con alcohol · +18</p>
+            <div class="price-pills">
+              <span class="price-pill">Morena $950</span>
+              <span class="price-pill">Splenda $1,050</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="sabores-label">Sabores disponibles</div>
+            <div class="sabores-wrap">
+              <span class="sabor">Jamaica fresa vino tinto</span>
+              <span class="sabor">Limonada gin frutos rojos</span>
+              <span class="sabor">Tamarindo jengibre mezcal</span>
+              <span class="sabor">Piña colada ron</span>
+              <span class="sabor">Mojito</span>
+              <span class="sabor">Tinto de verano</span>
+              <span class="sabor">Toronja frambuesa vino rosado</span>
+              <span class="sabor">Jamaiquita mezcal</span>
+              <span class="sabor">Mango maracuyá mezcal</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- KIDS -->
+        <article class="menu-card anim up d3">
+          <div class="card-head card-head-kids">
+            <span class="card-icon">🧃</span>
+            <div class="card-name">Kids</div>
+            <p class="card-desc">Azúcar morena · Sin alcohol</p>
+            <div class="price-pills">
+              <span class="price-pill">Morena $690</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="sabores-label">Sabores disponibles</div>
+            <div class="sabores-wrap">
+              <span class="sabor">Jamaica</span>
+              <span class="sabor">Limón</span>
+              <span class="sabor">Horchata</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- INFUSIONES -->
+        <article class="menu-card anim up d4">
+          <div class="card-head card-head-infusiones">
+            <span class="card-icon">🫖</span>
+            <div class="card-name">Infusiones</div>
+            <p class="card-desc">Agua infusionada frutal</p>
+            <div class="price-pills">
+              <span class="price-pill">$380</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="sabores-label">Sabores disponibles</div>
+            <div class="sabores-wrap">
+              <span class="sabor">Toronja naranja limón</span>
+              <span class="sabor">Pepino romero y menta</span>
+              <span class="sabor">Naranja blueberries menta</span>
+              <span class="sabor">Toronja con romero</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="menu-footnote anim up">
+        *Los precios están sujetos a cambio sin previo aviso. Producto 100% natural, sujeto a temporada.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       4. LA EXPERIENCIA
+  ══════════════════════════════════════ -->
+  <section id="experiencia" class="section" aria-label="La experiencia">
+    <div class="container">
+
+      <div class="anim up" style="text-align: center;">
+        <h2 class="section-heading" style="font-family:'Pacifico',cursive; color: var(--yellow);">La Experiencia</h2>
+        <p style="color: rgba(255,255,255,0.75); max-width: 560px; margin: 0.75rem auto 0; font-size: 1rem; line-height: 1.7; font-weight: 600;">
+          Todo lo que necesitas para que tu evento quede perfecto — sin preocuparte por nada.
+        </p>
+      </div>
+
+      <div class="exp-grid">
+
+        <div class="anim left">
+          <ul class="exp-checklist">
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Las mejores aguas frescas de Jalisco</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Vitroleros de 20 litros</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Cucharones incluidos</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Hielo a domicilio</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Vasos Piña Palmera 1L y 550ml — paquete de 25 por vitrolero</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Vasos niños 300ml — paquete de 50 por vitrolero</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>Mesa de montaje a partir de 3 vitroleros <em style="opacity:.75">(sujeta a disponibilidad)</em></span>
+            </li>
+          </ul>
+
+          <div class="stat-card anim up d3">
+            <div class="stat-number">1 vitrolero = 20L = 35 bebidas</div>
+            <div class="stat-note">Presentación de 550ml · Cada invitado consume aprox. 2 a 3 bebidas</div>
+          </div>
+        </div>
+
+        <div class="anim right">
+          <div class="img-ph" style="background: linear-gradient(145deg, var(--green-dark), #0d3d1e); min-height: 340px;">
+            <span class="ph-icon">🥤</span>
+            <span class="ph-label">Foto 3 tamaños de vaso</span>
+            <span class="ph-hint">1L · 550ml · 300ml — Reemplazar con foto real</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       5. ENVÍOS Y PICK UP
+  ══════════════════════════════════════ -->
+  <section id="envios" class="section section-white" aria-label="Envíos y pick up">
+    <div class="container">
+
+      <div class="envios-header anim up">
+        <h2 class="section-heading" style="color: var(--green-dark);">Envíos y Pick Up</h2>
+        <p class="section-lead">Te llevamos la vibra hasta tu evento, o pasa a recoger cuando quieras.</p>
+      </div>
+
+      <div class="envios-grid">
+
+        <!-- PICK UP -->
+        <div class="envio-card envio-pickup anim left">
+          <div class="envio-icon-wrap">📍</div>
+          <h3 class="envio-title">Pick Up</h3>
+          <span class="envio-price-tag">¡Sin costo!</span>
+          <ul class="envio-list">
+            <li>Encuéntranos a un costado de Mid Town Jalisco</li>
+            <li>Se deja depósito en garantía por cada vitrolero</li>
+          </ul>
+        </div>
+
+        <!-- ENVÍO -->
+        <div class="envio-card envio-delivery anim right">
+          <div class="envio-icon-wrap" style="color: var(--green-dark);">🚐</div>
+          <h3 class="envio-title" style="color: var(--green-dark);">Envío a domicilio</h3>
+          <span class="envio-price-tag">$250</span>
+          <ul class="envio-list">
+            <li>Dentro del periférico de Guadalajara</li>
+            <li>Fuera de zona — cotizamos aparte</li>
+            <li>Incluye entrega el día del evento y recolección al día siguiente</li>
+            <li>Pedido mínimo: 2 vitroleros</li>
+          </ul>
+
+          <div style="margin-top: 2rem;">
+            <div class="img-ph" style="background: linear-gradient(145deg, #e4f2e9, #c5e0cc); min-height: 180px;">
+              <span class="ph-icon" style="filter: none;">🚐</span>
+              <span class="ph-label" style="color: var(--green-dark);">Foto van de reparto</span>
+              <span class="ph-hint" style="color: rgba(27,107,53,0.5);">Piña Palmera</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       6. CARRITO PARA EVENTOS
+  ══════════════════════════════════════ -->
+  <section id="carrito" class="section section-dark" aria-label="Carrito para eventos">
+    <div class="container">
+
+      <div class="anim up" style="text-align: center; margin-bottom: 2.5rem;">
+        <h2 class="section-heading" style="font-family:'Pacifico',cursive; color: var(--yellow);">Carrito para Eventos</h2>
+      </div>
+
+      <div class="carrito-card anim up d1">
+        <div class="carrito-content">
+          <h2>¡Renta nuestro carrito vitrolero!</h2>
+          <p>Sorprende a tus invitados con la presentación más instagrameable de Guadalajara. Perfecto para bodas, xv años, fiestas y eventos corporativos.</p>
+
+          <div>
+            <span class="carrito-price">$350</span>
+            <p class="carrito-cap">Capacidad: hasta 4 vitroleros</p>
+          </div>
+
+          <a href="#contacto" class="btn btn-dark">
+            🛒 Rentarlo para mi evento
+          </a>
+        </div>
+
+        <div>
+          <div class="img-ph" style="background: linear-gradient(145deg, var(--green-mid), var(--green-dark)); min-height: 300px;">
+            <span class="ph-icon">🛒</span>
+            <span class="ph-label">Foto carrito vitrolero</span>
+            <span class="ph-hint">Reemplazar con foto real</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       7. CONCENTRADOS
+  ══════════════════════════════════════ -->
+  <section id="concentrados" class="section section-gray" aria-label="Concentrados">
+    <div class="container">
+      <div class="conc-grid">
+
+        <div class="conc-content">
+          <h2 class="section-heading anim left">Concentrados</h2>
+          <p class="anim left d1">
+            <strong>¡Prepara tus aguas Piña Palmera en casa!</strong>
+          </p>
+          <p class="anim left d2">
+            Nuestros concentrados son el secreto para tener la misma calidad de sabor en la comodidad de tu hogar. Cada botella rinde para preparar <strong>2 litros</strong> de agua fresca.
+          </p>
+          <p class="anim left d3">
+            Sencillos de preparar, deliciosos en cada vaso. Sin conservadores, sin sabores artificiales — pura fruta de temporada concentrada.
+          </p>
+          <div class="anim left d4" style="margin-top: 1.5rem;">
+            <a href="https://wa.me/523318041630?text=¡Hola!%20Me%20interesan%20los%20concentrados%20Piña%20Palmera%20🍍"
+               target="_blank" rel="noopener noreferrer"
+               class="btn btn-primary">
+              💬 Preguntar por concentrados
+            </a>
+          </div>
+        </div>
+
+        <div class="anim right">
+          <div class="img-ph" style="background: linear-gradient(145deg, #d4eeda, #a8d5b5); min-height: 320px;">
+            <span class="ph-icon" style="filter: none;">🍶</span>
+            <span class="ph-label" style="color: var(--green-dark);">Foto concentrados</span>
+            <span class="ph-hint" style="color: rgba(27,107,53,0.5);">Reemplazar con foto real</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       8. APARTA TU FECHA
+  ══════════════════════════════════════ -->
+  <section id="contacto" class="section section-dark" aria-label="Aparta tu fecha">
+    <div class="container">
+
+      <div class="contacto-header anim up">
+        <h2 class="section-heading" style="font-family:'Pacifico',cursive; color: var(--yellow);">¡Aparta tu fecha!</h2>
+        <p style="color: rgba(255,255,255,0.65); max-width: 520px; margin: 0.75rem auto 0; font-size: 1rem; line-height: 1.7; font-weight: 600;">
+          Llena el formulario y nos comunicamos contigo para confirmar disponibilidad.
+          Para apartar se requiere el <strong style="color: var(--yellow);">50% de anticipo</strong>.
+        </p>
+      </div>
+
+      <div class="form-main-grid">
+
+        <!-- FORM -->
+        <div>
+          <form id="order-form" novalidate>
+            <div class="fields-grid">
+
+              <div class="field anim left d1">
+                <label for="f-nombre">Nombre completo *</label>
+                <input type="text" id="f-nombre" name="nombre" placeholder="Tu nombre completo" required
+                       autocomplete="name">
+                <span class="field-error" id="err-nombre">Por favor ingresa tu nombre.</span>
+              </div>
+
+              <div class="field anim left d2">
+                <label for="f-fecha">Fecha del evento *</label>
+                <input type="date" id="f-fecha" name="fecha" required>
+                <span class="field-error" id="err-fecha">Selecciona la fecha del evento.</span>
+              </div>
+
+              <div class="field field-full anim left d3">
+                <label for="f-direccion">Dirección del lugar *</label>
+                <input type="text" id="f-direccion" name="direccion"
+                       placeholder="Calle, número, colonia, ciudad" required
+                       autocomplete="street-address">
+                <span class="field-error" id="err-direccion">Por favor ingresa la dirección.</span>
+              </div>
+
+              <div class="field anim left d4">
+                <label for="f-hora">Hora de inicio *</label>
+                <input type="time" id="f-hora" name="hora" required>
+                <span class="field-error" id="err-hora">Indica la hora de inicio.</span>
+              </div>
+
+              <div class="field anim left d5">
+                <label for="f-vasos">Número de vasos</label>
+                <input type="number" id="f-vasos" name="vasos"
+                       placeholder="Ej: 100" min="0" step="1"
+                       inputmode="numeric">
+              </div>
+
+              <div class="field field-full anim left d5">
+                <label for="f-sabores">Sabores deseados</label>
+                <textarea id="f-sabores" name="sabores"
+                          placeholder="¿Qué sabores te gustan? ¿Categoría: Clásicos, Con Piquete, Kids, Infusiones? Cuéntanos cualquier detalle."></textarea>
+              </div>
+
+            </div>
+
+            <div class="form-actions anim up d6">
+              <button type="submit" class="btn btn-primary btn-lg">
+                📅 Enviar solicitud
+              </button>
+              <a href="https://wa.me/523318041630?text=¡Hola!%20Quiero%20apartar%20mi%20fecha%20con%20Piña%20Palmera%20🍍"
+                 target="_blank" rel="noopener noreferrer"
+                 class="btn btn-whatsapp btn-lg">
+                💬 WhatsApp directo
+              </a>
+            </div>
+
+            <div class="success-msg" id="form-success" role="status" aria-live="polite">
+              ✓ ¡Solicitud enviada con éxito! Te contactaremos pronto para confirmar tu fecha. 🍍
+            </div>
+          </form>
+        </div>
+
+        <!-- PAYMENT SIDEBAR -->
+        <div>
+          <div class="pago-card anim right d2">
+            <div class="pago-title">💳 Datos de transferencia</div>
+            <p class="pago-subtitle">
+              Una vez acordada la fecha, realiza el anticipo del 50% para apartar tu lugar.
+            </p>
+
+            <div class="pago-rows">
+              <div class="pago-row">
+                <span class="pago-key">Titular</span>
+                <span class="pago-val">Marcella Elisa Mazzini</span>
+              </div>
+              <div class="pago-row">
+                <span class="pago-key">Banco</span>
+                <span class="pago-val">Cuenca</span>
+              </div>
+              <div class="pago-row">
+                <span class="pago-key">CLABE</span>
+                <span class="pago-val pago-clabe">7239 6900 0012 4587 96</span>
+              </div>
+              <div class="pago-row">
+                <span class="pago-key">Anticipo</span>
+                <span class="pago-val pago-anticipo">50% del total</span>
+              </div>
+            </div>
+
+            <a href="https://wa.me/523318041630?text=¡Hola!%20Quiero%20apartar%20mi%20fecha%20🍍"
+               target="_blank" rel="noopener noreferrer"
+               class="btn btn-whatsapp pago-wa">
+              💬 Escribir por WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <span class="pacifico">🍍 Piña Palmera</span>
+          <p class="footer-tagline">¡Buena vibra líquida!</p>
+          <p style="font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.5;">
+            Orgullosamente tapatías.<br>
+            Guadalajara, Jalisco · México
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <nav class="footer-links" aria-label="Footer">
+            <a href="#nuestras-aguas">🌿 Nuestras aguas</a>
+            <a href="#menu">🍋 El menú</a>
+            <a href="#experiencia">✨ La experiencia</a>
+            <a href="#envios">🚐 Envíos y pick up</a>
+            <a href="#carrito">🛒 Carrito eventos</a>
+            <a href="#concentrados">🍶 Concentrados</a>
+            <a href="#contacto">📅 Aparta tu fecha</a>
+          </nav>
+        </div>
+
+        <div class="footer-col">
+          <h4>Síguenos</h4>
+          <div class="footer-social-grid">
+            <a href="https://instagram.com/aguas_pina_palmera"
+               target="_blank" rel="noopener noreferrer"
+               class="social-link">
+              <span class="social-icon">📸</span>
+              @aguas_pina_palmera
+            </a>
+            <a href="https://facebook.com"
+               target="_blank" rel="noopener noreferrer"
+               class="social-link">
+              <span class="social-icon">👍</span>
+              Piña Palmera
+            </a>
+            <a href="tel:3318041630" class="social-link">
+              <span class="social-icon">📞</span>
+              3318 04 1630
+            </a>
+            <a href="https://wa.me/523318041630"
+               target="_blank" rel="noopener noreferrer"
+               class="social-link">
+              <span class="social-icon">💬</span>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          Hecho con amor por mujeres mexicanas desde 2014 · Guadalajara, Jalisco 🌺<br>
+          <span style="opacity: 0.5;">© 2025 Piña Palmera. Todos los derechos reservados.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════
+       WHATSAPP FLOAT
+  ══════════════════════════════════════ -->
+  <a href="https://wa.me/523318041630"
+     class="wa-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Contactar por WhatsApp">
+    <span class="wa-tooltip">¡Escríbenos!</span>
+    <!-- WhatsApp SVG icon -->
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    'use strict';
+
+    /* ─── NAVBAR: scroll class + scrollspy ─── */
+    const navbar  = document.getElementById('navbar');
+    const navAncs = document.querySelectorAll('.nav-links a');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+
+    window.addEventListener('scroll', () => {
+      // scrolled shadow
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+
+      // active link scrollspy
+      const scrollY = window.scrollY + 120;
+      let current = '';
+      sections.forEach(s => {
+        if (s.offsetTop <= scrollY) current = s.id;
+      });
+      navAncs.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    }, { passive: true });
+
+    /* ─── HAMBURGER / MOBILE DRAWER ─── */
+    const hamburger = document.getElementById('hamburger');
+    const drawer    = document.getElementById('mobile-drawer');
+
+    function toggleDrawer(open) {
+      const expanded = open ?? !drawer.classList.contains('open');
+      drawer.classList.toggle('open', expanded);
+      hamburger.classList.toggle('open', expanded);
+      hamburger.setAttribute('aria-expanded', String(expanded));
+    }
+
+    hamburger.addEventListener('click', () => toggleDrawer());
+
+    // Close on link click
+    drawer.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => toggleDrawer(false))
+    );
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (!navbar.contains(e.target) && !drawer.contains(e.target)) {
+        toggleDrawer(false);
+      }
+    });
+
+    /* ─── SCROLL ANIMATIONS (Intersection Observer) ─── */
+    const animObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -48px 0px'
+    });
+
+    document.querySelectorAll('.anim').forEach(el => animObs.observe(el));
+
+    /* ─── HERO ENTRANCE ─── */
+    window.addEventListener('load', () => {
+      const hero = document.querySelector('.hero-content');
+      if (!hero) return;
+      hero.style.opacity = '0';
+      hero.style.transform = 'translateY(36px)';
+      hero.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          hero.style.opacity = '1';
+          hero.style.transform = 'translateY(0)';
+        });
+      });
+    });
+
+    /* ─── FORM VALIDATION & SUBMIT ─── */
+    const form = document.getElementById('order-form');
+
+    const requiredFields = [
+      { id: 'f-nombre',    errorId: 'err-nombre' },
+      { id: 'f-fecha',     errorId: 'err-fecha' },
+      { id: 'f-direccion', errorId: 'err-direccion' },
+      { id: 'f-hora',      errorId: 'err-hora' },
+    ];
+
+    // Live validation
+    requiredFields.forEach(({ id, errorId }) => {
+      const input = document.getElementById(id);
+      const error = document.getElementById(errorId);
+      input.addEventListener('input', () => {
+        input.classList.remove('err');
+        error.classList.remove('show');
+      });
+    });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // Validate
+      let valid = true;
+      requiredFields.forEach(({ id, errorId }) => {
+        const input = document.getElementById(id);
+        const error = document.getElementById(errorId);
+        const isEmpty = !input.value.trim();
+        input.classList.toggle('err', isEmpty);
+        error.classList.toggle('show', isEmpty);
+        if (isEmpty) valid = false;
+      });
+
+      if (!valid) {
+        // scroll to first error
+        const firstErr = form.querySelector('.err');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // Collect data
+      const data = {
+        nombre:    document.getElementById('f-nombre').value.trim(),
+        fecha:     document.getElementById('f-fecha').value,
+        direccion: document.getElementById('f-direccion').value.trim(),
+        hora:      document.getElementById('f-hora').value,
+        sabores:   document.getElementById('f-sabores').value.trim(),
+        vasos:     document.getElementById('f-vasos').value,
+      };
+
+      // Submit button feedback
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      const original = submitBtn.innerHTML;
+      submitBtn.innerHTML = '⏳ Enviando...';
+
+      try {
+        const res = await fetch('http://localhost:3000/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          signal: AbortSignal.timeout(8000),
+        });
+
+        if (res.ok) {
+          document.getElementById('form-success').classList.add('show');
+          form.reset();
+          form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          throw new Error('server');
+        }
+
+      } catch {
+        // Fallback: pre-fill WhatsApp
+        const msg = [
+          '¡Hola! Quiero apartar mi fecha con Piña Palmera 🍍',
+          '',
+          `Nombre: ${data.nombre}`,
+          `Fecha: ${data.fecha}`,
+          `Dirección: ${data.direccion}`,
+          `Hora: ${data.hora}`,
+          data.sabores ? `Sabores: ${data.sabores}` : '',
+          data.vasos   ? `Vasos: ${data.vasos}`   : '',
+        ].filter(Boolean).join('\n');
+
+        window.open(`https://wa.me/523318041630?text=${encodeURIComponent(msg)}`, '_blank');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = original;
+      }
+    });
+
+    /* ─── CTA BUTTON HOVER MAGNETIC EFFECT ─── */
+    document.querySelectorAll('.btn-primary, .btn-dark').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 8;
+        const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 8;
+        btn.style.transform = `translateY(-3px) scale(1.04) translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@source "./app";
+@source "./index.html";
+
+@theme {
+  --color-brand-green-dark: #1B6B35;
+  --color-brand-green-mid: #4CAF6E;
+  --color-brand-green-light: #7DC96A;
+  --color-brand-yellow: #E8D44D;
+  --color-brand-orange: #F4A83A;
+  --color-brand-pink: #E8546A;
+
+  --font-pacifico: 'Pacifico', cursive;
+  --font-nunito: 'Nunito', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #fff;
+  font-family: 'Nunito', sans-serif;
+}

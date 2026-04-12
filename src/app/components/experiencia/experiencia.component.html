@@ -1,0 +1,118 @@
+<section id="experiencia" class="experiencia py-24 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section title -->
+    <div class="text-center mb-16">
+      <h2 class="section-title font-pacifico text-brand-green-dark text-4xl sm:text-5xl mb-3">
+        La experiencia
+      </h2>
+      <div class="w-24 h-1 bg-brand-yellow mx-auto rounded-full mb-4"></div>
+      <p class="text-brand-green-dark/70 font-nunito text-lg max-w-xl mx-auto">
+        Todo lo que incluye cada vitrolero para que tu evento fluya perfecto
+      </p>
+    </div>
+
+    <!-- Stat hero -->
+    <div class="stats-row grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
+      <div class="stat-card text-center bg-brand-green-dark rounded-3xl p-8 shadow-lg will-change-transform">
+        <p class="stat-number font-pacifico text-brand-yellow text-7xl">20</p>
+        <p class="text-white font-nunito font-semibold text-lg mt-2">litros por vitrolero</p>
+        <p class="text-white/60 font-nunito text-sm mt-1">Vidrio templado premium</p>
+      </div>
+      <div class="stat-card text-center bg-brand-yellow rounded-3xl p-8 shadow-lg will-change-transform">
+        <p class="stat-number font-pacifico text-brand-green-dark text-7xl">35</p>
+        <p class="text-brand-green-dark font-nunito font-semibold text-lg mt-2">bebidas de 550ml</p>
+        <p class="text-brand-green-dark/70 font-nunito text-sm mt-1">Por vitrolero</p>
+      </div>
+      <div class="stat-card text-center bg-brand-green-mid rounded-3xl p-8 shadow-lg will-change-transform">
+        <p class="stat-number font-pacifico text-white text-7xl">3</p>
+        <p class="text-white font-nunito font-semibold text-lg mt-2">tamaños de vaso</p>
+        <p class="text-white/80 font-nunito text-sm mt-1">300ml · 550ml · 1L</p>
+      </div>
+    </div>
+
+    <!-- Includes grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 includes-grid mb-16">
+      @for (item of includes; track item.texto) {
+        <div class="include-item flex items-start gap-4 bg-white border border-brand-green-light/30 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-brand-green-mid transition-all duration-200">
+          <span class="text-3xl shrink-0">{{ item.emoji }}</span>
+          <p class="text-brand-green-dark font-nunito font-medium leading-relaxed">{{ item.texto }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- Photo gallery placeholders ──────────────────────────────────────────
+         TODO: Reemplazar cada photo-slot con:
+         <img ngSrc="assets/images/evento-N.jpg" width="400" height="300"
+              alt="Piña Palmera en evento" class="w-full h-full object-cover rounded-2xl">
+         ─────────────────────────────────────────────────────────────────── -->
+    <div class="photos-gallery grid grid-cols-2 sm:grid-cols-4 gap-4 mb-16">
+      <div class="photo-slot relative overflow-hidden rounded-2xl aspect-[4/3]
+                  bg-brand-green-dark/5 border-2 border-dashed border-brand-green-mid/30
+                  flex flex-col items-center justify-center gap-2 group">
+        <svg class="w-8 h-8 text-brand-green-mid/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <p class="font-nunito text-brand-green-dark/35 text-xs text-center px-2">Foto evento 1<br>400×300</p>
+      </div>
+      <div class="photo-slot relative overflow-hidden rounded-2xl aspect-[4/3]
+                  bg-brand-yellow/8 border-2 border-dashed border-brand-yellow/40
+                  flex flex-col items-center justify-center gap-2">
+        <svg class="w-8 h-8 text-brand-yellow/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <p class="font-nunito text-brand-green-dark/35 text-xs text-center px-2">Foto evento 2<br>400×300</p>
+      </div>
+      <div class="photo-slot relative overflow-hidden rounded-2xl aspect-[4/3]
+                  bg-brand-pink/8 border-2 border-dashed border-brand-pink/30
+                  flex flex-col items-center justify-center gap-2">
+        <svg class="w-8 h-8 text-brand-pink/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <p class="font-nunito text-brand-green-dark/35 text-xs text-center px-2">Foto evento 3<br>400×300</p>
+      </div>
+      <div class="photo-slot relative overflow-hidden rounded-2xl aspect-[4/3]
+                  bg-brand-orange/8 border-2 border-dashed border-brand-orange/30
+                  flex flex-col items-center justify-center gap-2">
+        <svg class="w-8 h-8 text-brand-orange/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <p class="font-nunito text-brand-green-dark/35 text-xs text-center px-2">Foto equipo<br>400×300</p>
+      </div>
+    </div>
+
+    <!-- Glass sizes visual -->
+    <div class="glasses-section bg-brand-green-dark/5 border border-brand-green-light/20 rounded-3xl p-8 text-center">
+      <h3 class="font-pacifico text-brand-green-dark text-2xl mb-8">Tamaños de presentación</h3>
+      <div class="flex justify-center items-end gap-8 sm:gap-16">
+        <div class="glass-item flex flex-col items-center gap-3">
+          <div class="relative w-12 rounded-b-full rounded-t-sm overflow-hidden shadow-md"
+               style="height: 72px; background: linear-gradient(180deg, #E8546A, #E8D44D); opacity: 0.85;"></div>
+          <p class="font-pacifico text-brand-green-dark text-lg">300</p>
+          <p class="font-nunito text-brand-green-dark/60 text-xs">ml · mini</p>
+        </div>
+        <div class="glass-item flex flex-col items-center gap-3">
+          <div class="relative w-14 rounded-b-full rounded-t-sm overflow-hidden shadow-md"
+               style="height: 110px; background: linear-gradient(180deg, #4CAF6E, #E8D44D); opacity: 0.85;"></div>
+          <p class="font-pacifico text-brand-green-dark text-xl">550</p>
+          <p class="font-nunito text-brand-green-dark/60 text-xs">ml · estándar</p>
+        </div>
+        <div class="glass-item flex flex-col items-center gap-3">
+          <div class="relative w-16 rounded-b-full rounded-t-sm overflow-hidden shadow-md"
+               style="height: 144px; background: linear-gradient(180deg, #1B6B35, #4CAF6E); opacity: 0.85;"></div>
+          <p class="font-pacifico text-brand-green-dark text-2xl">1L</p>
+          <p class="font-nunito text-brand-green-dark/60 text-xs">para llevar</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

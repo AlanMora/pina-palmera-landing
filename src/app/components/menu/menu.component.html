@@ -1,0 +1,103 @@
+<section id="menu" class="menu py-24 bg-brand-green-dark overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section title -->
+    <div class="text-center mb-14">
+      <h2 class="section-title font-pacifico text-brand-yellow text-4xl sm:text-5xl mb-3">
+        Nuestro menú
+      </h2>
+      <div class="w-24 h-1 bg-brand-yellow/60 mx-auto rounded-full mb-4"></div>
+      <p class="text-white/70 font-nunito text-base max-w-xl mx-auto">
+        Vitroleros de 20 litros · Rinde para 35 bebidas de 550ml
+      </p>
+    </div>
+
+    <!-- Tab navigation -->
+    <div class="menu-tabs flex flex-wrap justify-center gap-3 mb-10">
+      @for (cat of categorias; track cat.id) {
+        <button
+          (click)="setTab(cat.id)"
+          [class]="tabActivo() === cat.id
+            ? 'bg-brand-yellow text-brand-green-dark font-bold shadow-lg scale-105'
+            : 'bg-white/10 text-white hover:bg-white/20'"
+          class="font-nunito text-sm sm:text-base px-6 py-3 rounded-full transition-all duration-200 font-medium">
+          {{ cat.emoji }} {{ cat.nombre }}
+        </button>
+      }
+    </div>
+
+    <!-- Content panel -->
+    <div class="menu-content-panel bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-10">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+
+        <!-- Prices + info (left) -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">{{ categoriaActiva.emoji }}</span>
+            <div>
+              <h3 class="font-pacifico text-brand-yellow text-2xl">{{ categoriaActiva.nombre }}</h3>
+              <p class="text-white/60 text-sm font-nunito">por vitrolero de 20L</p>
+            </div>
+          </div>
+
+          <!-- Prices -->
+          <div class="space-y-3 mb-8">
+            @for (precio of categoriaActiva.precios; track precio) {
+              <div class="flex items-center gap-3 bg-white/10 rounded-2xl px-5 py-3">
+                <svg class="w-5 h-5 text-brand-yellow shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-white font-nunito font-semibold">{{ precio }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-brand-yellow/20 border border-brand-yellow/30 rounded-2xl p-3 text-center">
+              <p class="font-pacifico text-brand-yellow text-2xl">20</p>
+              <p class="text-white/70 text-xs font-nunito mt-1">litros</p>
+            </div>
+            <div class="bg-brand-yellow/20 border border-brand-yellow/30 rounded-2xl p-3 text-center">
+              <p class="font-pacifico text-brand-yellow text-2xl">35</p>
+              <p class="text-white/70 text-xs font-nunito mt-1">bebidas</p>
+            </div>
+            <div class="bg-brand-yellow/20 border border-brand-yellow/30 rounded-2xl p-3 text-center">
+              <p class="font-pacifico text-brand-yellow text-2xl">550</p>
+              <p class="text-white/70 text-xs font-nunito mt-1">ml c/u</p>
+            </div>
+          </div>
+
+          <a href="/#aparta-fecha"
+             class="cta-btn mt-6 block text-center bg-brand-yellow text-brand-green-dark font-bold font-nunito px-6 py-3 rounded-full hover:bg-brand-orange hover:text-white transition-colors duration-200">
+            Pedir este sabor →
+          </a>
+        </div>
+
+        <!-- Flavor list (right) -->
+        <div class="lg:col-span-3">
+          <p class="text-white/60 font-nunito text-sm font-semibold uppercase tracking-wider mb-4">
+            Sabores disponibles
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            @for (sabor of categoriaActiva.sabores; track sabor) {
+              <div class="flex items-center gap-2 py-2 px-3 rounded-xl hover:bg-white/5 transition-colors">
+                <span class="w-2 h-2 rounded-full bg-brand-yellow shrink-0"></span>
+                <span class="text-white/85 font-nunito text-sm">{{ sabor }}</span>
+              </div>
+            }
+          </div>
+
+          @if (categoriaActiva.id === 'clasicos') {
+            <p class="text-white/40 font-nunito text-xs mt-6 italic">
+              * Sujeto a disponibilidad de temporada. Consulta tus sabores favoritos al agendar.
+            </p>
+          }
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

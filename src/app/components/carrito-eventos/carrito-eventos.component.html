@@ -1,0 +1,107 @@
+<section id="carrito-eventos" class="py-20 bg-brand-green-dark overflow-hidden">
+
+  <!-- Eyebrow badge -->
+  <div class="carrito-eyebrow flex justify-center mb-10">
+    <span class="inline-flex items-center gap-2 bg-brand-yellow/20 border border-brand-yellow/50 text-brand-yellow font-nunito font-semibold text-sm px-5 py-2 rounded-full uppercase tracking-widest">
+      🛒 Renta de carrito para eventos
+    </span>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Card principal amarilla -->
+    <div class="carrito-card bg-brand-yellow rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+
+      <!-- Columna galería -->
+      <div class="carrito-gallery relative w-full lg:w-1/2 bg-brand-green-mid/20 flex flex-col gap-4 p-6">
+        <!-- Foto principal -->
+        <div class="relative rounded-2xl overflow-hidden aspect-[4/3] w-full bg-brand-green-dark/10">
+          @for (photo of photos; track photo.src; let i = $index) {
+            @if (i === activePhoto()) {
+              <img
+                [src]="photo.src"
+                [alt]="photo.alt"
+                class="w-full h-full object-cover transition-opacity duration-500"
+              />
+            }
+          }
+        </div>
+
+        <!-- Miniaturas -->
+        <div class="flex gap-2 justify-center flex-wrap">
+          @for (photo of photos; track photo.src; let i = $index) {
+            <button
+              class="carrito-thumb w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-green-dark"
+              [class]="i === activePhoto() ? 'border-brand-green-dark scale-105' : 'border-white/60 hover:border-brand-green-dark/60'"
+              (click)="activePhoto.set(i)"
+              [attr.aria-label]="'Ver foto ' + (i + 1)"
+            >
+              <img [src]="photo.src" [alt]="photo.alt" class="w-full h-full object-cover" />
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Columna contenido -->
+      <div class="flex flex-col justify-center gap-6 p-8 lg:p-10 w-full lg:w-1/2 relative">
+
+        <!-- Título -->
+        <div>
+          <h2 class="font-pacifico text-brand-green-dark text-3xl lg:text-4xl leading-tight mb-2">
+            Lleva el carrito a tu evento
+          </h2>
+          <p class="font-nunito text-brand-green-dark/80 text-base leading-relaxed">
+            Servicio completo de vitroleros frescos para bodas, XV años, cumpleaños y eventos corporativos.
+            Tu carrito listo, presentado y atendido.
+          </p>
+        </div>
+
+        <!-- Badge precio — pop con rebote -->
+        <div class="price-highlight absolute top-8 right-8 lg:top-10 lg:right-10 bg-brand-green-dark text-brand-yellow font-pacifico text-2xl rounded-2xl px-5 py-3 shadow-lg rotate-3 select-none">
+          $350
+          <span class="block font-nunito text-xs text-brand-yellow/80 font-normal -mt-1 text-center">renta del carrito</span>
+        </div>
+
+        <!-- Features -->
+        <ul class="flex flex-col gap-3">
+          <li class="check-item flex items-start gap-3 font-nunito text-brand-green-dark text-sm">
+            <span class="mt-0.5 w-5 h-5 rounded-full bg-brand-green-dark text-brand-yellow flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+            Hasta <strong class="ml-1">4 vitroleros</strong> montados en el carrito
+          </li>
+          <li class="check-item flex items-start gap-3 font-nunito text-brand-green-dark text-sm">
+            <span class="mt-0.5 w-5 h-5 rounded-full bg-brand-green-dark text-brand-yellow flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+            Presentación estética con decoración tropical
+          </li>
+          <li class="check-item flex items-start gap-3 font-nunito text-brand-green-dark text-sm">
+            <span class="mt-0.5 w-5 h-5 rounded-full bg-brand-green-dark text-brand-yellow flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+            Vasos desechables incluidos en tu pedido
+          </li>
+          <li class="check-item flex items-start gap-3 font-nunito text-brand-green-dark text-sm">
+            <span class="mt-0.5 w-5 h-5 rounded-full bg-brand-green-dark text-brand-yellow flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+            Entrega puntual y recogida al final del evento
+          </li>
+          <li class="check-item flex items-start gap-3 font-nunito text-brand-green-dark text-sm">
+            <span class="mt-0.5 w-5 h-5 rounded-full bg-brand-green-dark text-brand-yellow flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+            Compatible con cualquier combinación de sabores
+          </li>
+        </ul>
+
+        <!-- CTA -->
+        <button
+          (click)="addCarrito()"
+          class="mt-2 self-start inline-flex items-center gap-2 bg-brand-green-dark hover:bg-brand-green-mid text-brand-yellow font-nunito font-bold text-base px-7 py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-brand-green-dark/30"
+        >
+          Agregar carrito a mi pedido
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </button>
+
+        <p class="font-nunito text-brand-green-dark/60 text-xs -mt-2">
+          *Precio adicional al costo de los vitroleros. Sujeto a disponibilidad de fecha.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,245 @@
+<section id="aparta-fecha" class="form-section py-24 bg-brand-green-dark overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section title -->
+    <div class="text-center mb-14">
+      <h2 class="section-title font-pacifico text-brand-yellow text-4xl sm:text-5xl mb-3">
+        Aparta tu fecha
+      </h2>
+      <div class="w-24 h-1 bg-brand-yellow/60 mx-auto rounded-full mb-4"></div>
+      <p class="text-white/70 font-nunito text-base max-w-lg mx-auto">
+        Llena el formulario y nos ponemos en contacto para confirmar tu pedido
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10">
+
+      <!-- Form -->
+      <div class="lg:col-span-3">
+
+        @if (enviado()) {
+          <div class="bg-brand-green-mid/20 border border-brand-green-mid rounded-3xl p-8 text-center">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="font-pacifico text-brand-yellow text-3xl mb-3">¡Pedido recibido!</h3>
+            <p class="text-white/80 font-nunito">
+              Gracias por contactarnos. Te responderemos pronto para confirmar tu pedido.
+            </p>
+            <p class="text-white/60 font-nunito text-sm mt-4">
+              O escríbenos directamente al <a href="tel:3318041630" class="text-brand-yellow hover:underline">33 1804 1630</a>
+            </p>
+          </div>
+        } @else {
+          <form (ngSubmit)="onSubmit()" [formGroup]="form" class="space-y-5" novalidate>
+
+            <!-- Nombre -->
+            <div class="form-field">
+              <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                Nombre completo *
+              </label>
+              <input formControlName="nombre" type="text" placeholder="Tu nombre"
+                     [class]="isInvalid('nombre') ? 'border-brand-pink' : 'border-white/20 focus:border-brand-yellow'"
+                     class="w-full bg-white/10 border text-white font-nunito placeholder-white/30 rounded-2xl px-5 py-3 focus:outline-none transition-colors">
+              @if (isInvalid('nombre')) {
+                <p class="text-brand-pink font-nunito text-xs mt-1.5">Ingresa tu nombre completo</p>
+              }
+            </div>
+
+            <!-- Fecha + Hora -->
+            <div class="form-field grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                  Fecha del evento *
+                </label>
+                <input formControlName="fecha" type="date"
+                       [class]="isInvalid('fecha') ? 'border-brand-pink' : 'border-white/20 focus:border-brand-yellow'"
+                       class="w-full bg-white/10 border text-white font-nunito rounded-2xl px-5 py-3 focus:outline-none transition-colors">
+                @if (isInvalid('fecha')) {
+                  <p class="text-brand-pink font-nunito text-xs mt-1.5">Selecciona la fecha</p>
+                }
+              </div>
+              <div>
+                <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                  Hora de inicio *
+                </label>
+                <input formControlName="hora" type="time"
+                       [class]="isInvalid('hora') ? 'border-brand-pink' : 'border-white/20 focus:border-brand-yellow'"
+                       class="w-full bg-white/10 border text-white font-nunito rounded-2xl px-5 py-3 focus:outline-none transition-colors">
+                @if (isInvalid('hora')) {
+                  <p class="text-brand-pink font-nunito text-xs mt-1.5">Ingresa la hora de inicio</p>
+                }
+              </div>
+            </div>
+
+            <!-- Dirección -->
+            <div class="form-field">
+              <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                Dirección del evento *
+              </label>
+              <input formControlName="direccion" type="text"
+                     placeholder="Calle, número, colonia, ciudad"
+                     [class]="isInvalid('direccion') ? 'border-brand-pink' : 'border-white/20 focus:border-brand-yellow'"
+                     class="w-full bg-white/10 border text-white font-nunito placeholder-white/30 rounded-2xl px-5 py-3 focus:outline-none transition-colors">
+              @if (isInvalid('direccion')) {
+                <p class="text-brand-pink font-nunito text-xs mt-1.5">Ingresa la dirección del evento</p>
+              }
+            </div>
+
+            <!-- Sabores -->
+            <div class="form-field">
+              <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                Sabores de tu preferencia
+              </label>
+              <textarea formControlName="sabores" rows="3"
+                        placeholder="¿Qué sabores te gustan? Lista tus favoritos o dinos el tipo de evento..."
+                        class="w-full bg-white/10 border border-white/20 focus:border-brand-yellow text-white font-nunito placeholder-white/30 rounded-2xl px-5 py-3 focus:outline-none transition-colors resize-none"></textarea>
+            </div>
+
+            <!-- Vasos + Pre-fill from calculadora -->
+            <div class="form-field grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                  Número de vasos aprox.
+                </label>
+                <input formControlName="vasos" type="number" placeholder="Ej. 200"
+                       class="w-full bg-white/10 border border-white/20 focus:border-brand-yellow text-white font-nunito placeholder-white/30 rounded-2xl px-5 py-3 focus:outline-none transition-colors">
+              </div>
+              <div>
+                <label class="block text-white/80 font-nunito font-semibold text-sm mb-2">
+                  Notas adicionales
+                </label>
+                <input formControlName="notas" type="text" placeholder="Alergias, restricciones..."
+                       class="w-full bg-white/10 border border-white/20 focus:border-brand-yellow text-white font-nunito placeholder-white/30 rounded-2xl px-5 py-3 focus:outline-none transition-colors">
+              </div>
+            </div>
+
+            <!-- Pre-filled from calculadora (hidden display) -->
+            @if (form.value.vitroleros && form.value.vitroleros > 0) {
+              <div class="form-field bg-white/10 border border-brand-yellow/30 rounded-2xl px-5 py-4">
+                <p class="text-white/60 font-nunito text-xs font-semibold uppercase tracking-wider mb-2">
+                  Datos de la calculadora
+                </p>
+                <div class="flex flex-wrap gap-3">
+                  @if (form.value.invitados) {
+                    <span class="bg-brand-yellow/20 text-brand-yellow font-nunito text-sm px-3 py-1 rounded-full">
+                      {{ form.value.invitados }} invitados
+                    </span>
+                  }
+                  <span class="bg-brand-yellow/20 text-brand-yellow font-nunito text-sm px-3 py-1 rounded-full">
+                    {{ form.value.vitroleros }} vitrolero{{ form.value.vitroleros !== 1 ? 's' : '' }}
+                  </span>
+                  @if (form.value.categoria) {
+                    <span class="bg-brand-yellow/20 text-brand-yellow font-nunito text-sm px-3 py-1 rounded-full">
+                      {{ form.value.categoria }}
+                    </span>
+                  }
+                  @if (form.value.totalCups) {
+                    <span class="bg-brand-yellow/20 text-brand-yellow font-nunito text-sm px-3 py-1 rounded-full">
+                      ~{{ form.value.totalCups }} bebidas
+                    </span>
+                  }
+                  @if (form.value.servicioEntrega) {
+                    <span class="bg-brand-yellow/20 text-brand-yellow font-nunito text-sm px-3 py-1 rounded-full">
+                      {{ form.value.servicioEntrega }}
+                    </span>
+                  }
+                  @if (form.value.incluirCarrito) {
+                    <span class="bg-brand-yellow/20 text-brand-yellow font-nunito text-sm px-3 py-1 rounded-full">
+                      Carrito de eventos
+                    </span>
+                  }
+                </div>
+
+                <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-2xl bg-white/8 px-4 py-3">
+                    <p class="text-white/45 text-[0.68rem] font-nunito font-semibold uppercase tracking-[0.22em]">
+                      Base
+                    </p>
+                    <p class="mt-2 text-brand-yellow text-2xl font-pacifico">
+                      {{ formatPrice(form.value.precioBase) }}
+                    </p>
+                  </div>
+                  <div class="rounded-2xl bg-white/8 px-4 py-3">
+                    <p class="text-white/45 text-[0.68rem] font-nunito font-semibold uppercase tracking-[0.22em]">
+                      Total estimado
+                    </p>
+                    <p class="mt-2 text-brand-yellow text-2xl font-pacifico">
+                      {{ formatPrice(form.value.precioTotal) }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Error -->
+            @if (error()) {
+              <div class="form-field bg-brand-pink/20 border border-brand-pink rounded-2xl px-5 py-4">
+                <p class="text-white font-nunito text-sm">⚠️ {{ error() }}</p>
+              </div>
+            }
+
+            <!-- Submit -->
+            <div class="form-field">
+              <button type="submit"
+                      [disabled]="enviando()"
+                      class="cta-btn w-full bg-brand-yellow text-brand-green-dark font-bold font-nunito text-base px-6 py-4 rounded-2xl hover:bg-brand-orange hover:text-white transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg">
+                @if (enviando()) {
+                  Enviando... ⏳
+                } @else {
+                  Enviar mi pedido 🗓️
+                }
+              </button>
+              <p class="text-white/40 font-nunito text-xs text-center mt-3">
+                Te responderemos en menos de 24 horas hábiles
+              </p>
+            </div>
+
+          </form>
+        }
+      </div>
+
+      <!-- Transfer info -->
+      <div class="lg:col-span-2">
+        <div class="transfer-card bg-white/10 border border-white/15 rounded-3xl p-7 sticky top-24">
+          <h3 class="font-pacifico text-brand-yellow text-xl mb-5">💳 Datos de pago</h3>
+          <p class="text-white/70 font-nunito text-sm mb-6 leading-relaxed">
+            El pago se realiza por transferencia bancaria una vez confirmado tu pedido.
+          </p>
+
+          <div class="space-y-4 font-nunito text-sm">
+            <div class="bg-white/10 rounded-2xl p-4">
+              <p class="text-white/50 text-xs uppercase tracking-wider mb-1">Titular</p>
+              <p class="text-white font-semibold">Marcella Elisa Mazzini</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl p-4">
+              <p class="text-white/50 text-xs uppercase tracking-wider mb-1">Banco</p>
+              <p class="text-white font-semibold">Cuenca</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl p-4">
+              <p class="text-white/50 text-xs uppercase tracking-wider mb-1">CLABE interbancaria</p>
+              <p class="text-brand-yellow font-bold text-base tracking-wide">7239 6900 0012 4587 96</p>
+            </div>
+          </div>
+
+          <div class="border-t border-white/20 mt-6 pt-6">
+            <p class="text-white/50 font-nunito text-xs mb-4">¿Tienes dudas? Escríbenos:</p>
+            <a href="tel:3318041630"
+               class="flex items-center gap-2 text-brand-yellow font-nunito font-semibold hover:text-white transition-colors mb-3">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              </svg>
+              33 1804 1630
+            </a>
+            <a href="https://instagram.com/aguas_pina_palmera" target="_blank" rel="noopener"
+               class="flex items-center gap-2 text-brand-yellow font-nunito font-semibold hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              &#64;aguas_pina_palmera
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
