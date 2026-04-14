@@ -4,6 +4,7 @@ import {
   inject,
   OnDestroy,
   effect,
+  computed,
   afterNextRender,
   PLATFORM_ID,
 } from '@angular/core';
@@ -13,6 +14,10 @@ import { Router } from '@angular/router';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
 import { CalculadoraService, Categoria, Endulzante } from '../../services/calculadora.service';
 import { gsap } from 'gsap';
+
+const RING_RADIUS = 28;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+const MAX_VITROLEROS = 15;
 
 @Component({
   selector: 'app-cart-sidebar',
@@ -27,6 +32,13 @@ export class CartSidebarComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private ready = false;
 
+  readonly ringCircumference = RING_CIRCUMFERENCE;
+
+  readonly ringOffset = computed(() => {
+    const pct = Math.min(this.calc.vitroleros() / MAX_VITROLEROS, 1);
+    return RING_CIRCUMFERENCE * (1 - pct);
+  });
+
   readonly categorias: { id: Categoria; label: string; precio: string }[] = [
     { id: 'clasicos',   label: 'Clásicos',    precio: '$750–$850'  },
     { id: 'piquete',    label: 'Con piquete',  precio: '$950–$1050' },
@@ -38,7 +50,6 @@ export class CartSidebarComponent implements OnDestroy {
     afterNextRender(() => {
       requestAnimationFrame(() => {
         this.ready = true;
-        // Refuerza el estado inicial por si GSAP está en carrera con Tailwind
         gsap.set('.cart-panel', { x: '100%' });
       });
     });
@@ -46,11 +57,24 @@ export class CartSidebarComponent implements OnDestroy {
     effect(() => {
       const open = this.sidebar.isOpen();
       if (!this.ready || !isPlatformBrowser(this.platformId)) return;
+
       if (open) {
-        gsap.to('.cart-panel', { duration: 0.38, x: '0%', ease: 'power3.out' });
+        // Slide panel in
+        gsap.to('.cart-panel', {
+          duration: 0.4, x: '0%', ease: 'power3.out',
+        });
+        // Stagger control sections
+        gsap.fromTo('.ctrl-section', {
+          y: 20, opacity: 0,
+        }, {
+          y: 0, opacity: 1, duration: 0.35,
+          ease: 'power2.out', stagger: 0.06, delay: 0.15,
+        });
         document.body.style.overflow = 'hidden';
       } else {
-        gsap.to('.cart-panel', { duration: 0.3, x: '100%', ease: 'power3.in' });
+        gsap.to('.cart-panel', {
+          duration: 0.3, x: '100%', ease: 'power3.in',
+        });
         document.body.style.overflow = '';
       }
     });

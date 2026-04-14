@@ -27,9 +27,24 @@ export class EnviosComponent implements OnDestroy {
       duration: 0.9, y: 55, opacity: 0, ease: 'power3.out',
     });
 
-    gsap.from('.envio-card', {
-      scrollTrigger: { trigger: '.envios-grid', start: 'top 80%' },
-      duration: 0.75, y: 55, opacity: 0, ease: 'back.out(1.3)', stagger: 0.2,
+    // Usar fromTo para que las cards SIEMPRE terminen visibles
+    const cards = gsap.utils.toArray<HTMLElement>('.envio-card');
+    cards.forEach((card, i) => {
+      gsap.fromTo(card,
+        { y: 55, autoAlpha: 0 },
+        {
+          scrollTrigger: {
+            trigger: '.envios-grid',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          duration: 0.75,
+          y: 0,
+          autoAlpha: 1,
+          ease: 'back.out(1.3)',
+          delay: i * 0.2,
+        }
+      );
     });
 
     // Float continuo en los iconos
@@ -43,7 +58,7 @@ export class EnviosComponent implements OnDestroy {
     });
 
     // Hover tilt 3D en cards
-    document.querySelectorAll('.envio-card').forEach(card => {
+    cards.forEach(card => {
       card.addEventListener('mouseenter', () =>
         gsap.to(card, { duration: 0.35, rotateY: 4, rotateX: -3, scale: 1.02, ease: 'power2.out',
           transformPerspective: 800 })
@@ -53,6 +68,13 @@ export class EnviosComponent implements OnDestroy {
           transformPerspective: 800 })
       );
     });
+
+    // Fallback: asegurar que las cards sean visibles después de 2s
+    setTimeout(() => {
+      cards.forEach(card => {
+        gsap.set(card, { autoAlpha: 1, y: 0 });
+      });
+    }, 2000);
   }
 
   ngOnDestroy() {

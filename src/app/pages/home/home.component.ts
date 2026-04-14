@@ -134,20 +134,23 @@ export class HomeComponent implements OnDestroy {
 
   private initAnimations() {
     gsap.from('.service-header', {
-      scrollTrigger: { trigger: '.service-cards-section', start: 'top 85%' },
+      scrollTrigger: { trigger: '.service-cards-section', start: 'top 85%', once: true },
       duration: 0.7, y: 40, opacity: 0, ease: 'power3.out',
+      immediateRender: false,
     });
 
     gsap.from('.service-card', {
-      scrollTrigger: { trigger: '.service-cards-section', start: 'top 80%' },
+      scrollTrigger: { trigger: '.service-cards-section', start: 'top 80%', once: true },
       duration: 0.7, y: 50, opacity: 0, ease: 'power2.out',
       stagger: 0.15,
+      immediateRender: false,
     });
 
     gsap.from('.service-orb', {
-      scrollTrigger: { trigger: '.service-cards-section', start: 'top 78%' },
+      scrollTrigger: { trigger: '.service-cards-section', start: 'top 78%', once: true },
       duration: 0.6, scale: 0.5, opacity: 0, ease: 'back.out(1.8)',
       stagger: 0.15, delay: 0.2,
+      immediateRender: false,
     });
   }
 
