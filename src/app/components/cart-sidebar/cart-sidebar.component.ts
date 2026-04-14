@@ -12,12 +12,17 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
-import { CalculadoraService, Categoria, Endulzante } from '../../services/calculadora.service';
+import {
+  CalculadoraService,
+  Categoria,
+  Endulzante,
+  SABORES_POR_CATEGORIA,
+} from '../../services/calculadora.service';
 import { gsap } from 'gsap';
 
-const RING_RADIUS = 28;
+const RING_RADIUS        = 28;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
-const MAX_VITROLEROS = 15;
+const MAX_VITROLEROS     = 15;
 
 @Component({
   selector: 'app-cart-sidebar',
@@ -40,10 +45,10 @@ export class CartSidebarComponent implements OnDestroy {
   });
 
   readonly categorias: { id: Categoria; label: string; precio: string }[] = [
-    { id: 'clasicos',   label: 'Clásicos',    precio: '$750–$850'  },
-    { id: 'piquete',    label: 'Con piquete',  precio: '$950–$1050' },
-    { id: 'kids',       label: 'Kids',         precio: '$690'       },
-    { id: 'infusiones', label: 'Infusiones',   precio: '$380'       },
+    { id: 'clasicos',   label: 'Clásicos',   precio: '$750–$850'  },
+    { id: 'piquete',    label: 'Con piquete', precio: '$950–$1050' },
+    { id: 'kids',       label: 'Kids',        precio: '$690'       },
+    { id: 'infusiones', label: 'Infusiones',  precio: '$380'       },
   ];
 
   constructor() {
@@ -59,37 +64,57 @@ export class CartSidebarComponent implements OnDestroy {
       if (!this.ready || !isPlatformBrowser(this.platformId)) return;
 
       if (open) {
-        // Slide panel in
-        gsap.to('.cart-panel', {
-          duration: 0.4, x: '0%', ease: 'power3.out',
-        });
-        // Stagger control sections
-        gsap.fromTo('.ctrl-section', {
-          y: 20, opacity: 0,
-        }, {
-          y: 0, opacity: 1, duration: 0.35,
-          ease: 'power2.out', stagger: 0.06, delay: 0.15,
-        });
+        gsap.to('.cart-panel', { duration: 0.4, x: '0%', ease: 'power3.out' });
+        gsap.fromTo('.ctrl-section',
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, ease: 'power2.out', stagger: 0.06, delay: 0.15 });
         document.body.style.overflow = 'hidden';
       } else {
-        gsap.to('.cart-panel', {
-          duration: 0.3, x: '100%', ease: 'power3.in',
-        });
+        gsap.to('.cart-panel', { duration: 0.3, x: '100%', ease: 'power3.in' });
         document.body.style.overflow = '';
       }
     });
   }
 
-  setCategoria(cat: Categoria) { this.calc.categoria.set(cat); }
-  setEndulzante(end: Endulzante) { this.calc.endulzante.set(end); }
+  // ── Invitados ──
   adjustInvitados(delta: number) { this.calc.ajustarInvitados(delta); }
-  toggleExtra(extra: 'envio' | 'carrito') { this.calc.toggleExtra(extra); }
-
   onInvitadosChange(event: Event) {
-    const val = parseInt((event.target as HTMLInputElement).value, 10);
-    this.calc.setInvitados(val);
+    this.calc.setInvitados(parseInt((event.target as HTMLInputElement).value, 10));
   }
 
+  // ── Extras ──
+  toggleExtra(extra: 'envio' | 'carrito') { this.calc.toggleExtra(extra); }
+
+  // ── Líneas ──
+  crearSugeridos()              { this.calc.agregarLineasSugeridas(); }
+  agregarLinea()                { this.calc.agregarLinea(); }
+  eliminarLinea(id: string)     { this.calc.eliminarLinea(id); }
+
+  setCategoriaLinea(id: string, cat: Categoria) {
+    this.calc.actualizarLinea(id, {
+      categoria:  cat,
+      sabor:      SABORES_POR_CATEGORIA[cat][0],
+      endulzante: 'morena',
+    });
+  }
+
+  setEndulzanteLinea(id: string, end: Endulzante) {
+    this.calc.actualizarLinea(id, { endulzante: end });
+  }
+
+  onSaborChange(id: string, sabor: string) {
+    this.calc.actualizarLinea(id, { sabor });
+  }
+
+  getSabores(cat: Categoria): string[] {
+    return SABORES_POR_CATEGORIA[cat];
+  }
+
+  mostrarEndulzanteLinea(cat: Categoria): boolean {
+    return cat !== 'kids' && cat !== 'infusiones';
+  }
+
+  // ── Helpers ──
   formatPrice(n: number): string {
     return new Intl.NumberFormat('es-MX', {
       style: 'currency', currency: 'MXN', maximumFractionDigits: 0,
@@ -99,7 +124,7 @@ export class CartSidebarComponent implements OnDestroy {
   getCatLabel(cat: Categoria): string {
     const m: Record<Categoria, string> = {
       clasicos:   'Clásicos',
-      piquete:    'Con piquete',
+      piquete:    'Piquete',
       kids:       'Kids',
       infusiones: 'Infusiones',
     };
