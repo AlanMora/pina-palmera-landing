@@ -2,6 +2,30 @@
   <app-hero />
   <app-vitroleros-showcase />
 
+  <!-- ░░ URGENCIA — Fechas disponibles ░░ -->
+  <div class="relative overflow-hidden bg-brand-yellow px-4 py-4 sm:py-5">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -right-10 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-brand-orange/20 blur-2xl"></div>
+      <div class="absolute -left-10 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-white/20 blur-2xl"></div>
+    </div>
+    <div class="relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 sm:flex-row sm:gap-4">
+      <div class="flex items-center gap-3">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-green-dark/15 text-base" aria-hidden="true">📅</span>
+        <p class="font-nunito text-sm font-bold text-brand-green-dark sm:text-base">
+          @if (hayUrgencia) {
+            <span class="mr-1 inline-block rounded-full bg-brand-green-dark px-2 py-0.5 font-nunito text-[10px] font-extrabold uppercase tracking-widest text-brand-yellow">Última hora</span>
+          }
+          {{ urgenciaMensaje }}
+        </p>
+      </div>
+      <a
+        href="#aparta-fecha"
+        class="shrink-0 rounded-xl bg-brand-green-dark px-5 py-2.5 font-nunito text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-brand-green-mid hover:shadow-md">
+        Reservar ahora →
+      </a>
+    </div>
+  </div>
+
   <!-- Sección de servicios — 3 cards visibles -->
   <section id="envios" class="service-cards-section relative overflow-hidden bg-[#f7fbf8] py-16 sm:py-24">
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -141,6 +165,97 @@
       </div>
     </div>
   </section>
+
+  <!-- ░░ MAPA — Punto de recolección ░░ -->
+  <section id="ubicacion" class="bg-white py-16 sm:py-20 overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+
+      <div class="mb-10 text-center">
+        <p class="mb-3 font-nunito text-xs font-bold uppercase tracking-widest text-brand-green-dark/40">
+          Pick up gratuito
+        </p>
+        <h2 class="font-pacifico text-4xl text-brand-green-dark sm:text-5xl">
+          Punto de recolección
+        </h2>
+        <p class="mx-auto mt-4 max-w-lg font-nunito text-sm leading-relaxed text-brand-green-dark/60 sm:text-base">
+          Si prefieres recoger tu pedido, nos encuentras en <strong class="text-brand-green-dark">Mid Town Jalisco, Guadalajara</strong>. Coordinamos horario al confirmar tu pedido.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-10">
+
+        <!-- Mapa -->
+        <div class="lg:col-span-3 overflow-hidden rounded-3xl shadow-[0_8px_40px_rgba(27,107,53,0.12)]">
+          <iframe
+            src="https://www.google.com/maps?q=Mid+Town+Jalisco,+Guadalajara,+Jalisco,+Mexico&output=embed"
+            width="100%"
+            height="380"
+            style="border:0; display:block;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ubicación Piña Palmera — Mid Town Jalisco, Guadalajara"
+            aria-label="Mapa de Google que muestra la ubicación de Piña Palmera en Mid Town Jalisco">
+          </iframe>
+        </div>
+
+        <!-- Info de ubicación -->
+        <div class="lg:col-span-2 flex flex-col justify-center gap-6">
+
+          <div class="rounded-2xl bg-[#f7fbf8] border border-brand-green-dark/8 p-5">
+            <div class="flex items-start gap-3">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-green-dark/10 text-lg" aria-hidden="true">📍</span>
+              <div>
+                <p class="font-nunito text-xs font-bold uppercase tracking-wider text-brand-green-dark/40 mb-1">Dirección</p>
+                <p class="font-nunito font-semibold text-brand-green-dark text-sm leading-relaxed">
+                  Mid Town Jalisco<br>Guadalajara, Jalisco
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-[#f7fbf8] border border-brand-green-dark/8 p-5">
+            <div class="flex items-start gap-3">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-green-dark/10 text-lg" aria-hidden="true">🕐</span>
+              <div>
+                <p class="font-nunito text-xs font-bold uppercase tracking-wider text-brand-green-dark/40 mb-1">Horario de recolección</p>
+                <p class="font-nunito font-semibold text-brand-green-dark text-sm">
+                  Lunes a sábado<br>9:00 am – 6:00 pm
+                </p>
+                <p class="font-nunito text-xs text-brand-green-dark/50 mt-1">Se coordina horario exacto al confirmar</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-brand-green-dark/6 border border-brand-green-dark/8 p-5">
+            <div class="flex items-start gap-3">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-yellow/40 text-lg" aria-hidden="true">🎉</span>
+              <div>
+                <p class="font-nunito text-xs font-bold uppercase tracking-wider text-brand-green-dark/40 mb-1">Pick up</p>
+                <p class="font-nunito font-bold text-brand-green-dark text-base">¡Sin costo extra!</p>
+                <p class="font-nunito text-xs text-brand-green-dark/55 mt-1">Ahorra $250 recogiendo directamente</p>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="https://maps.google.com/?q=Mid+Town+Jalisco,+Guadalajara,+Jalisco,+Mexico"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 rounded-2xl border-2 border-brand-green-dark/15 bg-white px-5 py-3.5 font-nunito text-sm font-bold text-brand-green-dark transition-all duration-200 hover:border-brand-green-dark hover:shadow-md">
+            <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Ver en Google Maps
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FAQ ░░ -->
+  <app-faq />
 
   <app-calaverandia-teaser />
 </main>

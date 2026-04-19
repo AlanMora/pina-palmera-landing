@@ -7,6 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HeroComponent } from '../../components/hero/hero.component';
@@ -15,6 +16,7 @@ import { CarritoEventosComponent } from '../../components/carrito-eventos/carrit
 import { ApartaFechaComponent } from '../../components/aparta-fecha/aparta-fecha.component';
 import { CalaverandiaTeaserComponent } from '../../components/calaverandia-teaser/calaverandia-teaser.component';
 import { VitroleroShowcaseComponent } from '../../components/vitroleros-showcase/vitroleros-showcase.component';
+import { FaqComponent } from '../../components/faq/faq.component';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
 import { CalculadoraService, ServicioPedido } from '../../services/calculadora.service';
 
@@ -44,7 +46,7 @@ interface ServiceOption {
 
 @Component({
   selector: 'app-home',
-  imports: [HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent],
+  imports: [HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -52,6 +54,13 @@ export class HomeComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly sidebar = inject(CartSidebarService);
   private readonly calc = inject(CalculadoraService);
+  private readonly meta = inject(Meta);
+
+  // Urgencia: sábados restantes en el mes actual
+  readonly fechasRestantes: number;
+  readonly mesActual: string;
+  readonly hayUrgencia: boolean;
+  readonly urgenciaMensaje: string;
 
   readonly serviceOptions: ServiceOption[] = [
     {
@@ -125,6 +134,35 @@ export class HomeComponent implements OnDestroy {
     },
   ];
   constructor() {
+    // Calcular sábados restantes en el mes
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const lastDay = new Date(year, month + 1, 0).getDate();
+    let saturdays = 0;
+    for (let d = today.getDate(); d <= lastDay; d++) {
+      if (new Date(year, month, d).getDay() === 6) saturdays++;
+    }
+    this.fechasRestantes = saturdays;
+    this.mesActual = today.toLocaleDateString('es-MX', { month: 'long' });
+    this.hayUrgencia = saturdays <= 2;
+    if (saturdays === 0) {
+      this.urgenciaMensaje = `¡Ya no quedan sábados en ${this.mesActual}! Reserva para el próximo mes hoy.`;
+    } else if (saturdays === 1) {
+      this.urgenciaMensaje = `¡Solo queda 1 sábado disponible en ${this.mesActual}! Aparta antes de que se llene.`;
+    } else {
+      this.urgenciaMensaje = `Últimos ${saturdays} fines de semana disponibles en ${this.mesActual}.`;
+    }
+
+    // Meta tags de la home
+    this.meta.updateTag({ name: 'description', content: 'Aguas frescas artesanales tapatías 100% naturales para eventos en Guadalajara. Vitroleros de 20L · 35 bebidas · Sin conservadores · Hechas al día desde 2014.' });
+    this.meta.updateTag({ property: 'og:title', content: 'Piña Palmera — Aguas Frescas para Eventos en Guadalajara' });
+    this.meta.updateTag({ property: 'og:description', content: '¡Buena vibra líquida! Vitroleros de aguas frescas naturales para tu evento. Clásicas, con piquete, Kids e Infusiones. Pick up en Mid Town Jalisco o envío a domicilio.' });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: 'Piña Palmera — Aguas Frescas para Eventos en Guadalajara' });
+    this.meta.updateTag({ name: 'twitter:description', content: '¡Buena vibra líquida! Vitroleros artesanales 100% naturales para tu evento en GDL.' });
+
     afterNextRender(() => {
       requestAnimationFrame(() => {
         this.initAnimations();

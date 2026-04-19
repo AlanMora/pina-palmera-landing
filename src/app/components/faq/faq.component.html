@@ -1,0 +1,74 @@
+<section id="faq" class="faq-section py-16 sm:py-24 bg-[#f7fbf8] overflow-hidden">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="faq-header text-center mb-12">
+      <p class="mb-3 font-nunito text-xs font-bold uppercase tracking-widest text-brand-green-dark/40">
+        Preguntas frecuentes
+      </p>
+      <h2 class="font-pacifico text-4xl text-brand-green-dark sm:text-5xl">
+        Todo lo que necesitas saber
+      </h2>
+      <p class="mt-4 font-nunito text-base text-brand-green-dark/60 max-w-xl mx-auto">
+        Resolvemos tus dudas para que apartes con total tranquilidad.
+      </p>
+    </div>
+
+    <div class="space-y-3" role="list">
+      @for (faq of faqs; track faq.pregunta; let i = $index) {
+        <div
+          class="faq-item rounded-2xl border overflow-hidden bg-white shadow-sm transition-all duration-200 hover:shadow-md"
+          [class.border-brand-green-dark/20]="openIndex() === i"
+          [class.border-brand-green-dark/8]="openIndex() !== i"
+          role="listitem">
+          <button
+            type="button"
+            (click)="toggle(i)"
+            class="w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+            [attr.aria-expanded]="openIndex() === i"
+            [attr.aria-controls]="'faq-answer-' + i">
+            <span class="font-nunito font-semibold text-brand-green-dark text-base leading-snug">
+              {{ faq.pregunta }}
+            </span>
+            <span
+              class="shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors duration-200"
+              [class.bg-brand-green-dark]="openIndex() === i"
+              [class.bg-brand-green-dark/8]="openIndex() !== i">
+              <svg
+                class="h-4 w-4 transition-transform duration-300"
+                [class.text-white]="openIndex() === i"
+                [class.text-brand-green-dark]="openIndex() !== i"
+                [class.rotate-45]="openIndex() === i"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+              </svg>
+            </span>
+          </button>
+          @if (openIndex() === i) {
+            <div
+              [id]="'faq-answer-' + i"
+              class="px-6 pb-5"
+              role="region">
+              <p class="font-nunito text-sm text-brand-green-dark/65 leading-relaxed border-t border-brand-green-dark/6 pt-4">
+                {{ faq.respuesta }}
+              </p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="mt-10 text-center">
+      <p class="font-nunito text-sm text-brand-green-dark/50 mb-5">¿No encontraste tu respuesta?</p>
+      <a
+        href="tel:3318041630"
+        class="inline-flex items-center gap-2 bg-brand-green-dark text-white font-nunito font-bold text-sm px-7 py-3.5 rounded-2xl hover:bg-brand-green-mid transition-colors duration-200 shadow-md">
+        <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+        </svg>
+        Llámanos al 33 1804 1630
+      </a>
+    </div>
+
+  </div>
+</section>
