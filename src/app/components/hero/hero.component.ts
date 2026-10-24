@@ -128,6 +128,7 @@ export class HeroComponent implements OnDestroy {
     const card = this.host.nativeElement.querySelector<HTMLElement>('.hero-card');
     if (!visual || !card || !window.matchMedia('(pointer: fine)').matches) return;
 
+    gsap.set(card, { transformPerspective: 1200 });
     const rotX = gsap.quickTo(card, 'rotationX', { duration: 0.6, ease: 'power3.out' });
     const rotY = gsap.quickTo(card, 'rotationY', { duration: 0.6, ease: 'power3.out' });
 

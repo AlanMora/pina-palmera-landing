@@ -2,10 +2,10 @@
 
   <!-- ── Fondo: aurora + rejilla ── -->
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <div class="md:motion-safe:animate-aurora absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-brand-green-mid/40 blur-[120px]"></div>
-    <div class="md:motion-safe:animate-aurora absolute -right-40 top-0 h-[30rem] w-[30rem] rounded-full bg-brand-teal/25 blur-[120px] [animation-delay:-6s]"></div>
-    <div class="md:motion-safe:animate-aurora absolute -bottom-48 left-1/4 h-[32rem] w-[32rem] rounded-full bg-brand-yellow/20 blur-[130px] [animation-delay:-11s]"></div>
-    <div class="md:motion-safe:animate-aurora absolute bottom-10 right-[15%] h-72 w-72 rounded-full bg-brand-pink/20 blur-[110px] [animation-delay:-3s]"></div>
+    <div class="md:motion-safe:animate-aurora absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-radial from-brand-green-mid/40 to-transparent to-70%"></div>
+    <div class="md:motion-safe:animate-aurora absolute -right-40 top-0 h-[30rem] w-[30rem] rounded-full bg-radial from-brand-teal/25 to-transparent to-70% [animation-delay:-6s]"></div>
+    <div class="md:motion-safe:animate-aurora absolute -bottom-48 left-1/4 h-[32rem] w-[32rem] rounded-full bg-radial from-brand-yellow/20 to-transparent to-70% [animation-delay:-11s]"></div>
+    <div class="md:motion-safe:animate-aurora absolute bottom-10 right-[15%] h-72 w-72 rounded-full bg-radial from-brand-pink/20 to-transparent to-70% [animation-delay:-3s]"></div>
     <div class="bg-grid absolute inset-0"></div>
     <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-night"></div>
   </div>
@@ -99,12 +99,12 @@
     </div>
 
     <!-- Columna visual — tarjeta de vidrio con tilt 3D -->
-    <div class="hero-visual relative mx-auto w-full max-w-[26rem] [perspective:1200px]">
+    <div class="hero-visual relative mx-auto w-full max-w-[26rem]">
 
       <!-- Halo -->
-      <div class="absolute -inset-8 rounded-[3rem] bg-gradient-to-tr from-brand-yellow/30 via-brand-pink/20 to-brand-teal/30 blur-3xl" aria-hidden="true"></div>
+      <div class="absolute -inset-10 rounded-full bg-radial from-brand-yellow/25 via-brand-pink/10 to-transparent to-70%" aria-hidden="true"></div>
 
-      <div class="hero-card glass relative rounded-[2.5rem] p-3 [transform-style:preserve-3d]">
+      <div class="hero-card glass relative rounded-[2.5rem] p-3">
         <div class="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
           <img
             ngSrc="/assets/images/portada.jpg"
@@ -138,7 +138,7 @@
       </div>
 
       <!-- Chips flotantes -->
-      <div class="hero-chip glass absolute left-0 top-10 flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5 sm:-left-10 [transform:translateZ(60px)]">
+      <div class="hero-chip glass absolute left-0 top-10 flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5 sm:-left-10">
         <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-green-light/20 text-base" aria-hidden="true">🌿</span>
         <div>
           <p class="font-nunito text-xs font-extrabold text-white">100% natural</p>
