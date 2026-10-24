@@ -6,20 +6,33 @@ import {
   afterNextRender,
   OnDestroy,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import { CartSidebarService } from '../../services/cart-sidebar.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-vitroleros-showcase',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './vitroleros-showcase.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VitroleroShowcaseComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
+  readonly sidebar = inject(CartSidebarService);
+
+  // Copias de cada fila para que el marquee nunca muestre huecos
+  readonly copias = [0, 1, 2];
+
+  readonly stats = [
+    { value: '20L',  label: 'por vitrolero',  color: 'text-white' },
+    { value: '35',   label: 'bebidas aprox.', color: 'text-brand-yellow' },
+    { value: '100%', label: 'natural',        color: 'text-brand-green-light' },
+    { value: '2014', label: 'desde',          color: 'text-brand-orange' },
+  ];
 
   // Fila 1 — se mueve a la izquierda (duplicada para loop infinito)
   readonly row1 = [
@@ -66,7 +79,7 @@ export class VitroleroShowcaseComponent implements OnDestroy {
     // Marquee fila 1 — izquierda infinito
     const track1 = document.querySelector('.vit-track-1') as HTMLElement;
     if (track1) {
-      const totalWidth = track1.scrollWidth / 2; // mitad porque está duplicado
+      const totalWidth = (track1.scrollWidth + 16) / 3; // un tercio: hay 3 copias (16 = gap-4)
       gsap.to(track1, {
         x: -totalWidth,
         duration: 28,
@@ -78,7 +91,7 @@ export class VitroleroShowcaseComponent implements OnDestroy {
     // Marquee fila 2 — derecha infinito (empieza desplazado a la izquierda)
     const track2 = document.querySelector('.vit-track-2') as HTMLElement;
     if (track2) {
-      const totalWidth = track2.scrollWidth / 2;
+      const totalWidth = (track2.scrollWidth + 16) / 3;
       gsap.fromTo(track2,
         { x: -totalWidth },
         { x: 0, duration: 32, ease: 'none', repeat: -1 }

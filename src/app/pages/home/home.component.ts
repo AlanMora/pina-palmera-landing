@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HeroComponent } from '../../components/hero/hero.component';
@@ -27,6 +28,13 @@ interface ServiceMetric {
   value: string;
 }
 
+interface UbicacionInfo {
+  icono: string;
+  titulo: string;
+  texto: string;
+  nota: string;
+}
+
 interface ServiceOption {
   id: ServicioPedido;
   eyebrow: string;
@@ -35,18 +43,18 @@ interface ServiceOption {
   price: string;
   priceNote: string;
   cta: string;
-  accent: string;
-  surface: string;
-  panel: string;
-  panelTextClass: string;
-  panelMutedClass: string;
+  featured: boolean;
+  accentText: string;
+  iconBg: string;
+  checkBg: string;
+  glow: string;
   highlights: string[];
   metrics: ServiceMetric[];
 }
 
 @Component({
   selector: 'app-home',
-  imports: [HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent],
+  imports: [RouterLink, HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -71,11 +79,11 @@ export class HomeComponent implements OnDestroy {
       price: 'Gratis',
       priceNote: 'No agrega costo de envío',
       cta: 'Usar pick up en mi pedido',
-      accent: '#1B6B35',
-      surface: 'linear-gradient(135deg, rgba(27,107,53,0.12), rgba(125,201,106,0.10))',
-      panel: 'linear-gradient(160deg, #153f26 0%, #1B6B35 60%, #246f3f 100%)',
-      panelTextClass: 'text-white',
-      panelMutedClass: 'text-white/70',
+      featured: false,
+      accentText: 'text-brand-green-light',
+      iconBg: 'bg-brand-green-light/15 text-brand-green-light',
+      checkBg: 'bg-brand-green-light',
+      glow: 'bg-brand-green-mid/50',
       highlights: [
         'Recolecta en Mid Town Jalisco.',
         'Perfecto para eventos pequeños o logística propia.',
@@ -94,11 +102,11 @@ export class HomeComponent implements OnDestroy {
       price: '$250',
       priceNote: 'Costo fijo por envío',
       cta: 'Agregar envío a mi pedido',
-      accent: '#4CAF6E',
-      surface: 'linear-gradient(135deg, rgba(76,175,110,0.15), rgba(232,212,77,0.14))',
-      panel: 'linear-gradient(160deg, #eef8f1 0%, #ddf1e2 100%)',
-      panelTextClass: 'text-brand-green-dark',
-      panelMutedClass: 'text-brand-green-dark/60',
+      featured: true,
+      accentText: 'text-brand-yellow',
+      iconBg: 'bg-brand-yellow/15 text-brand-yellow',
+      checkBg: 'bg-brand-yellow',
+      glow: 'bg-brand-yellow/40',
       highlights: [
         'Entrega coordinada según la hora de tu evento.',
         'Cobertura dentro del periférico de Guadalajara.',
@@ -117,11 +125,11 @@ export class HomeComponent implements OnDestroy {
       price: '$350',
       priceNote: 'Renta por evento',
       cta: 'Agregar carrito a mi pedido',
-      accent: '#F4A83A',
-      surface: 'linear-gradient(135deg, rgba(244,168,58,0.16), rgba(232,212,77,0.18))',
-      panel: 'linear-gradient(160deg, #fff6dd 0%, #ffe8a8 100%)',
-      panelTextClass: 'text-brand-green-dark',
-      panelMutedClass: 'text-brand-green-dark/60',
+      featured: false,
+      accentText: 'text-brand-orange',
+      iconBg: 'bg-brand-orange/15 text-brand-orange',
+      checkBg: 'bg-brand-orange',
+      glow: 'bg-brand-pink/40',
       highlights: [
         'Hasta 4 vitroleros simultáneos.',
         'Presentación decorada con flores y detalles frescos.',
@@ -133,6 +141,13 @@ export class HomeComponent implements OnDestroy {
       ],
     },
   ];
+
+  readonly ubicacionInfo: UbicacionInfo[] = [
+    { icono: '📍', titulo: 'Dirección',              texto: 'Mid Town Jalisco',               nota: 'Guadalajara, Jalisco' },
+    { icono: '🕐', titulo: 'Horario de recolección', texto: 'Lunes a sábado · 9:00 – 18:00',  nota: 'Se coordina horario exacto al confirmar' },
+    { icono: '🎉', titulo: 'Pick up',                texto: '¡Sin costo extra!',              nota: 'Ahorra $250 recogiendo directamente' },
+  ];
+
   constructor() {
     // Calcular sábados restantes en el mes
     const today = new Date();

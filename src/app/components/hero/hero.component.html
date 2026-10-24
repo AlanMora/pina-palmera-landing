@@ -1,248 +1,176 @@
-<section id="inicio" class="relative min-h-screen overflow-hidden bg-brand-green-dark pt-16">
+<section id="inicio" class="relative isolate overflow-hidden bg-night pt-24 text-white sm:pt-28">
 
-  <!-- Partículas flotantes -->
-  <div class="hero-particles absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true"></div>
-
-  <!-- Resplandores tropicales -->
-  <div class="hero-sun absolute left-1/2 top-20 h-48 w-48 -translate-x-1/2 rounded-full bg-brand-yellow/20 blur-3xl pointer-events-none sm:h-64 sm:w-64" aria-hidden="true"></div>
-  <div class="hero-sea-haze absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#4bd1bf]/15 via-brand-green-light/10 to-transparent pointer-events-none sm:h-56" aria-hidden="true"></div>
-
-  <!-- Hojas decorativas -->
-  <div class="hero-leaf absolute -top-8 -left-8 opacity-20 pointer-events-none select-none" aria-hidden="true">
-    <svg width="280" height="280" viewBox="0 0 280 280" fill="none">
-      <path d="M20 260 C20 260 -10 140 60 70 C110 20 220 -10 260 10 C260 10 240 100 180 150 C120 200 20 260 20 260Z" fill="#4CAF6E"/>
-      <path d="M20 260 L130 120" stroke="#7DC96A" stroke-width="4" opacity="0.7"/>
-      <path d="M20 260 L160 100" stroke="#7DC96A" stroke-width="2" opacity="0.4"/>
-    </svg>
-  </div>
-  <div class="hero-leaf absolute top-10 -right-10 opacity-15 pointer-events-none select-none rotate-90" aria-hidden="true">
-    <svg width="220" height="220" viewBox="0 0 280 280" fill="none">
-      <path d="M20 260 C20 260 -10 140 60 70 C110 20 220 -10 260 10 C260 10 240 100 180 150 C120 200 20 260 20 260Z" fill="#7DC96A"/>
-      <path d="M20 260 L130 120" stroke="#4CAF6E" stroke-width="4" opacity="0.7"/>
-    </svg>
-  </div>
-  <div class="hero-leaf absolute -bottom-16 left-1/4 opacity-10 pointer-events-none select-none -rotate-45" aria-hidden="true">
-    <svg width="300" height="300" viewBox="0 0 280 280" fill="none">
-      <path d="M140 270 C100 270 30 200 10 110 C-5 40 20 -10 50 5 C80 20 120 80 140 140 C160 80 200 20 230 5 C260 -10 285 40 270 110 C250 200 180 270 140 270Z" fill="#4CAF6E"/>
-    </svg>
+  <!-- ── Fondo: aurora + rejilla ── -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="motion-safe:animate-aurora absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-brand-green-mid/40 blur-[120px]"></div>
+    <div class="motion-safe:animate-aurora absolute -right-40 top-0 h-[30rem] w-[30rem] rounded-full bg-brand-teal/25 blur-[120px] [animation-delay:-6s]"></div>
+    <div class="motion-safe:animate-aurora absolute -bottom-48 left-1/4 h-[32rem] w-[32rem] rounded-full bg-brand-yellow/20 blur-[130px] [animation-delay:-11s]"></div>
+    <div class="motion-safe:animate-aurora absolute bottom-10 right-[15%] h-72 w-72 rounded-full bg-brand-pink/20 blur-[110px] [animation-delay:-3s]"></div>
+    <div class="bg-grid absolute inset-0"></div>
+    <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-night"></div>
   </div>
 
-  <!-- Palmas decorativas -->
-  <div class="hero-palm absolute -bottom-10 -left-14 hidden opacity-65 pointer-events-none select-none sm:block" aria-hidden="true">
+  <!-- Partículas luminosas -->
+  <div class="hero-particles pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true"></div>
+
+  <!-- Palmas en silueta -->
+  <div class="hero-palm pointer-events-none absolute -bottom-10 -left-16 -z-10 hidden select-none opacity-25 sm:block" aria-hidden="true">
     <svg width="280" height="320" viewBox="0 0 280 320" fill="none">
-      <path d="M104 314 C110 262 121 220 138 181 C149 156 162 132 177 104" stroke="#8B5A2B" stroke-width="18" stroke-linecap="round"/>
-      <path d="M181 103 C151 91 112 91 82 108 C111 111 144 121 170 140" fill="#3DAE66"/>
-      <path d="M181 103 C156 72 114 57 76 62 C103 78 133 96 160 126" fill="#4CAF6E"/>
-      <path d="M181 103 C209 74 243 59 271 60 C249 78 226 96 198 126" fill="#52C97B"/>
-      <path d="M181 103 C220 94 254 102 278 118 C247 119 216 125 190 140" fill="#2E8E57"/>
-      <path d="M181 103 C172 65 179 34 196 12 C201 42 198 76 189 112" fill="#61D38C"/>
-      <path d="M181 103 C198 130 225 147 249 152 C230 133 212 118 194 108" fill="#3DAE66"/>
+      <path d="M104 314 C110 262 121 220 138 181 C149 156 162 132 177 104" stroke="#4CAF6E" stroke-width="14" stroke-linecap="round"/>
+      <path d="M181 103 C151 91 112 91 82 108 C111 111 144 121 170 140" fill="#4CAF6E"/>
+      <path d="M181 103 C156 72 114 57 76 62 C103 78 133 96 160 126" fill="#7DC96A"/>
+      <path d="M181 103 C209 74 243 59 271 60 C249 78 226 96 198 126" fill="#4CAF6E"/>
+      <path d="M181 103 C220 94 254 102 278 118 C247 119 216 125 190 140" fill="#1B6B35"/>
+      <path d="M181 103 C172 65 179 34 196 12 C201 42 198 76 189 112" fill="#7DC96A"/>
     </svg>
   </div>
-  <div class="hero-palm absolute -bottom-12 -right-16 hidden opacity-55 pointer-events-none select-none md:block" aria-hidden="true">
+  <div class="hero-palm pointer-events-none absolute -bottom-12 -right-16 -z-10 hidden select-none opacity-20 md:block" aria-hidden="true">
     <svg width="300" height="340" viewBox="0 0 300 340" fill="none">
-      <path d="M196 330 C189 270 180 227 167 185 C156 149 141 117 121 84" stroke="#9B6737" stroke-width="18" stroke-linecap="round"/>
-      <path d="M119 84 C149 69 190 69 221 85 C192 91 159 104 132 123" fill="#49B86F"/>
-      <path d="M119 84 C94 56 56 40 22 42 C47 59 77 79 108 110" fill="#5DD086"/>
-      <path d="M119 84 C143 48 180 24 214 18 C197 49 173 77 138 105" fill="#37A55F"/>
-      <path d="M119 84 C90 92 58 108 34 132 C65 130 95 123 126 103" fill="#2D8D56"/>
-      <path d="M119 84 C112 47 93 18 69 2 C76 36 92 68 111 96" fill="#66D998"/>
-      <path d="M119 84 C144 104 175 114 201 115 C180 98 151 86 125 79" fill="#54C77D"/>
+      <path d="M196 330 C189 270 180 227 167 185 C156 149 141 117 121 84" stroke="#4CAF6E" stroke-width="14" stroke-linecap="round"/>
+      <path d="M119 84 C149 69 190 69 221 85 C192 91 159 104 132 123" fill="#4CAF6E"/>
+      <path d="M119 84 C94 56 56 40 22 42 C47 59 77 79 108 110" fill="#7DC96A"/>
+      <path d="M119 84 C143 48 180 24 214 18 C197 49 173 77 138 105" fill="#1B6B35"/>
+      <path d="M119 84 C112 47 93 18 69 2 C76 36 92 68 111 96" fill="#7DC96A"/>
     </svg>
   </div>
 
-  <!-- Brisa -->
-  <div class="hero-breeze absolute right-[10%] top-28 hidden opacity-45 pointer-events-none lg:block" aria-hidden="true">
-    <svg width="160" height="56" viewBox="0 0 160 56" fill="none">
-      <path d="M6 20 C42 4 76 6 112 20 C127 26 140 28 154 20" stroke="#F7F3D9" stroke-width="3" stroke-linecap="round"/>
-      <path d="M18 36 C50 24 80 25 109 36 C123 41 136 42 148 36" stroke="#F7F3D9" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
-    </svg>
-  </div>
-  <div class="hero-breeze absolute left-[8%] bottom-28 hidden rotate-180 opacity-30 pointer-events-none lg:block" aria-hidden="true">
-    <svg width="140" height="48" viewBox="0 0 140 48" fill="none">
-      <path d="M6 18 C38 3 68 5 97 17 C111 22 123 24 134 18" stroke="#F7F3D9" stroke-width="3" stroke-linecap="round"/>
-      <path d="M18 31 C46 21 73 22 98 31 C110 35 121 36 131 31" stroke="#F7F3D9" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
-    </svg>
-  </div>
+  <!-- ── LAYOUT ── -->
+  <div class="mx-auto grid max-w-7xl items-center gap-16 px-4 pb-24 sm:px-6 lg:min-h-[calc(100svh-7rem)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-8 lg:pb-16">
 
-  <!-- ── LAYOUT PRINCIPAL ── -->
-  <div class="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] max-w-7xl flex-col items-center px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:py-0">
+    <!-- Columna de texto -->
+    <div class="flex flex-col items-center text-center lg:items-start lg:text-left">
 
-    <!-- COLUMNA IZQUIERDA — contenido de texto -->
-    <div class="flex flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
-
-      <!-- Logo -->
-      <div class="hero-logo mb-5 flex justify-center lg:justify-start" aria-label="Logo Piña Palmera">
-        <svg width="80" height="96" viewBox="0 0 100 120" fill="none">
-          <ellipse cx="50" cy="85" rx="30" ry="32" fill="#E8D44D"/>
-          <path d="M30 73 L50 60 L70 73 L50 86Z" fill="#F4A83A" opacity="0.6"/>
-          <path d="M22 89 L50 76 L78 89 L50 102Z" fill="#F4A83A" opacity="0.5"/>
-          <path d="M27 107 L50 94 L73 107" stroke="#F4A83A" stroke-width="1.5" fill="none" opacity="0.6"/>
-          <path d="M35 63 L65 63 M35 77 L65 77 M35 91 L65 91 M35 105 L65 105" stroke="#F4A83A" stroke-width="1" opacity="0.4"/>
-          <path d="M38 58 L38 112 M44 56 L44 114 M50 55 L50 115 M56 56 L56 114 M62 58 L62 112" stroke="#F4A83A" stroke-width="1" opacity="0.4"/>
-          <path d="M45 57 Q42 35 50 22 Q58 35 55 57" fill="#4CAF6E"/>
-          <path d="M37 62 Q30 38 46 24 Q56 40 48 60" fill="#1B6B35"/>
-          <path d="M52 60 Q60 36 70 30 Q68 48 55 62" fill="#1B6B35"/>
-          <path d="M40 60 Q28 50 18 42 Q28 55 42 62" fill="#4CAF6E"/>
-          <path d="M58 60 Q70 52 80 44 Q70 57 56 62" fill="#4CAF6E"/>
-          <path d="M50 22 L50 57" stroke="#7DC96A" stroke-width="1.5" opacity="0.7"/>
-          <path d="M46 24 L42 60" stroke="#7DC96A" stroke-width="1" opacity="0.5"/>
-          <path d="M70 30 L56 60" stroke="#7DC96A" stroke-width="1" opacity="0.5"/>
-        </svg>
+      <div class="hero-eyebrow glass mb-7 inline-flex items-center gap-2.5 rounded-full py-1.5 pl-2 pr-4">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="motion-safe:animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-brand-green-light opacity-75"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand-green-light"></span>
+        </span>
+        <span class="font-nunito text-xs font-bold tracking-wide text-white/85 sm:text-sm">
+          Agenda abierta · Aguas frescas para eventos en GDL
+        </span>
       </div>
 
-      <!-- Título -->
-      <h1 class="hero-title font-pacifico text-brand-yellow text-5xl sm:text-6xl lg:text-7xl leading-tight mb-2">
-        Piña Palmera
+      <h1 class="hero-title font-pacifico text-6xl leading-[1.05] sm:text-7xl lg:text-8xl">
+        <span class="text-gradient-tropical motion-safe:animate-shine inline-block pb-2">Piña Palmera</span>
       </h1>
 
-      <!-- Subtítulo -->
-      <p class="hero-subtitle font-nunito text-brand-green-light text-sm sm:text-base font-semibold mb-3 tracking-widest uppercase">
-        Aguas frescas · Concentrados
-      </p>
-
-      <!-- Tagline -->
-      <p class="hero-tagline font-pacifico text-white text-2xl sm:text-3xl lg:text-4xl mb-7">
+      <p class="hero-tagline mt-3 font-pacifico text-3xl text-white sm:text-4xl">
         ¡Buena vibra líquida!
       </p>
 
-      <!-- Badges / propuesta de valor — chips visuales -->
-      <div class="hero-badges mb-8 flex flex-wrap justify-center gap-2 lg:justify-start">
-        <span class="flex items-center gap-1.5 rounded-full border border-brand-green-light/30 bg-brand-green-light/10 px-4 py-1.5 font-nunito text-xs font-semibold text-brand-green-light">
-          <span class="h-1.5 w-1.5 rounded-full bg-brand-green-light"></span>
-          100% Natural
-        </span>
-        <span class="flex items-center gap-1.5 rounded-full border border-brand-yellow/30 bg-brand-yellow/10 px-4 py-1.5 font-nunito text-xs font-semibold text-brand-yellow">
-          <span class="h-1.5 w-1.5 rounded-full bg-brand-yellow"></span>
-          Sin conservadores
-        </span>
-        <span class="flex items-center gap-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/10 px-4 py-1.5 font-nunito text-xs font-semibold text-brand-orange">
-          <span class="h-1.5 w-1.5 rounded-full bg-brand-orange"></span>
-          Hechas al día
-        </span>
-        <span class="flex items-center gap-1.5 rounded-full border border-brand-pink/30 bg-brand-pink/10 px-4 py-1.5 font-nunito text-xs font-semibold text-brand-pink">
-          <span class="h-1.5 w-1.5 rounded-full bg-brand-pink"></span>
-          Mujeres mexicanas · 2014
-        </span>
-      </div>
+      <p class="hero-copy mt-6 max-w-xl font-nunito text-base leading-relaxed text-white/65 sm:text-lg">
+        Vitroleros de <strong class="font-bold text-white">20 litros</strong> con aguas
+        <strong class="font-bold text-white">100% naturales</strong>, hechas el mismo día y listas para
+        que tu evento se sienta fresco de principio a fin.
+      </p>
 
       <!-- CTAs -->
-      <div class="hero-ctas flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div class="hero-ctas mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
         <button
+          type="button"
           (click)="sidebar.open()"
-          class="hero-cta cta-btn bg-brand-yellow text-brand-green-dark font-bold font-nunito text-base px-8 py-4 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3.75 5.25h1.386a1.5 1.5 0 011.474 1.223l.267 1.527m0 0h11.873a1.5 1.5 0 011.474 1.777l-.774 4.5a1.5 1.5 0 01-1.478 1.223H9.22a1.5 1.5 0 01-1.478-1.223L6.877 8.25zm2.123 10.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm9 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/>
+          class="hero-cta cta-btn group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-brand-yellow px-8 py-4 font-nunito text-base font-extrabold text-night shadow-[0_0_40px_rgba(232,212,77,0.35)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(232,212,77,0.6)]">
+          <span class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true"></span>
+          <svg class="relative h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
           </svg>
-          Calcula tu pedido
+          <span class="relative">Calcula tu pedido</span>
         </button>
         <a
-          href="/#aparta-fecha"
-          class="hero-cta cta-btn text-white/85 font-medium font-nunito text-sm border border-white/30 px-7 py-4 rounded-full hover:bg-white/10 transition-colors duration-200 text-center">
-          Aparta tu fecha →
+          routerLink="/reservar"
+          class="hero-cta cta-btn glass group inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 font-nunito text-base font-bold text-white transition-colors duration-200 hover:bg-white/10">
+          Aparta tu fecha
+          <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
         </a>
       </div>
+
+      <!-- Métricas -->
+      <dl class="hero-stats mt-12 grid w-full max-w-xl grid-cols-2 gap-3 sm:grid-cols-4">
+        @for (stat of stats; track stat.label) {
+          <div class="glass rounded-2xl px-4 py-3 text-center lg:text-left">
+            <dt class="sr-only">{{ stat.label }}</dt>
+            <dd class="font-pacifico text-2xl leading-none" [class]="stat.color">{{ stat.value }}</dd>
+            <dd class="mt-1.5 font-nunito text-[10px] font-bold uppercase tracking-[0.18em] text-white/45">{{ stat.label }}</dd>
+          </div>
+        }
+      </dl>
     </div>
 
-    <!-- COLUMNA DERECHA — collage fotográfico -->
-    <div class="relative mt-12 flex w-full justify-center lg:mt-0 lg:w-[520px] lg:shrink-0">
+    <!-- Columna visual — tarjeta de vidrio con tilt 3D -->
+    <div class="hero-visual relative mx-auto w-full max-w-[26rem] [perspective:1200px]">
 
-      <!-- Contenedor del collage — altura fija para el apilamiento -->
-      <div class="hero-collage relative h-[380px] w-[320px] sm:h-[440px] sm:w-[380px] lg:h-[520px] lg:w-[460px]">
+      <!-- Halo -->
+      <div class="absolute -inset-8 rounded-[3rem] bg-gradient-to-tr from-brand-yellow/30 via-brand-pink/20 to-brand-teal/30 blur-3xl" aria-hidden="true"></div>
 
-        <!-- Foto 4 — fondo / más atrás, rotada hacia la derecha -->
-        <div class="collage-photo absolute right-0 top-4 h-48 w-36 overflow-hidden rounded-2xl shadow-xl sm:h-56 sm:w-40 lg:h-64 lg:w-48"
-             style="transform: rotate(9deg); z-index: 1;">
+      <div class="hero-card glass relative rounded-[2.5rem] p-3 [transform-style:preserve-3d]">
+        <div class="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
           <img
-            class="h-full w-full object-cover"
-            src="/assets/images/imagen_3.jpg"
-            alt="Vitrolero Piña Palmera"
-            loading="eager"
-            width="192"
-            height="256">
-          <div class="absolute inset-0 bg-brand-green-dark/20"></div>
+            ngSrc="/assets/images/portada.jpg"
+            fill
+            priority
+            sizes="(min-width: 1024px) 26rem, 90vw"
+            class="object-cover"
+            alt="Vitroleros de aguas frescas Piña Palmera listos para un evento">
+          <div class="absolute inset-0 bg-gradient-to-t from-night/90 via-night/10 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent"></div>
+
+          <!-- Panel inferior -->
+          <div class="glass absolute inset-x-3 bottom-3 rounded-2xl p-4">
+            <div class="flex items-end justify-between gap-3">
+              <div>
+                <p class="font-nunito text-[10px] font-bold uppercase tracking-[0.2em] text-brand-green-light">Vitrolero</p>
+                <p class="font-pacifico text-3xl leading-tight text-white">20 L</p>
+              </div>
+              <div class="text-right">
+                <p class="font-pacifico text-3xl leading-tight text-brand-yellow">≈ 35</p>
+                <p class="font-nunito text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">bebidas de 550 ml</p>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-1.5">
+              @for (cat of categorias; track cat) {
+                <span class="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 font-nunito text-[10px] font-bold text-white/85">{{ cat }}</span>
+              }
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Foto 3 — abajo izquierda, rotada negativa -->
-        <div class="collage-photo absolute bottom-0 left-0 h-44 w-36 overflow-hidden rounded-2xl shadow-xl sm:h-52 sm:w-40 lg:h-60 lg:w-44"
-             style="transform: rotate(-7deg); z-index: 2;">
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/images/imagen_2.jpg"
-            alt="Vitrolero Piña Palmera"
-            loading="eager"
-            width="176"
-            height="240">
-          <div class="absolute inset-0 bg-brand-green-dark/15"></div>
+      <!-- Chips flotantes -->
+      <div class="hero-chip glass absolute left-0 top-10 flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5 sm:-left-10 [transform:translateZ(60px)]">
+        <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-green-light/20 text-base" aria-hidden="true">🌿</span>
+        <div>
+          <p class="font-nunito text-xs font-extrabold text-white">100% natural</p>
+          <p class="font-nunito text-[10px] text-white/55">Sin conservadores</p>
         </div>
+      </div>
 
-        <!-- Foto 2 — arriba izquierda, ligera rotación -->
-        <div class="collage-photo absolute left-2 top-0 h-40 w-32 overflow-hidden rounded-2xl shadow-xl sm:h-48 sm:w-36 lg:h-56 lg:w-40"
-             style="transform: rotate(-4deg); z-index: 3;">
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/images/imagen_1.jpg"
-            alt="Vitrolero Piña Palmera"
-            loading="eager"
-            width="160"
-            height="224">
-          <div class="absolute inset-0 bg-brand-green-dark/10"></div>
+      <div class="hero-chip glass absolute right-0 top-1/3 flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5 sm:-right-10">
+        <div class="flex -space-x-2" aria-hidden="true">
+          <span class="relative h-7 w-7 overflow-hidden rounded-full ring-2 ring-night"><img ngSrc="/assets/images/imagen_1.jpg" fill sizes="28px" class="object-cover" alt=""></span>
+          <span class="relative h-7 w-7 overflow-hidden rounded-full ring-2 ring-night"><img ngSrc="/assets/images/imagen_2.jpg" fill sizes="28px" class="object-cover" alt=""></span>
+          <span class="relative h-7 w-7 overflow-hidden rounded-full ring-2 ring-night"><img ngSrc="/assets/images/imagen_3.jpg" fill sizes="28px" class="object-cover" alt=""></span>
         </div>
-
-        <!-- Foto 1 — CENTRO / protagonista -->
-        <div class="collage-photo absolute inset-x-0 bottom-6 mx-auto h-64 w-44 overflow-hidden rounded-3xl shadow-2xl sm:h-72 sm:w-48 lg:h-80 lg:w-52"
-             style="transform: rotate(2deg); z-index: 4; left: 50%; transform: translateX(-50%) rotate(2deg);">
-          <img
-            class="h-full w-full object-cover"
-            src="/assets/images/portada.jpg"
-            alt="Piña Palmera — vitroleros de aguas frescas"
-            loading="eager"
-            width="208"
-            height="320">
-          <!-- Shine overlay -->
-          <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent"></div>
+        <div>
+          <p class="font-nunito text-xs font-extrabold text-white">Desde 2014</p>
+          <p class="font-nunito text-[10px] text-white/55">Hechas por mujeres mexicanas</p>
         </div>
+      </div>
 
-        <!-- Badge flotante sobre el collage — "20L" -->
-        <div class="collage-badge absolute -right-3 top-1/3 z-10 rounded-2xl bg-brand-yellow px-3 py-2 shadow-lg sm:-right-6">
-          <p class="font-pacifico text-xl leading-none text-brand-green-dark lg:text-2xl">20L</p>
-          <p class="font-nunito text-[9px] font-bold uppercase tracking-wide text-brand-green-dark/70">por vitrolero</p>
-        </div>
-
-        <!-- Badge flotante — "35 bebidas" -->
-        <div class="collage-badge absolute -left-3 top-1/2 z-10 rounded-2xl bg-brand-green-mid px-3 py-2 shadow-lg sm:-left-6">
-          <p class="font-pacifico text-xl leading-none text-white lg:text-2xl">35</p>
-          <p class="font-nunito text-[9px] font-bold uppercase tracking-wide text-white/70">bebidas</p>
-        </div>
-
-        <!-- Badge flotante — "Natural" -->
-        <div class="collage-badge absolute -top-3 right-1/4 z-10 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-lg">
-          <span class="h-2 w-2 rounded-full bg-brand-green-light"></span>
-          <p class="font-nunito text-[10px] font-bold text-brand-green-dark">100% Natural</p>
-        </div>
-
-        <!-- Resplandor detrás del collage -->
-        <div class="absolute inset-0 -z-10 rounded-full bg-brand-green-mid/20 blur-3xl scale-110"></div>
-
+      <div class="hero-chip absolute -bottom-5 left-6 flex items-center gap-2 rounded-2xl bg-brand-yellow px-4 py-2.5 shadow-[0_10px_40px_rgba(232,212,77,0.4)] sm:left-10">
+        <span class="text-base" aria-hidden="true">📍</span>
+        <p class="font-nunito text-xs font-extrabold text-night">Pick up gratis · Mid Town</p>
       </div>
     </div>
 
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/40 text-xs gap-1"
-       aria-hidden="true">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-    </svg>
-  </div>
-
-  <!-- Wave divider -->
-  <div class="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full h-12 sm:h-16">
-      <path d="M0 60 C360 0 1080 0 1440 60 L1440 60 L0 60 Z" fill="white"/>
-    </svg>
+  <!-- Indicador de scroll -->
+  <div class="hero-scroll absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block" aria-hidden="true">
+    <div class="flex h-10 w-6 justify-center rounded-full border border-white/25 pt-2">
+      <span class="hero-scroll-dot h-2 w-1 rounded-full bg-white/70"></span>
+    </div>
   </div>
 
 </section>

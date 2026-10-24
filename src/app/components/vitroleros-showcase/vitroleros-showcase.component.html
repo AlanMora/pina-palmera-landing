@@ -1,149 +1,90 @@
-<section class="vit-section relative overflow-hidden bg-white py-14 sm:py-18">
+<section class="vit-section relative isolate overflow-hidden bg-night py-16 text-white sm:py-24">
 
-  <!-- Degradado sutil de fondo -->
-  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-    <div class="absolute left-1/4 top-0 h-64 w-64 rounded-full bg-brand-green-light/8 blur-3xl"></div>
-    <div class="absolute right-1/4 bottom-0 h-48 w-48 rounded-full bg-brand-yellow/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute left-1/4 top-0 h-80 w-80 rounded-full bg-brand-green-mid/20 blur-[120px]"></div>
+    <div class="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-brand-orange/15 blur-[120px]"></div>
   </div>
 
   <!-- ── ENCABEZADO ── -->
-  <div class="vit-header relative z-10 mx-auto mb-10 max-w-6xl px-4 text-center sm:px-6">
-    <p class="mb-2 font-nunito text-[10px] font-bold uppercase tracking-widest text-brand-green-dark/40">
+  <div class="vit-header relative mx-auto mb-12 max-w-6xl px-4 text-center sm:px-6">
+    <p class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-nunito text-[10px] font-bold uppercase tracking-[0.25em] text-brand-green-light">
       Nuestros productos
     </p>
-    <h2 class="font-pacifico text-3xl text-brand-green-dark sm:text-4xl lg:text-5xl">
-      Los vitroleros que servimos
+    <h2 class="font-pacifico text-4xl text-white sm:text-5xl">
+      Los vitroleros que <span class="text-gradient-tropical">servimos</span>
     </h2>
-    <p class="mx-auto mt-3 max-w-xl font-nunito text-sm leading-relaxed text-brand-green-dark/55 sm:text-base">
+    <p class="mx-auto mt-4 max-w-xl font-nunito text-sm leading-relaxed text-white/55 sm:text-base">
       20 litros de agua fresca natural por vitrolero — sin conservadores, preparados el día del evento.
     </p>
-
-    <!-- Stats rápidos -->
-    <div class="mt-6 flex flex-wrap justify-center gap-6 sm:gap-10">
-      <div class="vit-stat flex flex-col items-center gap-0.5">
-        <span class="font-pacifico text-2xl text-brand-green-dark sm:text-3xl">20L</span>
-        <span class="font-nunito text-[10px] uppercase tracking-widest text-brand-green-dark/35">por vitrolero</span>
-      </div>
-      <div class="h-8 w-px self-center bg-brand-green-dark/10"></div>
-      <div class="vit-stat flex flex-col items-center gap-0.5">
-        <span class="font-pacifico text-2xl text-brand-green-dark sm:text-3xl">35</span>
-        <span class="font-nunito text-[10px] uppercase tracking-widest text-brand-green-dark/35">bebidas aprox.</span>
-      </div>
-      <div class="h-8 w-px self-center bg-brand-green-dark/10"></div>
-      <div class="vit-stat flex flex-col items-center gap-0.5">
-        <span class="font-pacifico text-2xl text-brand-yellow sm:text-3xl">100%</span>
-        <span class="font-nunito text-[10px] uppercase tracking-widest text-brand-green-dark/35">natural</span>
-      </div>
-      <div class="h-8 w-px self-center bg-brand-green-dark/10"></div>
-      <div class="vit-stat flex flex-col items-center gap-0.5">
-        <span class="font-pacifico text-2xl text-brand-orange sm:text-3xl">2014</span>
-        <span class="font-nunito text-[10px] uppercase tracking-widest text-brand-green-dark/35">desde</span>
-      </div>
-    </div>
   </div>
 
   <!-- ── FILAS DE FOTOS ── -->
   <div class="vit-rows relative">
 
-    <!-- Máscaras laterales para fade suave -->
-    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-white to-transparent sm:w-40" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-white to-transparent sm:w-40" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-night to-transparent sm:w-48" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-night to-transparent sm:w-48" aria-hidden="true"></div>
 
-    <!-- Fila 1 — scroll izquierda -->
-    <div class="vit-row mb-3 overflow-hidden">
-      <div class="vit-track-1 flex gap-3 will-change-transform" style="width: max-content;">
-        <!-- Original -->
-        @for (photo of row1; track photo.src) {
-          <div class="h-52 w-40 shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-64 sm:w-48 lg:h-72 lg:w-56">
-            <img
-              class="h-full w-full object-cover transition-transform duration-700 hover:scale-110"
-              [src]="photo.src"
-              [alt]="photo.alt"
-              loading="lazy"
-              width="224"
-              height="288">
-          </div>
-        }
-        <!-- Duplicado para loop infinito -->
-        @for (photo of row1; track photo.src) {
-          <div class="h-52 w-40 shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-64 sm:w-48 lg:h-72 lg:w-56" aria-hidden="true">
-            <img
-              class="h-full w-full object-cover"
-              [src]="photo.src"
-              [alt]="photo.alt"
-              loading="lazy"
-              width="224"
-              height="288">
-          </div>
-        }
-        <!-- Tercera copia para que nunca haya huecos -->
-        @for (photo of row1; track photo.src) {
-          <div class="h-52 w-40 shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-64 sm:w-48 lg:h-72 lg:w-56" aria-hidden="true">
-            <img
-              class="h-full w-full object-cover"
-              [src]="photo.src"
-              [alt]="photo.alt"
-              loading="lazy"
-              width="224"
-              height="288">
-          </div>
+    <!-- Fila 1 — scroll izquierda (3 copias para loop infinito sin huecos) -->
+    <div class="vit-row mb-4 overflow-hidden">
+      <div class="vit-track-1 flex w-max gap-4 will-change-transform">
+        @for (copia of copias; track copia) {
+          @for (photo of row1; track photo.src) {
+            <div class="group relative h-56 w-44 shrink-0 overflow-hidden rounded-3xl ring-1 ring-white/10 sm:h-64 sm:w-52 lg:h-72 lg:w-56"
+                 [attr.aria-hidden]="copia > 0 ? 'true' : null">
+              <img
+                [ngSrc]="photo.src"
+                fill
+                sizes="224px"
+                class="object-cover transition-transform duration-700 group-hover:scale-110"
+                [alt]="copia > 0 ? '' : photo.alt">
+              <div class="absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-white/10"></div>
+            </div>
+          }
         }
       </div>
     </div>
 
-    <!-- Fila 2 — scroll derecha (fotos ligeramente más pequeñas para ritmo visual) -->
+    <!-- Fila 2 — scroll derecha -->
     <div class="vit-row overflow-hidden">
-      <div class="vit-track-2 flex gap-3 will-change-transform" style="width: max-content;">
-        <!-- Copia desplazada -->
-        @for (photo of row2; track photo.src) {
-          <div class="h-44 w-36 shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-56 sm:w-44 lg:h-64 lg:w-52" aria-hidden="true">
-            <img
-              class="h-full w-full object-cover"
-              [src]="photo.src"
-              [alt]="photo.alt"
-              loading="lazy"
-              width="208"
-              height="256">
-          </div>
-        }
-        <!-- Original visible -->
-        @for (photo of row2; track photo.src) {
-          <div class="h-44 w-36 shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-56 sm:w-44 lg:h-64 lg:w-52">
-            <img
-              class="h-full w-full object-cover transition-transform duration-700 hover:scale-110"
-              [src]="photo.src"
-              [alt]="photo.alt"
-              loading="lazy"
-              width="208"
-              height="256">
-          </div>
-        }
-        <!-- Tercera copia -->
-        @for (photo of row2; track photo.src) {
-          <div class="h-44 w-36 shrink-0 overflow-hidden rounded-2xl shadow-md sm:h-56 sm:w-44 lg:h-64 lg:w-52" aria-hidden="true">
-            <img
-              class="h-full w-full object-cover"
-              [src]="photo.src"
-              [alt]="photo.alt"
-              loading="lazy"
-              width="208"
-              height="256">
-          </div>
+      <div class="vit-track-2 flex w-max gap-4 will-change-transform">
+        @for (copia of copias; track copia) {
+          @for (photo of row2; track photo.src) {
+            <div class="group relative h-48 w-40 shrink-0 overflow-hidden rounded-3xl ring-1 ring-white/10 sm:h-56 sm:w-48 lg:h-64 lg:w-52"
+                 [attr.aria-hidden]="copia !== 1 ? 'true' : null">
+              <img
+                [ngSrc]="photo.src"
+                fill
+                sizes="208px"
+                class="object-cover transition-transform duration-700 group-hover:scale-110"
+                [alt]="copia !== 1 ? '' : photo.alt">
+              <div class="absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-white/10"></div>
+            </div>
+          }
         }
       </div>
     </div>
   </div>
 
-  <!-- ── CTA ── -->
-  <div class="relative z-10 mt-10 flex justify-center">
-    <a
-      href="/#calculadora"
-      class="inline-flex items-center gap-2 rounded-full bg-brand-green-dark px-7 py-3.5 font-nunito text-sm font-bold text-brand-yellow shadow-lg transition-all duration-200 hover:scale-105 hover:bg-brand-green-mid">
+  <!-- ── STATS + CTA ── -->
+  <div class="relative mx-auto mt-12 flex max-w-4xl flex-col items-center gap-8 px-4">
+    <div class="glass grid w-full grid-cols-2 divide-white/10 overflow-hidden rounded-3xl sm:grid-cols-4 sm:divide-x">
+      @for (stat of stats; track stat.label) {
+        <div class="vit-stat flex flex-col items-center gap-1 px-4 py-5">
+          <span class="font-pacifico text-3xl" [class]="stat.color">{{ stat.value }}</span>
+          <span class="font-nunito text-[10px] font-bold uppercase tracking-[0.2em] text-white/45">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+
+    <button
+      type="button"
+      (click)="sidebar.open()"
+      class="group inline-flex items-center gap-2 rounded-2xl bg-brand-yellow px-7 py-3.5 font-nunito text-sm font-extrabold text-night shadow-[0_0_32px_rgba(232,212,77,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_48px_rgba(232,212,77,0.55)]">
       Calcula cuántos necesitas
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+      <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
       </svg>
-    </a>
+    </button>
   </div>
 
 </section>
