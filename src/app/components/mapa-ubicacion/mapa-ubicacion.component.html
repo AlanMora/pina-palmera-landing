@@ -1,0 +1,45 @@
+<div class="glass relative overflow-hidden rounded-[2rem] p-2">
+  <div class="relative h-[360px] overflow-hidden rounded-[1.6rem] bg-night-soft sm:h-[420px]">
+
+    <div #mapa class="absolute inset-0 h-full w-full" role="region" aria-label="Mapa: Piña Palmera en Midtown Jalisco, Guadalajara"></div>
+
+    <!-- Placeholder mientras carga -->
+    @if (estado() === 'esperando' || estado() === 'cargando') {
+      <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3 bg-night-soft" aria-hidden="true">
+        <div class="bg-grid absolute inset-0"></div>
+        <span class="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-yellow to-brand-orange text-xl motion-safe:animate-pulse">🍍</span>
+        <p class="relative font-nunito text-xs font-bold uppercase tracking-[0.2em] text-white/40">Cargando mapa…</p>
+      </div>
+    }
+
+    <!-- Respaldo si el mapa no puede cargar -->
+    @if (estado() === 'error') {
+      <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-night-soft px-6 text-center">
+        <div class="bg-grid absolute inset-0"></div>
+        <span class="relative text-4xl" aria-hidden="true">📍</span>
+        <p class="relative font-nunito text-base font-bold text-white">Midtown Jalisco · Guadalajara</p>
+        <p class="relative font-nunito text-sm text-white/55">C. Colomos 2339, Italia Providencia</p>
+      </div>
+    }
+
+    <!-- Tarjeta flotante -->
+    <div class="pointer-events-none absolute inset-x-3 bottom-10 flex justify-start sm:inset-x-4">
+      <div class="pointer-events-auto flex w-full items-center justify-between gap-3 rounded-2xl border border-white/10 bg-night/90 p-3 shadow-[0_12px_40px_rgba(0,0,0,0.5)] sm:w-auto sm:gap-5 sm:pl-4">
+        <div class="min-w-0">
+          <p class="truncate font-nunito text-sm font-extrabold text-white">Midtown Jalisco</p>
+          <p class="truncate font-nunito text-xs text-white/55">C. Colomos 2339, Italia Providencia</p>
+        </div>
+        <a
+          [href]="urlComoLlegar"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-brand-yellow px-4 py-2.5 font-nunito text-xs font-extrabold text-night shadow-[0_0_20px_rgba(232,212,77,0.35)] transition-shadow hover:shadow-[0_0_32px_rgba(232,212,77,0.55)]">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+          </svg>
+          Cómo llegar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

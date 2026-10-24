@@ -8,6 +8,7 @@ import { ApartaFechaComponent } from '../../components/aparta-fecha/aparta-fecha
 import { CalaverandiaTeaserComponent } from '../../components/calaverandia-teaser/calaverandia-teaser.component';
 import { VitroleroShowcaseComponent } from '../../components/vitroleros-showcase/vitroleros-showcase.component';
 import { FaqComponent } from '../../components/faq/faq.component';
+import { MapaUbicacionComponent } from '../../components/mapa-ubicacion/mapa-ubicacion.component';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
 import { CalculadoraService, ServicioPedido } from '../../services/calculadora.service';
 
@@ -42,7 +43,7 @@ interface ServiceOption {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent],
+  imports: [RouterLink, HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent, MapaUbicacionComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -130,7 +131,7 @@ export class HomeComponent {
   ];
 
   readonly ubicacionInfo: UbicacionInfo[] = [
-    { icono: '📍', titulo: 'Dirección',              texto: 'Mid Town Jalisco',               nota: 'Guadalajara, Jalisco' },
+    { icono: '📍', titulo: 'Dirección',              texto: 'Midtown Jalisco',                nota: 'C. Colomos 2339, Italia Providencia, GDL' },
     { icono: '🕐', titulo: 'Horario de recolección', texto: 'Lunes a sábado · 9:00 – 18:00',  nota: 'Se coordina horario exacto al confirmar' },
     { icono: '🎉', titulo: 'Pick up',                texto: '¡Sin costo extra!',              nota: 'Ahorra $250 recogiendo directamente' },
   ];

@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:pina-palmera-landing": "node dist/pina-palmera-landing/server/server.mjs"
+    "serve:ssr:pina-palmera-landing": "node dist/pina-palmera-landing/server/server.mjs",
+    "postinstall": "node scripts/set-mapbox-token.mjs"
   },
   "private": true,
   "packageManager": "npm@11.5.1",
@@ -23,6 +24,7 @@
     "@tailwindcss/postcss": "^4.2.2",
     "express": "^5.1.0",
     "gsap": "^3.14.2",
+    "mapbox-gl": "^3.33.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
