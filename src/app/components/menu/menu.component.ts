@@ -1,9 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, afterNextRender, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 
 type Tab = 'clasicos' | 'piquete' | 'kids' | 'infusiones';
 
@@ -20,8 +15,7 @@ interface Categoria {
   templateUrl: './menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuComponent implements OnDestroy {
-  private readonly platformId = inject(PLATFORM_ID);
+export class MenuComponent {
   readonly tabActivo = signal<Tab>('clasicos');
 
   readonly categorias: Categoria[] = [
@@ -67,33 +61,4 @@ export class MenuComponent implements OnDestroy {
   }
 
   setTab(tab: Tab) { this.tabActivo.set(tab); }
-
-  constructor() {
-    afterNextRender(() => {
-      requestAnimationFrame(() => {
-        this.initAnimations();
-      });
-    });
-  }
-
-  private initAnimations() {
-    gsap.from('.menu .section-title', {
-      scrollTrigger: { trigger: '.menu .section-title', start: 'top 85%' },
-      duration: 0.8, y: 50, opacity: 0, ease: 'power2.out',
-    });
-    gsap.from('.menu-tabs', {
-      scrollTrigger: { trigger: '.menu-tabs', start: 'top 85%' },
-      duration: 0.7, y: 30, opacity: 0, ease: 'power2.out',
-    });
-    gsap.from('.menu-content-panel', {
-      scrollTrigger: { trigger: '.menu-content-panel', start: 'top 80%' },
-      duration: 0.8, y: 40, opacity: 0, ease: 'power2.out',
-    });
-  }
-
-  ngOnDestroy() {
-    if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    }
-  }
 }

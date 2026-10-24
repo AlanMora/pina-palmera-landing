@@ -1,17 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  afterNextRender,
-  inject,
-  PLATFORM_ID,
-  OnDestroy,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 
 interface FaqItem {
   pregunta: string;
@@ -23,9 +10,7 @@ interface FaqItem {
   templateUrl: './faq.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FaqComponent implements OnDestroy {
-  private readonly platformId = inject(PLATFORM_ID);
-
+export class FaqComponent {
   readonly openIndex = signal<number | null>(null);
 
   readonly faqs: FaqItem[] = [
@@ -63,32 +48,7 @@ export class FaqComponent implements OnDestroy {
     },
   ];
 
-  constructor() {
-    afterNextRender(() => {
-      requestAnimationFrame(() => this.initAnimations());
-    });
-  }
-
   toggle(index: number) {
     this.openIndex.set(this.openIndex() === index ? null : index);
-  }
-
-  private initAnimations() {
-    gsap.from('.faq-header', {
-      scrollTrigger: { trigger: '.faq-section', start: 'top 85%', once: true },
-      duration: 0.7, y: 40, opacity: 0, ease: 'power3.out',
-      immediateRender: false,
-    });
-    gsap.from('.faq-item', {
-      scrollTrigger: { trigger: '.faq-section', start: 'top 80%', once: true },
-      duration: 0.5, y: 30, opacity: 0, ease: 'power2.out', stagger: 0.07,
-      immediateRender: false,
-    });
-  }
-
-  ngOnDestroy() {
-    if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    }
   }
 }

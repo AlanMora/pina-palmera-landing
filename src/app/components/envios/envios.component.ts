@@ -1,9 +1,6 @@
 import { Component, ChangeDetectionStrategy, afterNextRender, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-envios',
@@ -22,30 +19,7 @@ export class EnviosComponent implements OnDestroy {
   }
 
   private initAnimations() {
-    gsap.from('.envios .section-title', {
-      scrollTrigger: { trigger: '.envios .section-title', start: 'top 85%' },
-      duration: 0.9, y: 55, opacity: 0, ease: 'power3.out',
-    });
-
-    // Usar fromTo para que las cards SIEMPRE terminen visibles
     const cards = gsap.utils.toArray<HTMLElement>('.envio-card');
-    cards.forEach((card, i) => {
-      gsap.fromTo(card,
-        { y: 55, autoAlpha: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.envios-grid',
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-          duration: 0.75,
-          y: 0,
-          autoAlpha: 1,
-          ease: 'back.out(1.3)',
-          delay: i * 0.2,
-        }
-      );
-    });
 
     // Float continuo en los iconos
     gsap.to('.envio-icon', {
@@ -68,18 +42,11 @@ export class EnviosComponent implements OnDestroy {
           transformPerspective: 800 })
       );
     });
-
-    // Fallback: asegurar que las cards sean visibles después de 2s
-    setTimeout(() => {
-      cards.forEach(card => {
-        gsap.set(card, { autoAlpha: 1, y: 0 });
-      });
-    }, 2000);
   }
 
   ngOnDestroy() {
     if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      gsap.killTweensOf('.envio-card, .envio-icon');
     }
   }
 }

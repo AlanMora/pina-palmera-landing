@@ -1,16 +1,6 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  afterNextRender,
-  inject,
-  PLATFORM_ID,
-  OnDestroy,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HeroComponent } from '../../components/hero/hero.component';
 import { CalculadoraComponent } from '../../components/calculadora/calculadora.component';
 import { CarritoEventosComponent } from '../../components/carrito-eventos/carrito-eventos.component';
@@ -20,8 +10,6 @@ import { VitroleroShowcaseComponent } from '../../components/vitroleros-showcase
 import { FaqComponent } from '../../components/faq/faq.component';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
 import { CalculadoraService, ServicioPedido } from '../../services/calculadora.service';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface ServiceMetric {
   label: string;
@@ -58,8 +46,7 @@ interface ServiceOption {
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnDestroy {
-  private readonly platformId = inject(PLATFORM_ID);
+export class HomeComponent {
   private readonly sidebar = inject(CartSidebarService);
   private readonly calc = inject(CalculadoraService);
   private readonly meta = inject(Meta);
@@ -177,34 +164,6 @@ export class HomeComponent implements OnDestroy {
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: 'Piña Palmera — Aguas Frescas para Eventos en Guadalajara' });
     this.meta.updateTag({ name: 'twitter:description', content: '¡Buena vibra líquida! Vitroleros artesanales 100% naturales para tu evento en GDL.' });
-
-    afterNextRender(() => {
-      requestAnimationFrame(() => {
-        this.initAnimations();
-      });
-    });
-  }
-
-  private initAnimations() {
-    gsap.from('.service-header', {
-      scrollTrigger: { trigger: '.service-cards-section', start: 'top 85%', once: true },
-      duration: 0.7, y: 40, opacity: 0, ease: 'power3.out',
-      immediateRender: false,
-    });
-
-    gsap.from('.service-card', {
-      scrollTrigger: { trigger: '.service-cards-section', start: 'top 80%', once: true },
-      duration: 0.7, y: 50, opacity: 0, ease: 'power2.out',
-      stagger: 0.15,
-      immediateRender: false,
-    });
-
-    gsap.from('.service-orb', {
-      scrollTrigger: { trigger: '.service-cards-section', start: 'top 78%', once: true },
-      duration: 0.6, scale: 0.5, opacity: 0, ease: 'back.out(1.8)',
-      stagger: 0.15, delay: 0.2,
-      immediateRender: false,
-    });
   }
 
   applyService(serviceId: ServicioPedido) {
@@ -214,11 +173,5 @@ export class HomeComponent implements OnDestroy {
 
   isServiceActive(serviceId: ServicioPedido): boolean {
     return this.calc.isServicioActivo(serviceId);
-  }
-
-  ngOnDestroy() {
-    if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    }
   }
 }

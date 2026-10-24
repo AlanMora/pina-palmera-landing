@@ -6,18 +6,13 @@ import {
   effect,
   inject,
   signal,
-  afterNextRender,
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CalculadoraService } from '../../services/calculadora.service';
 import { ContactService, ApiError, OrderPayload } from '../../services/contact.service';
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Tipos de evento disponibles para el select
 const TIPOS_EVENTO = [
@@ -166,17 +161,6 @@ export class ApartaFechaComponent {
         precioTotal:     datos.precioTotal,
       });
     });
-
-    // Limpiar ScrollTriggers al destruir
-    this.destroyRef.onDestroy(() => {
-      if (isPlatformBrowser(this.platformId)) {
-        ScrollTrigger.getAll().forEach(t => t.kill());
-      }
-    });
-
-    afterNextRender(() => {
-      requestAnimationFrame(() => this.initAnimations());
-    });
   }
 
   // ── Enviar formulario ────────────────────────────────────────────────────
@@ -245,24 +229,5 @@ export class ApartaFechaComponent {
       currency: 'MXN',
       maximumFractionDigits: 0,
     }).format(value);
-  }
-
-  // ── Animaciones ──────────────────────────────────────────────────────────
-  private initAnimations(): void {
-    gsap.from('.form-section .section-title', {
-      scrollTrigger: { trigger: '.form-section .section-title', start: 'top 85%', once: true },
-      duration: 0.8, y: 50, opacity: 0, ease: 'power2.out',
-      immediateRender: false,
-    });
-    gsap.from('.form-fieldset', {
-      scrollTrigger: { trigger: '.form-section', start: 'top 75%', once: true },
-      duration: 0.6, y: 30, opacity: 0, ease: 'power2.out', stagger: 0.12,
-      immediateRender: false,
-    });
-    gsap.from('.transfer-card', {
-      scrollTrigger: { trigger: '.transfer-card', start: 'top 80%', once: true },
-      duration: 0.7, x: 50, opacity: 0, ease: 'power2.out',
-      immediateRender: false,
-    });
   }
 }

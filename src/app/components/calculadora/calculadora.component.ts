@@ -11,9 +11,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalculadoraService, Categoria, Endulzante } from '../../services/calculadora.service';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-calculadora',
@@ -37,7 +34,6 @@ export class CalculadoraComponent implements OnDestroy {
     afterNextRender(() => {
       requestAnimationFrame(() => {
         this.animationsReady = true;
-        this.initAnimations();
       });
     });
 
@@ -56,37 +52,6 @@ export class CalculadoraComponent implements OnDestroy {
         );
       }
     });
-  }
-
-  private initAnimations() {
-    // Encabezado — fade + subida
-    gsap.from('.calc-header', {
-      scrollTrigger: { trigger: '.calc-header', start: 'top 88%' },
-      duration: 0.7, y: 30, opacity: 0, ease: 'power3.out',
-    });
-
-    // Widget completo — aparece desde abajo con spring
-    gsap.from('.calc-widget', {
-      scrollTrigger: { trigger: '.calc-widget', start: 'top 85%' },
-      duration: 0.9, y: 50, opacity: 0, ease: 'back.out(1.2)',
-    });
-
-    // Columnas de controles — stagger sutil
-    const cols = document.querySelectorAll('.calc-col');
-    gsap.from(cols, {
-      scrollTrigger: { trigger: '.calc-widget', start: 'top 80%' },
-      duration: 0.5, y: 20, opacity: 0, ease: 'power2.out', stagger: 0.08,
-    });
-
-    // Banda de resultado — brillo de entrada
-    gsap.fromTo('.calc-results',
-      { boxShadow: '0 0 0px rgba(232,212,77,0)' },
-      {
-        scrollTrigger: { trigger: '.calc-widget', start: 'top 80%' },
-        boxShadow: '0 4px 32px rgba(232,212,77,0.12)',
-        duration: 1.2, ease: 'power2.out',
-      }
-    );
   }
 
   setCategoria(cat: Categoria) { this.calc.categoria.set(cat); }
@@ -116,8 +81,7 @@ export class CalculadoraComponent implements OnDestroy {
 
   ngOnDestroy() {
     if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      gsap.killTweensOf('*');
+      gsap.killTweensOf('#vitroleros-num, #precio-total');
     }
   }
 }

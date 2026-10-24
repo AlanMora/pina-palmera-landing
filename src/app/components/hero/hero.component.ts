@@ -2,10 +2,7 @@ import { Component, ChangeDetectionStrategy, ElementRef, OnDestroy, afterNextRen
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface HeroStat {
   value: string;
@@ -83,25 +80,6 @@ export class HeroComponent implements OnDestroy {
   }
 
   private initAnimations() {
-    const scrollTrigger = () => ({
-      trigger: '#inicio',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 1.5,
-    });
-
-    // Entrada
-    gsap.timeline({ defaults: { ease: 'power3.out' } })
-      .from('.hero-eyebrow', { duration: 0.8, y: -20, opacity: 0, filter: 'blur(8px)' }, 0.1)
-      .from('.hero-title', { duration: 1.1, y: 60, opacity: 0, filter: 'blur(16px)' }, 0.2)
-      .from('.hero-tagline', { duration: 0.9, y: 30, opacity: 0, filter: 'blur(10px)' }, 0.45)
-      .from('.hero-copy', { duration: 0.8, y: 24, opacity: 0 }, 0.6)
-      .from('.hero-ctas .hero-cta', { duration: 0.7, y: 20, opacity: 0, scale: 0.9, stagger: 0.1, ease: 'back.out(1.8)' }, 0.75)
-      .from('.hero-stats > div', { duration: 0.6, y: 24, opacity: 0, stagger: 0.08 }, 0.9)
-      .from('.hero-card', { duration: 1.3, y: 80, opacity: 0, rotationX: 18, rotationY: -12, ease: 'expo.out' }, 0.3)
-      .from('.hero-chip', { duration: 0.8, scale: 0.6, opacity: 0, stagger: 0.15, ease: 'back.out(2)' }, 1)
-      .from('.hero-palm', { duration: 1.6, y: 90, opacity: 0, stagger: 0.15, ease: 'power2.out' }, 0);
-
     // Flotación continua
     gsap.to('.hero-chip', {
       y: '-=10',
@@ -128,10 +106,6 @@ export class HeroComponent implements OnDestroy {
       ease: 'power1.in',
       repeat: -1,
     });
-
-    // Parallax al hacer scroll
-    gsap.to('.hero-visual', { scrollTrigger: scrollTrigger(), y: 80, ease: 'none' });
-    gsap.to('.hero-palm', { scrollTrigger: scrollTrigger(), y: 110, ease: 'none' });
 
     // Hover magnético en CTAs
     const ctaButtons = Array.from(this.host.nativeElement.querySelectorAll<HTMLElement>('.cta-btn'));

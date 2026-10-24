@@ -8,11 +8,8 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { CartSidebarService } from '../../services/cart-sidebar.service';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-vitroleros-showcase',
@@ -63,19 +60,6 @@ export class VitroleroShowcaseComponent implements OnDestroy {
   private initAnimations() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // Encabezado — fade + subida
-    gsap.from('.vit-header', {
-      scrollTrigger: { trigger: '.vit-section', start: 'top 85%' },
-      duration: 0.8, y: 40, opacity: 0, ease: 'power3.out',
-    });
-
-    // Stats
-    gsap.from('.vit-stat', {
-      scrollTrigger: { trigger: '.vit-section', start: 'top 80%' },
-      duration: 0.5, y: 20, opacity: 0, ease: 'power2.out',
-      stagger: 0.08, delay: 0.2,
-    });
-
     // Marquee fila 1 — izquierda infinito
     const track1 = document.querySelector('.vit-track-1') as HTMLElement;
     if (track1) {
@@ -97,18 +81,10 @@ export class VitroleroShowcaseComponent implements OnDestroy {
         { x: 0, duration: 32, ease: 'none', repeat: -1 }
       );
     }
-
-    // Fade-in de las filas al hacer scroll
-    gsap.from('.vit-row', {
-      scrollTrigger: { trigger: '.vit-rows', start: 'top 88%' },
-      duration: 0.9, opacity: 0, y: 30, ease: 'power2.out',
-      stagger: 0.18,
-    });
   }
 
   ngOnDestroy() {
     if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
       gsap.killTweensOf('.vit-track-1, .vit-track-2');
     }
   }

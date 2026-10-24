@@ -4,14 +4,10 @@ import {
   signal,
   inject,
   PLATFORM_ID,
-  afterNextRender,
   OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-calaverandia',
@@ -50,73 +46,6 @@ export class CalaverandiaComponent implements OnDestroy {
     { src: '/assets/images/imagen_6.jpg',  alt: 'Vitrolero Piña Palmera 6' },
     { src: '/assets/images/imagen_7.jpg',  alt: 'Vitrolero Piña Palmera 7' },
   ];
-
-  constructor() {
-    afterNextRender(() => {
-      requestAnimationFrame(() => {
-        this.initAnimations();
-      });
-    });
-  }
-
-  private initAnimations() {
-    // Badge "evento" — rebota desde arriba
-    gsap.from('.calav-badge', {
-      scrollTrigger: { trigger: '.calav-section', start: 'top 82%' },
-      duration: 0.6, y: -30, opacity: 0, ease: 'back.out(2)',
-    });
-
-    // Título principal
-    gsap.from('.calav-title', {
-      scrollTrigger: { trigger: '.calav-title', start: 'top 88%' },
-      duration: 0.9, y: 60, opacity: 0, ease: 'power3.out',
-    });
-
-    // Descripción
-    gsap.from('.calav-desc', {
-      scrollTrigger: { trigger: '.calav-desc', start: 'top 90%' },
-      duration: 0.7, y: 30, opacity: 0, ease: 'power2.out', delay: 0.15,
-    });
-
-    // Imagen portada — parallax sutil
-    gsap.to('.calav-hero-img', {
-      scrollTrigger: {
-        trigger: '.calav-section',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1.5,
-      },
-      y: -50,
-      ease: 'none',
-    });
-
-    // Grid fotos evento — stagger reveal
-    gsap.from('.calav-event-photo', {
-      scrollTrigger: { trigger: '.calav-event-grid', start: 'top 85%' },
-      duration: 0.65, scale: 0.88, opacity: 0, ease: 'power2.out',
-      stagger: { amount: 0.6, grid: 'auto', from: 'start' },
-    });
-
-    // Grid vitroleros — slide desde abajo con stagger
-    gsap.from('.calav-vitrolero-photo', {
-      scrollTrigger: { trigger: '.calav-vitrolero-grid', start: 'top 85%' },
-      duration: 0.7, y: 50, opacity: 0, ease: 'back.out(1.2)',
-      stagger: { amount: 0.5 },
-    });
-
-    // Stats — contador visual
-    gsap.from('.calav-stat', {
-      scrollTrigger: { trigger: '.calav-stats', start: 'top 88%' },
-      duration: 0.5, y: 20, opacity: 0, ease: 'power2.out',
-      stagger: 0.1,
-    });
-
-    // CTA button
-    gsap.from('.calav-cta', {
-      scrollTrigger: { trigger: '.calav-cta', start: 'top 92%' },
-      duration: 0.7, scale: 0.85, opacity: 0, ease: 'back.out(1.8)',
-    });
-  }
 
   openLightbox(index: number) {
     this.lightboxIndex.set(index);
@@ -165,8 +94,7 @@ export class CalaverandiaComponent implements OnDestroy {
 
   ngOnDestroy() {
     if (isPlatformBrowser(this.platformId)) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      gsap.killTweensOf('*');
+      gsap.killTweensOf('.calav-lightbox-img');
       document.body.style.overflow = '';
     }
   }

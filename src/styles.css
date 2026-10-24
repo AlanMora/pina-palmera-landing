@@ -45,6 +45,12 @@
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.16),
     0 24px 60px -24px rgb(0 0 0 / 0.55);
+
+  /* En móvil el desenfoque es costoso: se reduce para un scroll fluido */
+  @media (width < 768px) {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
 }
 
 /* Vidrio más denso — navbar, paneles con mucho texto */
@@ -85,9 +91,13 @@ html {
   scroll-behavior: smooth;
 }
 
+html {
+  background-color: #03130A;
+}
+
 body {
   overflow-x: hidden;
-  background-color: #fff;
+  background-color: #03130A;
   font-family: 'Nunito', sans-serif;
 }
 
