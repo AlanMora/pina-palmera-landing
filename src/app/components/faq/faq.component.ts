@@ -28,11 +28,11 @@ export class FaqComponent {
     },
     {
       pregunta: '¿Cuál es la zona de cobertura para envío a domicilio?',
-      respuesta: 'Hacemos envíos dentro del periférico de Guadalajara con un costo fijo de $250. Para zonas fuera del periférico o municipios conurbados (Zapopan, Tlaquepaque, Tonalá), contáctanos y lo cotizamos.',
+      respuesta: 'Hacemos envíos dentro del periférico de Guadalajara con el costo de envío indicado en la cotización. Para zonas fuera del periférico o municipios conurbados (Zapopan, Tlaquepaque, Tonalá), contáctanos y lo cotizamos.',
     },
     {
       pregunta: '¿Aceptan tarjeta de crédito o débito?',
-      respuesta: 'Por el momento el pago es por transferencia bancaria (SPEI) antes del evento. Los datos de cuenta los encuentras en la sección de pago. No manejamos efectivo ni terminal física.',
+      respuesta: 'Después de confirmar disponibilidad podrás pagar desde tu enlace de pedido con tarjeta cuando esté habilitada, o por transferencia bancaria. Tu reserva se confirma al verificar el anticipo requerido.',
     },
     {
       pregunta: '¿Cuánto tiempo duran las aguas frescas?',

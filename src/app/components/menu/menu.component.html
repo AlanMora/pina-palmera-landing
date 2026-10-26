@@ -26,6 +26,7 @@
       }
     </div>
 
+    @if (categoriaActiva; as active) {
     <!-- Content panel -->
     <div class="menu-content-panel bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-10">
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
@@ -33,16 +34,16 @@
         <!-- Prices + info (left) -->
         <div class="lg:col-span-2">
           <div class="flex items-center gap-3 mb-6">
-            <span class="text-4xl">{{ categoriaActiva.emoji }}</span>
+            <span class="text-4xl">{{ active.emoji }}</span>
             <div>
-              <h3 class="font-pacifico text-brand-yellow text-2xl">{{ categoriaActiva.nombre }}</h3>
+              <h3 class="font-pacifico text-brand-yellow text-2xl">{{ active.nombre }}</h3>
               <p class="text-white/60 text-sm font-nunito">por vitrolero de 20L</p>
             </div>
           </div>
 
           <!-- Prices -->
           <div class="space-y-3 mb-8">
-            @for (precio of categoriaActiva.precios; track precio) {
+            @for (precio of active.precios; track precio) {
               <div class="flex items-center gap-3 bg-white/10 rounded-2xl px-5 py-3">
                 <svg class="w-5 h-5 text-brand-yellow shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
@@ -69,7 +70,7 @@
             </div>
           </div>
 
-          <a href="/#aparta-fecha"
+          <a href="/tienda"
              class="cta-btn mt-6 block text-center bg-brand-yellow text-brand-green-dark font-bold font-nunito px-6 py-3 rounded-full hover:bg-brand-orange hover:text-white transition-colors duration-200">
             Pedir este sabor →
           </a>
@@ -81,7 +82,7 @@
             Sabores disponibles
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            @for (sabor of categoriaActiva.sabores; track sabor) {
+            @for (sabor of active.sabores; track sabor) {
               <div class="flex items-center gap-2 py-2 px-3 rounded-xl hover:bg-white/5 transition-colors">
                 <span class="w-2 h-2 rounded-full bg-brand-yellow shrink-0"></span>
                 <span class="text-white/85 font-nunito text-sm">{{ sabor }}</span>
@@ -89,7 +90,7 @@
             }
           </div>
 
-          @if (categoriaActiva.id === 'clasicos') {
+          @if (active.id === 'clasicos') {
             <p class="text-white/40 font-nunito text-xs mt-6 italic">
               * Sujeto a disponibilidad de temporada. Consulta tus sabores favoritos al agendar.
             </p>
@@ -99,5 +100,6 @@
       </div>
     </div>
 
+    } @else { <p class="text-center text-white/70">{{ catalog.loading() ? "Cargando menú…" : "El menú no está disponible en este momento." }}</p> }
   </div>
 </section>

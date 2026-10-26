@@ -1,0 +1,159 @@
+<main class="invoice-page">
+  <div class="invoice-container">
+    <a [routerLink]="'/pago/' + token" class="back">← Volver a mi pedido</a>
+    <header>
+      <p class="eyebrow">PIÑA PALMERA · MI EXPEDIENTE</p>
+      <h1>Tu factura y comprobantes</h1>
+      <p>Solicita tu CFDI y conserva los documentos de tu evento.</p>
+    </header>
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+    @if (notice()) {
+      <p class="notice" role="status">{{ notice() }}</p>
+    }
+    @if (data(); as d) {
+      <section class="glass">
+        <div class="heading">
+          <div>
+            <h2>{{ d.folio }}</h2>
+            @if (d.issuer) {
+              <p>{{ d.issuer.legalName }} · {{ d.issuer.taxId }}</p>
+            }
+          </div>
+          <button (click)="refresh()" [disabled]="busy()">Actualizar estado</button>
+        </div>
+        @if (d.issuer) {
+          <form [formGroup]="form" (ngSubmit)="save()">
+            <h3>Datos fiscales del receptor</h3>
+            <p class="help">
+              Captúralos exactamente como aparecen en tu constancia de situación fiscal. No
+              necesitas subir tu constancia ni documentos de identidad.
+            </p>
+            <div class="fields">
+              <label
+                >RFC<input
+                  formControlName="taxId"
+                  maxlength="13"
+                  autocomplete="off"
+                  placeholder="RFC de quien recibe la factura" /></label
+              ><label
+                >Nombre o razón social<input
+                  formControlName="legalName"
+                  autocomplete="organization" /></label
+              ><label
+                >Régimen fiscal (clave SAT)<input
+                  formControlName="taxSystem"
+                  inputmode="numeric"
+                  maxlength="3"
+                  placeholder="Ej. 601 o 612" /></label
+              ><label
+                >Código postal fiscal<input
+                  formControlName="zip"
+                  inputmode="numeric"
+                  maxlength="5"
+                  autocomplete="postal-code" /></label
+              ><label
+                >Uso del CFDI<input
+                  formControlName="use"
+                  maxlength="4"
+                  placeholder="Ej. G03" /></label
+              ><label
+                >Correo electrónico<input formControlName="email" type="email" autocomplete="email"
+              /></label>
+            </div>
+            <label class="check"
+              ><input type="checkbox" formControlName="confirmed" /> Revisé mis datos y solicito la
+              factura de este pedido.</label
+            ><button class="primary" [disabled]="busy() || form.invalid">
+              {{ d.requestedAt ? 'Actualizar datos fiscales' : 'Solicitar factura' }}
+            </button>
+            @if (d.requestedAt) {
+              <p class="help">
+                Solicitud registrada {{ d.requestedAt | date: 'short' }}. Cambiar datos no modifica
+                una factura ya emitida; el equipo revisará si requiere sustitución.
+              </p>
+            }
+          </form>
+        } @else {
+          <p class="help">
+            El equipo está preparando la información del emisor de tu pedido. Contáctanos si
+            necesitas factura.
+          </p>
+        }
+      </section>
+      <section class="glass">
+        <h2>Mis documentos fiscales</h2>
+        @for (doc of d.documents; track doc.id) {
+          <article class="document">
+            <div>
+              <h3>
+                {{
+                  doc.type === 'I'
+                    ? 'Factura'
+                    : doc.type === 'P'
+                      ? 'Complemento de pago'
+                      : 'Nota de crédito'
+                }}
+              </h3>
+              <p>{{ doc.amountCents / 100 | currency: 'MXN' }} · {{ label(doc.status) }}</p>
+              @if (doc.uuid) {
+                <small>{{ doc.uuid }}</small>
+              }
+            </div>
+            @if (doc.status === 'VALID' || doc.status === 'CANCELED') {
+              <div class="buttons">
+                <button (click)="download(doc, 'pdf')" [disabled]="busy()">Descargar PDF</button
+                ><button (click)="download(doc, 'xml')" [disabled]="busy()">Descargar XML</button>
+              </div>
+            }
+          </article>
+        } @empty {
+          <p class="help">Cuando tu factura esté emitida aparecerá aquí para descargarla.</p>
+        }
+      </section>
+    }
+    @if (fulfillment(); as f) {
+      @if (f.guarantee; as g) {
+        <section class="glass">
+          <h2>Garantía del equipo</h2>
+          <p class="amount">{{ g.amountCents / 100 | currency: 'MXN' }}</p>
+          <p class="terms">{{ g.terms }}</p>
+          <p class="help">
+            Depositado {{ g.receivedCents / 100 | currency: 'MXN' }} · Devuelto
+            {{ g.returnedCents / 100 | currency: 'MXN' }} · Aplicado
+            {{ g.appliedCents / 100 | currency: 'MXN' }}
+          </p>
+          @if (g.consentAt) {
+            <p class="notice">Condiciones aceptadas {{ g.consentAt | date: 'short' }}.</p>
+          } @else {
+            <label class="check"
+              ><input type="checkbox" [formControl]="accept" /> Leí y acepto estas condiciones de
+              garantía.</label
+            ><button class="primary" (click)="consent()" [disabled]="busy() || !accept.value">
+              Aceptar condiciones
+            </button>
+          }
+        </section>
+      }
+      @if (f.deliveryReady) {
+        <section class="glass">
+          <h2>Recepción de mi evento</h2>
+          @if (f.acknowledgedAt) {
+            <p class="notice">Recepción confirmada {{ f.acknowledgedAt | date: 'short' }}.</p>
+          } @else {
+            <label class="check"
+              ><input type="checkbox" [formControl]="receipt" /> Confirmo que recibí la entrega
+              correspondiente a mi pedido.</label
+            ><button class="primary" (click)="consent(true)" [disabled]="busy() || !receipt.value">
+              Confirmar recepción
+            </button>
+          }
+        </section>
+      }
+    }
+    <p class="help footer">
+      Este enlace es privado. Compártelo únicamente con quien deba gestionar tu pedido.
+    </p>
+  </div>
+</main>

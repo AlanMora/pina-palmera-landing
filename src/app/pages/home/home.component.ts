@@ -2,9 +2,6 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { HeroComponent } from '../../components/hero/hero.component';
-import { CalculadoraComponent } from '../../components/calculadora/calculadora.component';
-import { CarritoEventosComponent } from '../../components/carrito-eventos/carrito-eventos.component';
-import { ApartaFechaComponent } from '../../components/aparta-fecha/aparta-fecha.component';
 import { CalaverandiaTeaserComponent } from '../../components/calaverandia-teaser/calaverandia-teaser.component';
 import { VitroleroShowcaseComponent } from '../../components/vitroleros-showcase/vitroleros-showcase.component';
 import { FaqComponent } from '../../components/faq/faq.component';
@@ -43,7 +40,7 @@ interface ServiceOption {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, HeroComponent, CalculadoraComponent, CarritoEventosComponent, ApartaFechaComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent, MapaUbicacionComponent],
+  imports: [RouterLink, HeroComponent, CalaverandiaTeaserComponent, VitroleroShowcaseComponent, FaqComponent, MapaUbicacionComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -58,7 +55,7 @@ export class HomeComponent {
   readonly hayUrgencia: boolean;
   readonly urgenciaMensaje: string;
 
-  readonly serviceOptions: ServiceOption[] = [
+  private readonly serviceDefinitions: ServiceOption[] = [
     {
       id: 'pickup',
       eyebrow: 'Recoge directo',
@@ -87,7 +84,7 @@ export class HomeComponent {
       eyebrow: 'Más pedido',
       title: 'Envío a domicilio con look premium',
       description: 'La opción más práctica cuando quieres que Piña Palmera llegue lista al evento dentro del periférico.',
-      price: '$250',
+      price: '',
       priceNote: 'Costo fijo por envío',
       cta: 'Agregar envío a mi pedido',
       featured: true,
@@ -110,7 +107,7 @@ export class HomeComponent {
       eyebrow: 'Experiencia completa',
       title: 'Carrito decorado para eventos',
       description: 'Convierte la barra de aguas en parte de la ambientación con una estación montada y lista para lucirse.',
-      price: '$350',
+      price: '',
       priceNote: 'Renta por evento',
       cta: 'Agregar carrito a mi pedido',
       featured: false,
@@ -130,32 +127,16 @@ export class HomeComponent {
     },
   ];
 
+  get serviceOptions(): ServiceOption[] { return this.serviceDefinitions.map(s => ({...s, price:s.id==='pickup'?'Gratis':s.id==='envio'?'Según código postal':this.calc.catalog.money(this.calc.catalog.settings()?.cartCents)})); }
+
   readonly ubicacionInfo: UbicacionInfo[] = [
     { icono: '📍', titulo: 'Dirección',              texto: 'Midtown Jalisco',                nota: 'C. Colomos 2339, Italia Providencia, GDL' },
     { icono: '🕐', titulo: 'Horario de recolección', texto: 'Lunes a sábado · 9:00 – 18:00',  nota: 'Se coordina horario exacto al confirmar' },
-    { icono: '🎉', titulo: 'Pick up',                texto: '¡Sin costo extra!',              nota: 'Ahorra $250 recogiendo directamente' },
+    { icono: '🎉', titulo: 'Pick up',                texto: '¡Sin costo extra!',              nota: 'Ahorra el costo de envío recogiendo directamente' },
   ];
 
   constructor() {
-    // Calcular sábados restantes en el mes
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const lastDay = new Date(year, month + 1, 0).getDate();
-    let saturdays = 0;
-    for (let d = today.getDate(); d <= lastDay; d++) {
-      if (new Date(year, month, d).getDay() === 6) saturdays++;
-    }
-    this.fechasRestantes = saturdays;
-    this.mesActual = today.toLocaleDateString('es-MX', { month: 'long' });
-    this.hayUrgencia = saturdays <= 2;
-    if (saturdays === 0) {
-      this.urgenciaMensaje = `¡Ya no quedan sábados en ${this.mesActual}! Reserva para el próximo mes hoy.`;
-    } else if (saturdays === 1) {
-      this.urgenciaMensaje = `¡Solo queda 1 sábado disponible en ${this.mesActual}! Aparta antes de que se llene.`;
-    } else {
-      this.urgenciaMensaje = `Últimos ${saturdays} fines de semana disponibles en ${this.mesActual}.`;
-    }
+    this.fechasRestantes=0;this.mesActual='';this.hayUrgencia=false;this.urgenciaMensaje='Consulta disponibilidad real y reserva la fecha de tu evento.';
 
     // Meta tags de la home
     this.meta.updateTag({ name: 'description', content: 'Aguas frescas artesanales tapatías 100% naturales para eventos en Guadalajara. Vitroleros de 20L · 35 bebidas · Sin conservadores · Hechas al día desde 2014.' });

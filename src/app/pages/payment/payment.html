@@ -1,0 +1,336 @@
+<main class="commerce-page">
+  <section class="glass-surface mx-auto max-w-2xl">
+    <p class="text-xs font-bold uppercase tracking-widest text-brand-yellow">
+      Tu evento con Piña Palmera
+    </p>
+    <h1 class="mt-4 font-pacifico text-3xl text-brand-yellow">Seguimiento y pago</h1>
+    @if (error()) {
+      <div role="alert" class="mt-6 rounded-xl bg-red-100 p-4 text-sm text-red-900">
+        {{ error() }} <button class="font-bold underline" (click)="load()">Reintentar</button>
+      </div>
+    }
+    @if (loading()) {
+      <p role="status" class="mt-8 animate-pulse">Consultando tu pedido…</p>
+    }
+    @if (order(); as o) {
+      @if (o.issuer) {
+        <p class="my-3 text-sm text-white/80">
+          {{ o.issuer.legalName }} · RFC {{ o.issuer.taxId }}
+        </p>
+      }
+      <p class="mt-6 text-sm text-white/60">{{ o.folio }} · Evento {{ o.eventDate }}</p>
+      <h2 class="mt-2 text-xl font-bold">{{ label(o.status) }}</h2>
+      @if (message()) {
+        <p role="status" class="commerce-notice mt-5">{{ message() }}</p>
+      }
+      @if (expired(o)) {
+        <p class="commerce-error">
+          El tiempo para pagar terminó. Crea un nuevo pedido para consultar disponibilidad.
+        </p>
+        <a [routerLink]="'/recuperar/' + token" class="commerce-button"
+          >Recuperar mis sabores y recotizar</a
+        >
+      }
+      @if (o.holdUntil && !expired(o) && o.paidCents === 0 && o.status === 'APPROVED') {
+        <p class="mt-5 rounded-xl bg-white/10 p-4 text-sm">
+          Disponibilidad reservada hasta {{ o.holdUntil | date: 'HH:mm' : '-0600' }} (Guadalajara).
+          Inicia el pago con tarjeta durante los primeros 29 minutos. Para transferencias, confirma
+          con el equipo antes de enviar dinero.
+        </p>
+      }
+      <p class="mt-5 text-sm">
+        {{ operationLabel(o.operationsStatus) }} · Evento {{ o.eventDate }} a las {{ o.eventTime }}.
+        Devolución de equipos: {{ o.returnDate }}.
+      </p>
+      <div class="mt-5 space-y-3">
+        @for (l of o.lines; track $index) {
+          <div class="flex justify-between gap-4 text-sm">
+            <span>{{ l.name }} · {{ l.sabor }} ({{ l.endulzante }})</span
+            ><strong>{{ catalog.money(l.unitCents) }}</strong>
+          </div>
+        }
+      </div>
+      <dl class="my-8 space-y-4 rounded-2xl bg-white/5 p-5">
+        <div class="flex justify-between gap-3">
+          <dt>Total de tu pedido</dt>
+          <dd class="font-bold">{{ catalog.money(o.totalCents) }}</dd>
+        </div>
+        <div class="flex justify-between gap-3">
+          <dt>Pagado neto</dt>
+          <dd class="font-bold">{{ catalog.money(o.paidCents) }}</dd>
+        </div>
+        <div class="flex justify-between gap-3 border-t border-white/10 pt-4">
+          <dt>Saldo pendiente</dt>
+          <dd class="font-bold text-brand-yellow">{{ catalog.money(o.balanceCents) }}</dd>
+        </div>
+      </dl>
+      @if (o.closurePath) {
+        <a class="commerce-button secondary" [routerLink]="o.closurePath"
+          >Compartir mi experiencia y ver el cierre</a
+        >
+      }
+      @if (o.collectionPaused) {
+        <p class="commerce-notice">
+          El seguimiento automático está pausado mientras atendemos tu caso. Puedes pagar
+          voluntariamente si lo deseas.
+        </p>
+      }
+      @if (o.balanceCents > 0 && o.balanceDueAt && !['CANCELLED', 'EXPIRED'].includes(o.status)) {
+        <p class="mb-5 text-sm text-white/75">
+          @if (o.balanceTiming === 'AFTER_EVENT' && !o.eventCompletedAt) {
+            Tu saldo vence {{ o.balanceAfterHours }} horas después de finalizar el evento. La fecha
+            se confirma al cierre.
+          } @else {
+            Liquida tu saldo antes del {{ o.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}.
+          }
+        </p>
+      }
+      @if (o.refundDueCents > 0) {
+        <p class="mb-5 rounded-xl bg-white/10 p-4">
+          Devolución pendiente de procesar: {{ catalog.money(o.refundDueCents) }}.
+        </p>
+      }
+      @if (returned && o.balanceCents > 0 && o.paidCents === 0) {
+        <p role="status" class="mb-5 text-sm text-white/70">
+          Si acabas de pagar, estamos esperando la confirmación del banco. Esta página se actualiza
+          automáticamente.
+        </p>
+      }
+      @if (o.status === 'PENDING') {
+        <p class="text-sm leading-relaxed text-white/75">
+          Recibimos tu solicitud. Nuestro equipo revisará la fecha y los sabores antes de habilitar
+          el pago. Guarda este enlace para consultar el avance.
+        </p>
+      }
+      @if (
+        ['APPROVED', 'CONFIRMED', 'DELIVERED'].includes(o.status) &&
+        !expired(o) &&
+        o.balanceCents > 0
+      ) {
+        @if (o.paymentReview) {
+          <p class="commerce-error">
+            Hay una incidencia de pago en revisión. El equipo debe resolverla antes de otro cobro o
+            entrega.
+          </p>
+        }
+        @if (o.stripeEnabled && !o.paymentReview) {
+          <form [formGroup]="paymentForm" class="mb-5">
+            <label
+              >Método de pago<select formControlName="method">
+                <option value="CARD">Tarjeta</option>
+                @if (o.paymentOptions.bank) {
+                  <option value="BANK">Transferencia por Stripe</option>
+                }
+                @if (o.paymentOptions.oxxo) {
+                  <option value="OXXO">Efectivo en OXXO</option>
+                }
+              </select></label
+            >
+            @if (paymentForm.controls.method.value !== 'CARD') {
+              <p class="muted">
+                Para anticipos, disponible con al menos 7 días de anticipación. Para saldos después
+                del evento, sujeto a confirmación del pago. La reserva se confirma cuando Stripe
+                confirme el dinero. OXXO admite de $10 a $10,000 MXN; su ficha vence en 1 día y las
+                devoluciones se coordinan por transferencia bancaria.
+              </p>
+            }
+            @if (paymentForm.controls.method.value === 'CARD' && o.paymentOptions.installments) {
+              <p class="muted">
+                Meses sin intereses desde
+                {{ catalog.money(o.paymentOptions.installmentsMinCents) }} por cobro, sujeto a
+                tarjeta y planes elegibles mostrados por Stripe.
+              </p>
+            }
+            @if (paymentForm.controls.method.value === 'CARD' && o.paymentOptions.saveCard) {
+              <label class="check-field"
+                ><input type="checkbox" formControlName="saveCard" />Autorizo guardar mi tarjeta en
+                Stripe para facilitar el pago del saldo de este pedido.</label
+              >
+              @if (paymentForm.controls.saveCard.value) {
+                <label class="check-field"
+                  ><input type="checkbox" formControlName="autoBalance" />Autorizo un intento de
+                  cobro automático del saldo pendiente
+                  @if (o.balanceTiming === 'AFTER_EVENT') {
+                    al vencer el plazo de {{ o.balanceAfterHours }} horas después de finalizar el
+                    evento, nunca antes de la fecha estimada
+                    {{ o.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}.
+                  } @else {
+                    el {{ o.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}.
+                  }
+                  Puedo revocarlo desde esta página antes del cobro.</label
+                >
+              }
+            }
+          </form>
+          @if (o.autoBalanceAuthorized) {
+            <p class="muted">Tienes autorizado el cobro del saldo en la fecha indicada.</p>
+            <button
+              type="button"
+              class="commerce-button secondary"
+              (click)="revoke()"
+              [disabled]="busy()"
+            >
+              Revocar cobro automático
+            </button>
+          }
+
+          <div class="flex flex-col gap-3">
+            @if (o.depositCents > 0 && o.depositCents < o.balanceCents) {
+              <button
+                class="rounded-full bg-brand-yellow px-6 py-4 font-bold text-brand-green-dark disabled:opacity-50"
+                (click)="pay('DEPOSIT')"
+                [disabled]="busy()"
+              >
+                {{
+                  busy() ? 'Preparando pago…' : 'Pagar anticipo de ' + catalog.money(o.depositCents)
+                }}
+              </button>
+            }
+            <button
+              class="rounded-full border border-brand-yellow px-6 py-4 font-bold text-brand-yellow disabled:opacity-50"
+              (click)="pay('BALANCE')"
+              [disabled]="busy()"
+            >
+              {{
+                busy()
+                  ? 'Preparando pago…'
+                  : 'Pagar ' +
+                    (o.paidCents ? 'saldo de ' : 'total de ') +
+                    catalog.money(o.balanceCents)
+              }}
+            </button>
+          </div>
+          <p class="mt-3 text-xs text-white/50">
+            Te llevaremos al formulario seguro de Stripe. Nunca almacenamos los datos de tu tarjeta.
+            Si eliges Link, podrás reutilizar tus datos en futuras compras verificando tu identidad
+            con Stripe.
+          </p>
+        }
+        @if (o.issuer ? o.issuer.bankClabe : catalog.settings()?.bankClabe) {
+          <div class="mt-7 rounded-2xl bg-white/5 p-5">
+            <h3 class="font-bold text-brand-yellow">También puedes pagar por transferencia</h3>
+            <p class="mt-3">
+              {{ o.issuer ? o.issuer.bankName : catalog.settings()?.bankName }} ·
+              {{ o.issuer ? o.issuer.bankHolder : catalog.settings()?.bankHolder }}
+            </p>
+            <p class="mt-2 select-all break-all font-bold tracking-widest">
+              {{ o.issuer ? o.issuer.bankClabe : catalog.settings()?.bankClabe }}
+            </p>
+            <p class="mt-3 text-sm text-white/70">
+              Referencia: {{ o.folio }}. Comparte el comprobante con nuestro equipo; el pago se
+              reflejará después de verificarlo.
+            </p>
+          </div>
+        }
+        @if (!o.stripeEnabled && !(o.issuer ? o.issuer.bankClabe : catalog.settings()?.bankClabe)) {
+          <p class="mt-5 text-sm text-white/70">
+            Contáctanos para coordinar el pago de tu reserva.
+          </p>
+        }
+      }
+      @if (o.payments.length) {
+        @if (o.discountCents) {
+          <p class="mb-5">
+            Promoción {{ o.promoCode }}: −{{ catalog.money(o.discountCents) }} incluida en el total.
+          </p>
+        }
+        <h3 class="mb-3 mt-7 font-bold">Movimientos de pago</h3>
+        @for (p of o.payments; track $index) {
+          @if (p.receiptUrl) {
+            <a
+              [href]="p.receiptUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm font-bold underline"
+              >Ver recibo de Stripe</a
+            >
+          }
+          @if (p.disputedCents) {
+            <p class="text-sm text-amber-200">
+              Importe en disputa: {{ catalog.money(p.disputedCents) }}
+            </p>
+          }
+          <p class="mb-2 text-sm text-white/75">
+            {{ p.createdAt | date: 'dd/MM/yyyy' }} ·
+            {{
+              p.method === 'OXXO'
+                ? 'OXXO'
+                : p.method === 'BANK' || p.provider === 'TRANSFER'
+                  ? 'Transferencia'
+                  : 'Tarjeta / Link'
+            }}
+            ·
+            {{
+              p.status === 'SUCCEEDED'
+                ? 'Recibido'
+                : p.status === 'PENDING'
+                  ? 'En proceso'
+                  : p.status === 'EXPIRED'
+                    ? 'Expirado'
+                    : 'Fallido'
+            }}
+            · {{ catalog.money(p.amountCents) }}
+            @if (p.refundedCents) {
+              · Devuelto {{ catalog.money(p.refundedCents) }}
+            }
+          </p>
+        }
+      }
+      @if (['APPROVED', 'CONFIRMED'].includes(o.status) && !expired(o)) {
+        <details class="mt-8 border-t border-white/15 pt-5">
+          <summary class="cursor-pointer font-bold">Cambios y cancelaciones</summary>
+          <p class="muted mt-4">
+            Cancelación hasta {{ o.cancellationDeadline | date: 'dd/MM/yyyy HH:mm' : '-0600' }}:
+            {{ o.refundPercent }}% del importe pagado es elegible para devolución. Después del plazo
+            no aplica devolución automática. Los cambios requieren revisión del equipo.
+          </p>
+          @if (o.changeRequest) {
+            <p class="mt-4 text-sm">Solicitud pendiente: {{ o.changeRequest }}</p>
+          }
+          <form [formGroup]="requestForm" class="mt-4">
+            <label
+              >Describe tu solicitud<textarea
+                formControlName="reason"
+                rows="3"
+                maxlength="1000"
+              ></textarea></label
+            ><label class="check-field"
+              ><input type="checkbox" formControlName="confirm" />Confirmo la solicitud que voy a
+              enviar.</label
+            >
+            <div class="field-grid">
+              <button
+                type="button"
+                class="commerce-button secondary"
+                [disabled]="busy() || requestForm.invalid"
+                (click)="customerAction('changes')"
+              >
+                Solicitar cambio</button
+              ><button
+                type="button"
+                class="commerce-button secondary"
+                [disabled]="busy() || requestForm.invalid"
+                (click)="customerAction('cancel')"
+              >
+                Cancelar mi reserva
+              </button>
+            </div>
+          </form>
+        </details>
+      }
+      @if (o.balanceCents === 0) {
+        <p class="rounded-xl bg-brand-green-mid/20 p-4 font-semibold">Tu pedido está liquidado.</p>
+      }
+      @if (o.status === 'CANCELLED') {
+        <p class="mt-5 text-sm text-white/70">
+          Si realizaste un pago, contacta a nuestro equipo para revisar su devolución.
+        </p>
+      }
+    }
+    <div class="mt-8 flex flex-wrap justify-between gap-4 border-t border-white/10 pt-6 text-sm">
+      <a href="tel:3318041630" class="font-bold text-brand-yellow">Ayuda: 33 1804 1630</a
+      ><a [routerLink]="'/factura/' + token" class="commerce-button">Factura, garantía y entrega</a
+      ><a routerLink="/" class="text-white/70">Volver al inicio →</a>
+    </div>
+  </section>
+</main>

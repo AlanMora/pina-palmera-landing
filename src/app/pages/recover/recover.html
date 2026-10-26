@@ -1,0 +1,29 @@
+<main class="commerce-page">
+  <section class="glass-surface mx-auto max-w-xl">
+    <h1 class="text-3xl font-bold">Retomemos tu evento</h1>
+    <p class="muted mt-4">
+      Recupera los sabores de tu pedido y elige una nueva fecha. Verificaremos precios, promociones
+      y disponibilidad antes de reservar.
+    </p>
+    @if (loading()) {
+      <p class="mt-5" role="status">Consultando tu selección…</p>
+    }
+    @if (error()) {
+      <p role="alert" class="commerce-error">{{ error() }}</p>
+    }
+    @if (data(); as d) {
+      <ul class="my-6 space-y-2">
+        @for (l of d.lines; track $index) {
+          <li>{{ l.sabor }} · {{ l.endulzante }}</li>
+        }
+      </ul>
+      @if (cart.lineas().length) {
+        <p class="muted">
+          Al continuar, reemplazarás los productos que tienes actualmente en el carrito.
+        </p>
+      }
+      <button class="commerce-button" (click)="restore()">Recuperar estos sabores</button>
+    }
+    <a routerLink="/tienda" class="commerce-button secondary">Armar otro carrito</a>
+  </section>
+</main>

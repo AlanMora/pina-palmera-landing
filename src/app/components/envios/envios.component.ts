@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, afterNextRender, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
+import { Catalog } from '../../services/catalog';
 
 @Component({
   selector: 'app-envios',
@@ -8,6 +9,7 @@ import { gsap } from 'gsap';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EnviosComponent implements OnDestroy {
+  readonly catalog = inject(Catalog);
   private readonly platformId = inject(PLATFORM_ID);
 
   constructor() {

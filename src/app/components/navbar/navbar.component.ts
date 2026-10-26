@@ -28,7 +28,7 @@ export class NavbarComponent {
     { path: '/menu',         label: 'Menú',         labelLargo: 'Menú y precios',  icon: '📋' },
     { path: '/experiencia',  label: 'Experiencia',  labelLargo: 'Experiencia',     icon: '✨' },
     { path: '/concentrados', label: 'Concentrados', labelLargo: 'Concentrados',    icon: '🫙' },
-    { path: '/reservar',     label: 'Reservar',     labelLargo: 'Reservar fecha',  icon: '🗓️' },
+    { path: '/tienda', label: 'Comprar', labelLargo: 'Armar mi evento', icon: '🛍️' },
   ];
 
   toggleMenu() { this.menuOpen.update(v => !v); }

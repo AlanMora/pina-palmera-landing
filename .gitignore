@@ -4,3 +4,19 @@ dist/
 .env.local
 .angular/
 *.js.map
+
+# Credenciales y archivos locales (no publicar)
+.env*
+!.env.example
+!.env.*.example
+.local/
+.DS_Store
+.claude/
+.idea/
+coverage/
+*.log
+*.dump
+*.pem
+*.key
+*.p12
+*.pfx

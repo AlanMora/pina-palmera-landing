@@ -1,60 +1,32 @@
-# PinaPalmeraLanding
+# Piña Palmera · Tienda y landing
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Angular 21, SSR, Tailwind, Angular Material y Lucide. La API administra catálogo, precios, cotizaciones, disponibilidad y pagos.
 
-## Development server
+- `/tienda`: sabores, cantidades, extras y carrito persistente. Se guardan productos y preferencias; no datos de contacto ni tarjetas.
+- `/reservar`: calendario con disponibilidad, cobertura por código postal y aceptación de cotización. Cotización válida por 10 minutos; inventario reservado durante 60 minutos al crear el pedido.
+- `/pago/:token`: anticipo o total con Stripe, transferencias, saldo, plazos, operación, cambios y cancelación. La confirmación del cobro proviene del servidor.
+- Las páginas de presentación consultan precios del catálogo. El carrito vacío no agrega productos; la calculadora solo orienta la cantidad sugerida.
 
-To start a local development server, run:
+## Local
 
-```bash
-ng serve
+```sh
+npm ci
+npm start -- --host localhost --port 4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Tienda: http://localhost:4200/tienda. API: http://localhost:3100/api. Panel: http://localhost:4201. Revisar `src/environments` para otros entornos. Configuración, migraciones y servicios en el proyecto hermano `pina-palmera-services`.
 
-## Code scaffolding
+## Verificación
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```sh
+npm run build
+npm test -- --watch=false
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Stripe y correo requieren credenciales reales en el servidor. Configurar zonas y capacidad real desde el panel. El build mantiene una advertencia de presupuesto inicial (~583 kB sin comprimir, ~130 kB estimados en transferencia); no impide compilar. Tienda, calendario y seguimiento se cargan por ruta.
 
-```bash
-ng generate --help
-```
+## Opciones de compra
 
-## Building
+Códigos promocionales y total validado por servidor; consentimiento opcional para recordar reservas abandonadas. /recuperar/:token restaura productos y requiere recotizar. El seguimiento ofrece métodos habilitados (tarjeta/Link, transferencia Stripe, OXXO), recibos y consentimiento separado para guardar tarjeta y cobrar el saldo de ese pedido. El cliente puede revocar la autorización automática. MSI depende de elegibilidad y planes ofrecidos por Stripe.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-# pina-palmera-landing
+Una transferencia Stripe u OXXO exige al menos siete días antes del evento; la confirmación es diferida. Los métodos adicionales permanecen apagados hasta configurarlos desde el panel y la cuenta Stripe.

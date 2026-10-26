@@ -1,0 +1,146 @@
+<main class="commerce-page">
+  <div class="commerce-wrap">
+    <div class="commerce-heading">
+      <span class="eyebrow"><svg lucideShoppingBag></svg> TU CELEBRACIÓN EMPIEZA AQUÍ</span>
+      <h1>Buenos momentos.<br /><em>Sabores a tu gusto.</em></h1>
+      <p>Elige tus aguas, ajusta las cantidades y reserva la fecha de tu evento.</p>
+    </div>
+    @if (notice()) {
+      <p class="commerce-notice" role="status"><svg lucideCheck></svg>{{ notice() }}</p>
+    }
+    <div class="commerce-layout">
+      <section aria-label="Catálogo" class="product-grid">
+        @for (c of cart.catalog.categories(); track c.id) {
+          <article class="glass-surface product-card">
+            <div class="product-photo">
+              <img
+                [src]="'/assets/images/' + photos[c.id]"
+                [alt]="c.name + ' de Piña Palmera'"
+                loading="lazy"
+              /><span>Vitrolero · 20 litros</span>
+            </div>
+            <div class="product-body">
+              <h2>{{ c.name }}</h2>
+              <p class="product-price">
+                {{ cart.catalog.money(cart.catalog.price(c.id, sweeteners[c.id] || 'morena')) }}
+                <small>MXN / unidad</small>
+              </p>
+              <label
+                >Sabor<select [(ngModel)]="flavors[c.id]">
+                  <option [ngValue]="undefined">{{ c.flavors[0] }}</option>
+                  @for (f of c.flavors.slice(1); track f) {
+                    <option [value]="f">{{ f }}</option>
+                  }
+                </select></label
+              >
+              <div class="field-grid">
+                <label
+                  >Endulzante<select [(ngModel)]="sweeteners[c.id]">
+                    <option [ngValue]="undefined">Morena / base</option>
+                    @if (c.priceSplenda !== null) {
+                      <option value="splenda">Splenda</option>
+                    }
+                  </select></label
+                ><label
+                  >Cantidad<input
+                    type="number"
+                    min="1"
+                    max="50"
+                    [(ngModel)]="quantities[c.id]"
+                    placeholder="1"
+                /></label>
+              </div>
+              <button
+                class="commerce-button"
+                (click)="add(c)"
+                [disabled]="cart.lineas().length >= 50"
+              >
+                <svg lucidePlus></svg> Agregar al carrito
+              </button>
+            </div>
+          </article>
+        } @empty {
+          <div class="glass-surface">
+            <p>
+              {{
+                cart.catalog.loading()
+                  ? 'Cargando el menú…'
+                  : 'El catálogo no está disponible. Intenta de nuevo.'
+              }}
+            </p>
+            <button class="commerce-button" (click)="cart.catalog.load()">Actualizar menú</button>
+          </div>
+        }
+      </section>
+      <aside class="glass-surface cart-summary">
+        <div class="summary-title">
+          <h2>Tu carrito</h2>
+          <span>{{ cart.lineas().length }} unidades</span>
+        </div>
+        @for (g of cart.grouped(); track g.key) {
+          <div class="cart-line">
+            <div>
+              <strong>{{ g.line.sabor }}</strong>
+              <p>
+                {{ g.line.endulzante }} ·
+                {{ cart.catalog.money(cart.getPrecioLinea(g.line) * 100) }}
+              </p>
+            </div>
+            <div class="quantity">
+              <button
+                (click)="cart.eliminarLinea(g.ids[g.ids.length - 1])"
+                [attr.aria-label]="'Quitar una unidad de ' + g.line.sabor"
+              >
+                <svg lucideMinus></svg></button
+              ><span>{{ g.quantity }}</span
+              ><button
+                (click)="cart.addProduct(g.line.categoria, g.line.sabor, g.line.endulzante)"
+                [disabled]="cart.lineas().length >= 50"
+                [attr.aria-label]="'Agregar una unidad de ' + g.line.sabor"
+              >
+                <svg lucidePlus></svg></button
+              ><button
+                (click)="cart.removeGroup(g.ids)"
+                [attr.aria-label]="'Eliminar ' + g.line.sabor"
+              >
+                <svg lucideTrash2></svg>
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-cart">
+            <svg lucideShoppingBag></svg>
+            <p>Un buen evento comienza con tu primer sabor.</p>
+          </div>
+        }
+        <label class="check-field"
+          ><input
+            type="checkbox"
+            [ngModel]="cart.incluirCarrito()"
+            (ngModelChange)="cart.incluirCarrito.set($event)"
+          />Agregar carrito para el evento
+          <strong>{{ cart.catalog.money(cart.catalog.settings()?.cartCents) }}</strong></label
+        >
+        <div class="summary-total">
+          <span>Subtotal</span
+          ><strong>{{
+            cart.catalog.money(
+              (cart.precioBase() + (cart.incluirCarrito() ? cart.precioCarrito() : 0)) * 100
+            )
+          }}</strong>
+        </div>
+        <p class="muted">
+          El envío se calcula con tu código postal. Disponibilidad y total se confirman al
+          continuar.
+        </p>
+        @if (cart.pedidoValido()) {
+          <a class="commerce-button" routerLink="/reservar"
+            >Elegir fecha y continuar <svg lucideArrowRight></svg
+          ></a>
+        } @else if (cart.lineas().length) {
+          <p role="alert">Hay sabores que cambiaron. Elimínalos y vuelve a seleccionarlos.</p>
+        }
+      </aside>
+    </div>
+  </div>
+</main>

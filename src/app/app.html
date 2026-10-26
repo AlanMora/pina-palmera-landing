@@ -1,4 +1,9 @@
 <app-navbar />
+@if (catalog.error()) {
+ <div role="alert" class="fixed bottom-4 left-4 right-4 z-[100] mx-auto max-w-xl rounded-2xl border border-amber-200 bg-amber-50 p-4 font-nunito text-sm text-amber-950 shadow-lg">
+ {{ catalog.error() }} <button class="ml-2 font-bold underline" (click)="catalog.load()">Reintentar</button>
+ </div>
+}
 <app-cart-sidebar />
 <router-outlet />
 <app-footer />

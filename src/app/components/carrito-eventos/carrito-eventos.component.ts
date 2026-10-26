@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
+import { Catalog } from '../../services/catalog';
 import { CartSidebarService } from '../../services/cart-sidebar.service';
 import { CalculadoraService } from '../../services/calculadora.service';
 
@@ -19,6 +20,7 @@ import { CalculadoraService } from '../../services/calculadora.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarritoEventosComponent implements OnDestroy {
+  readonly catalog = inject(Catalog);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly sidebar = inject(CartSidebarService);
   private readonly calc = inject(CalculadoraService);

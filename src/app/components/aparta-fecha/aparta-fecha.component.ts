@@ -8,6 +8,7 @@ import {
   signal,
   PLATFORM_ID,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -28,14 +29,14 @@ const TIPOS_EVENTO = [
 
 @Component({
   selector: 'app-aparta-fecha',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './aparta-fecha.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApartaFechaComponent {
   // ── DI ───────────────────────────────────────────────────────────────────
   private readonly fb         = inject(FormBuilder);
-  private readonly calc       = inject(CalculadoraService);
+  readonly calc       = inject(CalculadoraService);
   private readonly contact    = inject(ContactService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
@@ -55,6 +56,9 @@ export class ApartaFechaComponent {
   readonly enviado  = signal(false);
   readonly error    = signal<ApiError | null>(null);
   readonly folio    = signal('');
+  readonly paymentPath = signal('');
+  private requestId = '';
+  private lastPayload = '';
   readonly clabeCopiada = signal(false);
 
   // ── Formulario tipado con nonNullable ────────────────────────────────────
@@ -165,6 +169,8 @@ export class ApartaFechaComponent {
 
   // ── Enviar formulario ────────────────────────────────────────────────────
   onSubmit(): void {
+    if (this.enviando()) return;
+    if (!this.calc.pedidoValido()) { this.error.set({tipo:'validacion',mensaje:'Revisa los sabores y categorías de tu carrito. El catálogo debe estar disponible para solicitar tu reserva.'}); return; }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -175,27 +181,16 @@ export class ApartaFechaComponent {
 
     const val = this.form.getRawValue();
 
-    const payload: OrderPayload = {
-      nombre:          val.nombre,
-      telefono:        val.telefono,
-      email:           val.email || undefined,
-      tipoEvento:      val.tipoEvento,
-      fecha:           val.fecha,
-      hora:            val.hora,
-      direccion:       val.direccion,
-      sabores:         val.sabores || undefined,
-      notas:           val.notas || undefined,
-      invitados:       val.invitados,
-      vitroleros:      val.vitroleros,
-      categoria:       val.categoria,
-      endulzante:      val.endulzante,
-      totalCups:       val.totalCups,
-      servicioEntrega: val.servicioEntrega,
-      incluirEnvio:    val.incluirEnvio,
-      incluirCarrito:  val.incluirCarrito,
-      precioBase:      val.precioBase,
-      precioTotal:     val.precioTotal,
+    const order = {
+      nombre:val.nombre,telefono:val.telefono,email:val.email || undefined,
+      tipoEvento:val.tipoEvento,fecha:val.fecha,hora:val.hora,direccion:val.direccion,
+      invitados:val.invitados,incluirEnvio:val.incluirEnvio,incluirCarrito:val.incluirCarrito,
+      notas:[val.notas,val.sabores ? 'Preferencias adicionales: '+val.sabores : ''].filter(Boolean).join(' · ') || undefined,
+      lineas:this.calc.lineasPedido().map(({categoria,endulzante,sabor})=>({categoria,endulzante,sabor})),
     };
+    const serialized=JSON.stringify(order);
+    if (!this.requestId || this.lastPayload!==serialized) {this.requestId=crypto.randomUUID();this.lastPayload=serialized;}
+    const payload:OrderPayload={...order,requestId:this.requestId};
 
     this.contact
       .submitOrder(payload)
@@ -204,6 +199,8 @@ export class ApartaFechaComponent {
         next: (res) => {
           this.enviando.set(false);
           this.folio.set(res.folio ?? '');
+          this.paymentPath.set(res.paymentPath);
+          this.f.precioTotal.setValue(res.totalCents / 100);
           this.enviado.set(true);
         },
         error: (err: ApiError) => {
@@ -216,7 +213,7 @@ export class ApartaFechaComponent {
   // ── Copiar CLABE al portapapeles ─────────────────────────────────────────
   copyClabe(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    navigator.clipboard.writeText('723969000012458796').then(() => {
+    navigator.clipboard.writeText(this.calc.catalog.settings()?.bankClabe ?? '').then(() => {
       this.clabeCopiada.set(true);
       setTimeout(() => this.clabeCopiada.set(false), 2500);
     });
@@ -224,10 +221,11 @@ export class ApartaFechaComponent {
 
   // ── Helpers de template ──────────────────────────────────────────────────
   formatPrice(value: number): string {
+    if (!Number.isFinite(value)) return 'Por consultar';
     return new Intl.NumberFormat('es-MX', {
       style: 'currency',
       currency: 'MXN',
-      maximumFractionDigits: 0,
+      maximumFractionDigits: 2,
     }).format(value);
   }
 }

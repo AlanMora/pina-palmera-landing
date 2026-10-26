@@ -1,0 +1,137 @@
+<main class="commerce-page">
+  <div class="commerce-wrap closure-wrap">
+    <a routerLink="/" class="back-link">Piña Palmera</a>
+    <header class="commerce-heading">
+      <p class="eyebrow">DESPUÉS DE TU EVENTO</p>
+      <h1>Gracias por celebrar <em>con nosotros.</em></h1>
+      <p>Tu experiencia nos importa. Aquí puedes compartirla, consultar tu saldo y pedir ayuda.</p>
+    </header>
+    @if (error()) {
+      <p class="commerce-error" role="alert">{{ error() }}</p>
+    }
+    @if (notice()) {
+      <p class="commerce-notice" role="status">{{ notice() }}</p>
+    }
+    @if (loading()) {
+      <p role="status">Consultando tu evento…</p>
+    }
+    @if (data(); as o) {
+      <div class="closure-grid">
+        <section class="glass-surface">
+          <p class="eyebrow">{{ o.folio }} · {{ o.eventDate }}</p>
+          <h2>¿Cómo estuvo todo, {{ o.name }}?</h2>
+          <p class="muted">
+            La encuesta es opcional. Puedes pagar o solicitar ayuda sin contestarla.
+          </p>
+          @if (o.survey) {
+            <div class="survey-thanks">
+              <span class="rating">{{ o.survey.rating }} / 5</span>
+              <h3>Tu opinión quedó registrada</h3>
+              <p>{{ o.survey.comment || 'Gracias por ayudarnos a mejorar.' }}</p>
+            </div>
+          } @else {
+            <form [formGroup]="survey" (ngSubmit)="submitSurvey()">
+              <fieldset>
+                <legend>Califica tu experiencia del 1 al 5</legend>
+                <div class="stars">
+                  @for (star of stars; track star) {
+                    <label [class.chosen]="survey.controls.rating.value >= star"
+                      ><input
+                        type="radio"
+                        formControlName="rating"
+                        [value]="star"
+                        [attr.aria-label]="star + ' de 5'"
+                      /><span aria-hidden="true">★</span><small>{{ star }}</small></label
+                    >
+                  }
+                </div>
+              </fieldset>
+              @if (survey.controls.rating.touched && survey.controls.rating.invalid) {
+                <p role="alert">Elige una calificación.</p>
+              }
+              <label
+                >¿Qué te gustó o qué podemos mejorar?<textarea
+                  formControlName="comment"
+                  rows="3"
+                  maxlength="2000"
+                  placeholder="Cuéntanos tu experiencia"
+                ></textarea></label
+              ><label class="check-field"
+                ><input type="checkbox" formControlName="contactRequested" />Quiero que me contacten
+                para dar seguimiento.</label
+              ><button class="commerce-button" [disabled]="busy()">
+                {{ busy() ? 'Guardando…' : 'Enviar mi opinión' }}
+              </button>
+            </form>
+          }
+          @if (o.supportStatus === 'OPEN') {
+            <div class="support-note" role="status">
+              <h3>Tu solicitud está en atención</h3>
+              <p>
+                Un integrante de nuestro equipo te contactará. Pausamos los recordatorios y próximos
+                intentos de cobro automático mientras revisamos tu caso. Tu saldo no ha cambiado.
+              </p>
+            </div>
+          } @else {
+            <details>
+              <summary>Necesito ayuda con mi evento</summary>
+              <form [formGroup]="help" (ngSubmit)="requestHelp()">
+                <label
+                  >Cuéntanos qué ocurrió<textarea
+                    formControlName="message"
+                    rows="3"
+                    maxlength="2000"
+                  ></textarea></label
+                ><button class="commerce-button secondary" [disabled]="busy() || help.invalid">
+                  Solicitar atención
+                </button>
+              </form>
+            </details>
+          }
+        </section>
+        <aside class="glass-surface receipt">
+          <p class="eyebrow">TU CUENTA, CLARA</p>
+          <h2>Resumen del evento</h2>
+          <dl>
+            <div>
+              <dt>Total</dt>
+              <dd>{{ o.totalCents / 100 | currency: 'MXN' : 'symbol-narrow' }}</dd>
+            </div>
+            <div>
+              <dt>Pagos recibidos</dt>
+              <dd>{{ o.paidCents / 100 | currency: 'MXN' : 'symbol-narrow' }}</dd>
+            </div>
+            <div class="balance">
+              <dt>Saldo pendiente</dt>
+              <dd>{{ o.balanceCents / 100 | currency: 'MXN' : 'symbol-narrow' }}</dd>
+            </div>
+          </dl>
+          @if (o.balanceCents > 0) {
+            <p class="muted">
+              Fecha de liquidación: {{ o.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }} · hora
+              de Ciudad de México.
+            </p>
+            <a class="commerce-button" [routerLink]="o.paymentPath">Pagar saldo</a>
+            <p class="muted">
+              El pago se registra cuando se confirma. Responder la encuesta no realiza ningún cargo.
+            </p>
+          } @else {
+            <p class="paid" role="status">Tu evento está liquidado. ¡Gracias!</p>
+          }
+          <a class="commerce-button secondary" [routerLink]="o.paymentPath"
+            >Ver pagos y comprobantes</a
+          ><a class="text-link" [routerLink]="o.invoicePath">Consultar facturación</a
+          ><label class="check-field consent"
+            ><input
+              type="checkbox"
+              [checked]="o.whatsappConsent"
+              [disabled]="busy()"
+              (change)="consent($any($event.target).checked)"
+            />Acepto recibir por WhatsApp mensajes de Piña Palmera sobre este evento, su encuesta y
+            pagos. Puedo desactivarlos aquí.</label
+          >
+        </aside>
+      </div>
+    }
+  </div>
+</main>

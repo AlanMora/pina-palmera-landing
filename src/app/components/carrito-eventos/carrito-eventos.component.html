@@ -58,7 +58,7 @@
 
         <!-- Badge precio — pop con rebote -->
         <div class="price-highlight absolute top-8 right-8 lg:top-10 lg:right-10 bg-brand-green-dark text-brand-yellow font-pacifico text-2xl rounded-2xl px-5 py-3 shadow-lg rotate-3 select-none">
-          $350
+          {{ catalog.money(catalog.settings()?.cartCents) }}
           <span class="block font-nunito text-xs text-brand-yellow/80 font-normal -mt-1 text-center">renta del carrito</span>
         </div>
 

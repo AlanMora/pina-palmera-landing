@@ -23,12 +23,7 @@ export class CalculadoraComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private animationsReady = false;
 
-  readonly categorias: { id: Categoria; label: string; icon: string; precio: string }[] = [
-    { id: 'clasicos',   label: 'Clásicos',    icon: '🥤', precio: '$750–$850' },
-    { id: 'piquete',    label: 'Con piquete',  icon: '🌶️', precio: '$950–$1050' },
-    { id: 'kids',       label: 'Kids',         icon: '⭐', precio: '$690' },
-    { id: 'infusiones', label: 'Infusiones',   icon: '🌿', precio: '$380' },
-  ];
+  get categorias() { return this.calc.catalog.categories().map(c => ({id:c.id,label:c.name,icon:c.emoji,precio:this.calc.catalog.range(c)})); }
 
   constructor() {
     afterNextRender(() => {
@@ -64,8 +59,9 @@ export class CalculadoraComponent implements OnDestroy {
   }
 
   formatPrice(n: number): string {
+    if (!Number.isFinite(n)) return this.calc.catalog.loading() ? 'Cargando…' : 'Por consultar';
     return new Intl.NumberFormat('es-MX', {
-      style: 'currency', currency: 'MXN', maximumFractionDigits: 0,
+      style: 'currency', currency: 'MXN', maximumFractionDigits: 2,
     }).format(n);
   }
 
