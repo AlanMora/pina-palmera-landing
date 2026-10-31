@@ -23,6 +23,7 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: .
+          build-args: MAPBOX_TOKEN=${{ secrets.MAPBOX_PUBLIC_TOKEN }}
           platforms: linux/amd64
           push: ${{ github.event_name == 'workflow_dispatch' }}
           tags: ghcr.io/alanmora/pina-palmera-landing:${{ github.sha }}

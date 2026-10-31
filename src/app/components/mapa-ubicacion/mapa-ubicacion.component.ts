@@ -26,23 +26,28 @@ export class MapaUbicacionComponent implements OnDestroy {
   private readonly contenedor = viewChild.required<ElementRef<HTMLDivElement>>('mapa');
 
   readonly estado = signal<EstadoMapa>('esperando');
-  readonly urlComoLlegar =
-    `https://www.google.com/maps/dir/?api=1&destination=${PUNTO_RECOLECCION[1]},${PUNTO_RECOLECCION[0]}`;
+  readonly urlComoLlegar = `https://www.google.com/maps/dir/?api=1&destination=${PUNTO_RECOLECCION[1]},${PUNTO_RECOLECCION[0]}`;
 
   private map?: MapboxMap;
   private observer?: IntersectionObserver;
+  private resizeObserver?: ResizeObserver;
+  private loadTimeout?: ReturnType<typeof setTimeout>;
+  private destroyed = false;
 
   constructor() {
     // Solo en navegador. El mapa (y su "map load" facturable) se crea únicamente
     // cuando la sección está por entrar en pantalla: quien no baja hasta aquí no consume.
     afterNextRender(() => {
       const el = this.contenedor().nativeElement;
-      this.observer = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          this.observer?.disconnect();
-          this.cargarMapa(el);
-        }
-      }, { rootMargin: '300px 0px' });
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            this.observer?.disconnect();
+            this.cargarMapa(el);
+          }
+        },
+        { rootMargin: '300px 0px' },
+      );
       this.observer.observe(el);
     });
   }
@@ -56,50 +61,66 @@ export class MapaUbicacionComponent implements OnDestroy {
     try {
       // Build CSP + worker como archivo aparte: el worker incrustado se rompe al minificar
       const { default: mapboxgl } = await import('mapbox-gl/dist/mapbox-gl-csp.js');
+      if (this.destroyed) return;
+      if (!mapboxgl.supported()) {
+        this.estado.set('error');
+        return;
+      }
       mapboxgl.workerUrl = '/vendor/mapbox-gl-csp-worker.js';
       mapboxgl.accessToken = environment.mapboxToken;
 
       const map = new mapboxgl.Map({
         container: el,
-        style: 'mapbox://styles/mapbox/standard',
-        config: {
-          basemap: {
-            lightPreset: 'night',
-            showPointOfInterestLabels: false,
-            showTransitLabels: false,
-          },
-        },
+        style: 'mapbox://styles/mapbox/streets-v12',
+        language: 'es',
         center: PUNTO_RECOLECCION,
-        zoom: 12.5,
-        pitch: 45,
-        bearing: -15,
+        zoom: 15.2,
+        pitch: 0,
+        bearing: 0,
+        dragRotate: false,
+        touchPitch: false,
+        scrollZoom: false,
         cooperativeGestures: true, // en móvil el scroll de la página no se queda atrapado en el mapa
         attributionControl: false,
         locale: {
+          'NavigationControl.ZoomIn': 'Acercar',
+          'NavigationControl.ZoomOut': 'Alejar',
           'ScrollZoomBlocker.CtrlMessage': 'Usa ctrl + scroll para hacer zoom',
           'ScrollZoomBlocker.CmdMessage': 'Usa ⌘ + scroll para hacer zoom',
           'TouchPanBlocker.Message': 'Usa dos dedos para mover el mapa',
         },
       });
       this.map = map;
+      map.touchZoomRotate.disableRotation();
+      map
+        .getCanvas()
+        .setAttribute('aria-label', 'Mapa del punto de recolección en Midtown Jalisco');
+      if ('ResizeObserver' in window) {
+        this.resizeObserver = new ResizeObserver(() => map.resize());
+        this.resizeObserver.observe(el);
+      }
+      this.loadTimeout = setTimeout(() => {
+        if (!this.destroyed && this.estado() !== 'listo') this.estado.set('error');
+      }, 20000);
 
       map.addControl(new mapboxgl.AttributionControl({ compact: true }));
-      map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), 'top-right');
+      map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
 
       new mapboxgl.Marker({ element: this.crearMarcador(), anchor: 'bottom' })
         .setLngLat(PUNTO_RECOLECCION)
         .addTo(map);
 
       map.once('load', () => {
+        if (this.destroyed) return;
+        clearTimeout(this.loadTimeout);
+        map.resize();
         this.estado.set('listo');
-        map.flyTo({ center: PUNTO_RECOLECCION, zoom: 15.6, pitch: 55, bearing: -25, duration: 2600, essential: true });
       });
       map.on('error', () => {
         if (this.estado() !== 'listo') this.estado.set('error');
       });
-    } catch (err) {
+    } catch {
       // Sin WebGL o sin red: se muestra la tarjeta de respaldo con el enlace.
-      console.error('No se pudo cargar el mapa', err);
       this.estado.set('error');
     }
   }
@@ -119,8 +140,20 @@ export class MapaUbicacionComponent implements OnDestroy {
     return el;
   }
 
+  reintentar() {
+    if (this.estado() !== 'error' || this.destroyed) return;
+    this.resizeObserver?.disconnect();
+    clearTimeout(this.loadTimeout);
+    this.map?.remove();
+    this.map = undefined;
+    void this.cargarMapa(this.contenedor().nativeElement);
+  }
+
   ngOnDestroy() {
+    this.destroyed = true;
     this.observer?.disconnect();
+    this.resizeObserver?.disconnect();
+    clearTimeout(this.loadTimeout);
     this.map?.remove();
   }
 }

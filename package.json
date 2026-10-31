@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:pina-palmera-landing": "node dist/pina-palmera-landing/server/server.mjs",
-    "postinstall": "node scripts/set-mapbox-token.mjs"
+    "postinstall": "node scripts/set-mapbox-token.mjs",
+    "prebuild": "node scripts/set-mapbox-token.mjs",
+    "prestart": "node scripts/set-mapbox-token.mjs"
   },
   "private": true,
   "packageManager": "npm@11.5.1",

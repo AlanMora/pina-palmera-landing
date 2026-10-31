@@ -1,9 +1,11 @@
 FROM node:24-bookworm-slim AS build
 WORKDIR /app
+ENV NG_BUILD_MAX_WORKERS=1 NODE_OPTIONS=--max-old-space-size=2048
 COPY package.json package-lock.json ./
 COPY scripts ./scripts
 RUN npm ci --no-audit --no-fund
 COPY . .
+ARG MAPBOX_TOKEN
 RUN npm run build -- --configuration swarm
 FROM node:24-bookworm-slim
 WORKDIR /app

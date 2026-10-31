@@ -20,3 +20,6 @@ coverage/
 *.key
 *.p12
 *.pfx
+
+# Archivo generado con el token público configurado en el entorno
+/src/environments/mapbox-token.ts
