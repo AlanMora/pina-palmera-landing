@@ -30,3 +30,12 @@ Stripe y correo requieren credenciales reales en el servidor. Configurar zonas y
 Códigos promocionales y total validado por servidor; consentimiento opcional para recordar reservas abandonadas. /recuperar/:token restaura productos y requiere recotizar. El seguimiento ofrece métodos habilitados (tarjeta/Link, transferencia Stripe, OXXO), recibos y consentimiento separado para guardar tarjeta y cobrar el saldo de ese pedido. El cliente puede revocar la autorización automática. MSI depende de elegibilidad y planes ofrecidos por Stripe.
 
 Una transferencia Stripe u OXXO exige al menos siete días antes del evento; la confirmación es diferida. Los métodos adicionales permanecen apagados hasta configurarlos desde el panel y la cuenta Stripe.
+
+
+## Contenedor y Docker Swarm
+
+La imagen de producción incluye la compilación Angular y el servidor Node, sin credenciales. Expone el puerto interno 4000 y `/health/live`. Configurar `NG_ALLOWED_HOSTS` con los nombres de host permitidos. La API se consume mediante `/api` del mismo origen; el proxy del stack se configura en `pina-palmera-services`.
+
+El workflow **Verify and publish web image** verifica la construcción en push/PR. Su ejecución manual publica la imagen privada en GHCR con el SHA completo del commit. El despliegue local ya se administra con Docker Swarm desde el repositorio de servicios.
+
+La imagen usa la configuración Angular `swarm` (`environment.swarm.ts`), con API del mismo origen. La configuración `production` conserva su endpoint independiente para despliegues que no usan el proxy de Swarm.
