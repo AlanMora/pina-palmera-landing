@@ -36,6 +36,6 @@ Una transferencia Stripe u OXXO exige al menos siete días antes del evento; la 
 
 La imagen de producción incluye la compilación Angular y el servidor Node, sin credenciales. Expone el puerto interno 4000 y `/health/live`. Configurar `NG_ALLOWED_HOSTS` con los nombres de host permitidos. La API se consume mediante `/api` del mismo origen; el proxy del stack se configura en `pina-palmera-services`.
 
-El workflow **Verify and publish web image** verifica la construcción en push/PR. Su ejecución manual publica la imagen privada en GHCR con el SHA completo del commit. El despliegue local ya se administra con Docker Swarm desde el repositorio de servicios.
+El workflow **Verify and publish web image** verifica la construcción en push/PR. Su ejecución manual publica la imagen privada en GHCR con el SHA completo del commit. El despliegue local se administra con Docker Compose desde el repositorio de servicios; Swarm queda preparado para producción.
 
 La imagen usa la configuración Angular `swarm` (`environment.swarm.ts`), con API del mismo origen. La configuración `production` conserva su endpoint independiente para despliegues que no usan el proxy de Swarm.
