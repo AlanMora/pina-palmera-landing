@@ -29,7 +29,14 @@
     <div class="hero-visual">
       <img
         class="hero-photo"
-        src="/assets/images/imagen_3.jpg"
+        src="/assets/images/menu-hero-960.webp"
+        srcset="
+          /assets/images/menu-hero-480.webp   480w,
+          /assets/images/menu-hero-960.webp   960w,
+          /assets/images/menu-hero-1368.webp 1368w
+        "
+        sizes="(max-width: 800px) calc(100vw - 52px), (max-width: 1304px) 45vw, 580px"
+        decoding="async"
         alt="Vitroleros Piña Palmera entre palmeras y flores tropicales"
         width="1368"
         height="1824"

@@ -1,4 +1,8 @@
-<div class="menu-page" [class.has-order]="cart.lineas().length > 0">
+<div
+  class="menu-page"
+  [class.has-order]="cart.lineas().length > 0"
+  [class.searching]="searchActive()"
+>
   <app-menu-hero />
 
   <section id="sabores" class="catalog-section" aria-labelledby="flavors-title">
@@ -11,12 +15,18 @@
         </div>
         <div class="search-wrap">
           <label for="flavor-search">¿Buscas un sabor?</label>
-          <div class="search-field">
+          <div
+            class="search-field"
+            (focusin)="searchActive.set(true)"
+            (focusout)="onSearchFocusOut($event)"
+          >
             <svg lucideSearch aria-hidden="true"></svg>
             <input
               #flavorSearch
               id="flavor-search"
               type="search"
+              enterkeyhint="search"
+              (keydown.enter)="flavorSearch.blur(); searchActive.set(false)"
               placeholder="Prueba mango, jamaica, limón…"
               [value]="query()"
               (input)="search($any($event.target).value)"

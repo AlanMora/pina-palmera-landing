@@ -17,6 +17,7 @@ import { CalculadoraService, Endulzante } from '../../services/calculadora.servi
 
 @Component({
   selector: 'app-menu',
+  host: { '(document:click)': 'onDocumentClick($event)' },
   imports: [
     RouterLink,
     MenuHeroComponent,
@@ -39,6 +40,7 @@ export class MenuComponent {
   readonly cart = inject(CalculadoraService);
   readonly selectedCategory = signal<CategoryId | 'todos'>('clasicos');
   readonly query = signal('');
+  readonly searchActive = signal(false);
   readonly notice = signal('');
   readonly lastAdded = signal('');
   private readonly sweeteners = signal<Partial<Record<CategoryId, Endulzante>>>({});
@@ -71,6 +73,21 @@ export class MenuComponent {
   readonly resultCount = computed(() =>
     this.results().reduce((count, category) => count + category.flavors.length, 0),
   );
+
+  onDocumentClick(event: MouseEvent) {
+    if (!(event.target as Element | null)?.closest('.search-field')) {
+      this.searchActive.set(false);
+    }
+  }
+
+  onSearchFocusOut(event: FocusEvent) {
+    const next = event.relatedTarget as Node | null;
+    // On touch Safari, focus can leave the input before the clear button click.
+    // Keep the bar hidden until that click finishes; keyboard Tab can update now.
+    if (next && !(event.currentTarget as HTMLElement).contains(next)) {
+      this.searchActive.set(false);
+    }
+  }
 
   selectCategory(category: CategoryId | 'todos') {
     this.selectedCategory.set(category);
