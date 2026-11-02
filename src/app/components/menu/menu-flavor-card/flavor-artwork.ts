@@ -43,7 +43,6 @@ export function flavorArtwork(flavor: string) {
       a.name === 'horchata' ? 1 : b.name === 'horchata' ? -1 : a.position - b.position,
     );
   const first = matches[0];
-  const second = matches[1];
   const path = (ingredient: string) => `/assets/illustrations/flavors/${ingredient}.svg`;
   return {
     ingredients: matches.map((art) => art.name),
@@ -52,8 +51,8 @@ export function flavorArtwork(flavor: string) {
       : name.includes('black lemonade')
         ? '#e6e8e1'
         : (first?.wash ?? '#e9efdf'),
-    background: second
-      ? `url("${path(first.name)}"), url("${path(second.name)}")`
-      : `url("${path(first?.name ?? 'hoja')}")`,
+    background: (matches.length ? matches : [{ name: 'hoja' }])
+      .map((ingredient) => `url("${path(ingredient.name)}")`)
+      .join(', '),
   };
 }

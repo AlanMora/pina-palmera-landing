@@ -27,10 +27,12 @@
   background-repeat: repeat;
   background-size:
     160px 160px,
-    135px 135px;
+    135px 135px,
+    110px 110px;
   background-position:
     110px -10px,
-    -12px 85px;
+    -12px 85px,
+    40px 50px;
   transform: rotate(-12deg);
   opacity: 0.63;
   pointer-events: none;
@@ -153,10 +155,12 @@ h4 {
   .fruit-background {
     background-size:
       145px 145px,
-      120px 120px;
+      120px 120px,
+      100px 100px;
     background-position:
       65px -8px,
-      -18px 100px;
+      -18px 100px,
+      30px 60px;
   }
 }
 @media (max-width: 360px) {
@@ -191,10 +195,12 @@ h4 {
   .fruit-background {
     background-size:
       160px 160px,
-      135px 135px;
+      135px 135px,
+      110px 110px;
     background-position:
       60px -15px,
-      -40px 60px;
+      -40px 60px,
+      45px 20px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
