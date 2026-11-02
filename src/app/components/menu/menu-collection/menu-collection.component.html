@@ -1,0 +1,81 @@
+@let c = category();
+<section
+  class="category-layout"
+  [attr.data-category]="c.id"
+  [attr.aria-labelledby]="'category-' + c.id"
+>
+  <aside class="category-intro">
+    <div class="category-symbol" aria-hidden="true"><svg lucideGlassWater></svg></div>
+    <span class="category-kicker">LA COLECCIÓN</span>
+    <h3 [id]="'category-' + c.id">{{ c.name }}</h3>
+    <p class="category-description">{{ descriptions[c.id] }}</p>
+    <div class="category-price">
+      <span>Por vitrolero de 20 L</span><strong>{{ catalog.money(price()) }}</strong
+      ><small>MXN · {{ sweetener() === 'splenda' ? 'Con Splenda' : 'Morena / base' }}</small>
+    </div>
+    @if (c.priceSplenda !== null) {
+      <fieldset class="sweetener-picker">
+        <legend>Elige el endulzante</legend>
+        <div>
+          <label
+            ><input
+              type="radio"
+              [name]="'sweetener-' + c.id"
+              value="morena"
+              [checked]="sweetener() === 'morena'"
+              (change)="sweetenerChange.emit('morena')"
+            /><span>Morena / base</span></label
+          >
+          <label
+            ><input
+              type="radio"
+              [name]="'sweetener-' + c.id"
+              value="splenda"
+              [checked]="sweetener() === 'splenda'"
+              (change)="sweetenerChange.emit('splenda')"
+            /><span>Splenda</span></label
+          >
+        </div>
+      </fieldset>
+    }
+    @if (!c.available) {
+      <p class="availability">Temporalmente no disponible</p>
+    } @else {
+      <p class="category-hint">
+        <svg lucidePlus aria-hidden="true"></svg> Agrega los sabores que te antojen.
+      </p>
+    }
+  </aside>
+  <div class="flavor-grid">
+    @for (flavor of c.flavors; track flavor) {
+      <article class="flavor-card" [class.just-added]="lastAdded() === c.id + ':' + flavor">
+        <div class="flavor-top">
+          <span class="flavor-mark" aria-hidden="true"><svg lucideDroplets></svg></span
+          ><span>{{ c.name }}</span>
+        </div>
+        <h4>{{ flavor }}</h4>
+        <div class="flavor-bottom">
+          <p>{{ catalog.money(price()) }}<small> / 20 L</small></p>
+          <button
+            type="button"
+            [disabled]="disabled()"
+            (click)="flavorAdd.emit(flavor)"
+            [attr.aria-label]="
+              'Agregar ' +
+              flavor +
+              ' con ' +
+              (sweetener() === 'splenda' ? 'Splenda' : 'morena / base') +
+              ' al carrito'
+            "
+          >
+            @if (lastAdded() === c.id + ':' + flavor) {
+              <svg lucideCheck aria-hidden="true"></svg>
+            } @else {
+              <svg lucidePlus aria-hidden="true"></svg>
+            }
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+</section>

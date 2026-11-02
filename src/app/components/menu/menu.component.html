@@ -1,105 +1,170 @@
-<section id="menu" class="menu py-24 bg-brand-green-dark overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="menu-page" [class.has-order]="cart.lineas().length > 0">
+  <app-menu-hero />
 
-    <!-- Section title -->
-    <div class="text-center mb-14">
-      <h2 class="section-title font-pacifico text-brand-yellow text-4xl sm:text-5xl mb-3">
-        Nuestro menú
-      </h2>
-      <div class="w-24 h-1 bg-brand-yellow/60 mx-auto rounded-full mb-4"></div>
-      <p class="text-white/70 font-nunito text-base max-w-xl mx-auto">
-        Vitroleros de 20 litros · Rinde para 35 bebidas de 550ml
-      </p>
-    </div>
-
-    <!-- Tab navigation -->
-    <div class="menu-tabs flex flex-wrap justify-center gap-3 mb-10">
-      @for (cat of categorias; track cat.id) {
-        <button
-          (click)="setTab(cat.id)"
-          [class]="tabActivo() === cat.id
-            ? 'bg-brand-yellow text-brand-green-dark font-bold shadow-lg scale-105'
-            : 'bg-white/10 text-white hover:bg-white/20'"
-          class="font-nunito text-sm sm:text-base px-6 py-3 rounded-full transition-all duration-200 font-medium">
-          {{ cat.emoji }} {{ cat.nombre }}
-        </button>
-      }
-    </div>
-
-    @if (categoriaActiva; as active) {
-    <!-- Content panel -->
-    <div class="menu-content-panel bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-10">
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-
-        <!-- Prices + info (left) -->
-        <div class="lg:col-span-2">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-4xl">{{ active.emoji }}</span>
-            <div>
-              <h3 class="font-pacifico text-brand-yellow text-2xl">{{ active.nombre }}</h3>
-              <p class="text-white/60 text-sm font-nunito">por vitrolero de 20L</p>
-            </div>
-          </div>
-
-          <!-- Prices -->
-          <div class="space-y-3 mb-8">
-            @for (precio of active.precios; track precio) {
-              <div class="flex items-center gap-3 bg-white/10 rounded-2xl px-5 py-3">
-                <svg class="w-5 h-5 text-brand-yellow shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
-                </svg>
-                <span class="text-white font-nunito font-semibold">{{ precio }}</span>
-              </div>
-            }
-          </div>
-
-          <!-- Stats -->
-          <div class="grid grid-cols-3 gap-3">
-            <div class="bg-brand-yellow/20 border border-brand-yellow/30 rounded-2xl p-3 text-center">
-              <p class="font-pacifico text-brand-yellow text-2xl">20</p>
-              <p class="text-white/70 text-xs font-nunito mt-1">litros</p>
-            </div>
-            <div class="bg-brand-yellow/20 border border-brand-yellow/30 rounded-2xl p-3 text-center">
-              <p class="font-pacifico text-brand-yellow text-2xl">35</p>
-              <p class="text-white/70 text-xs font-nunito mt-1">bebidas</p>
-            </div>
-            <div class="bg-brand-yellow/20 border border-brand-yellow/30 rounded-2xl p-3 text-center">
-              <p class="font-pacifico text-brand-yellow text-2xl">550</p>
-              <p class="text-white/70 text-xs font-nunito mt-1">ml c/u</p>
-            </div>
-          </div>
-
-          <a href="/tienda"
-             class="cta-btn mt-6 block text-center bg-brand-yellow text-brand-green-dark font-bold font-nunito px-6 py-3 rounded-full hover:bg-brand-orange hover:text-white transition-colors duration-200">
-            Pedir este sabor →
-          </a>
+  <section id="sabores" class="catalog-section" aria-labelledby="flavors-title">
+    <div class="menu-wrap">
+      <div class="catalog-heading">
+        <div>
+          <p class="menu-eyebrow">NUESTRO MENÚ</p>
+          <h2 id="flavors-title">¿A qué sabe <em>tu celebración?</em></h2>
+          <p>Encuentra tu mezcla favorita. Elige, combina y compártela.</p>
         </div>
-
-        <!-- Flavor list (right) -->
-        <div class="lg:col-span-3">
-          <p class="text-white/60 font-nunito text-sm font-semibold uppercase tracking-wider mb-4">
-            Sabores disponibles
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            @for (sabor of active.sabores; track sabor) {
-              <div class="flex items-center gap-2 py-2 px-3 rounded-xl hover:bg-white/5 transition-colors">
-                <span class="w-2 h-2 rounded-full bg-brand-yellow shrink-0"></span>
-                <span class="text-white/85 font-nunito text-sm">{{ sabor }}</span>
-              </div>
+        <div class="search-wrap">
+          <label for="flavor-search">¿Buscas un sabor?</label>
+          <div class="search-field">
+            <svg lucideSearch aria-hidden="true"></svg>
+            <input
+              #flavorSearch
+              id="flavor-search"
+              type="search"
+              placeholder="Prueba mango, jamaica, limón…"
+              [value]="query()"
+              (input)="search($any($event.target).value)"
+              autocomplete="off"
+              aria-controls="flavor-results"
+            />
+            @if (query()) {
+              <button
+                type="button"
+                aria-label="Limpiar búsqueda"
+                (click)="search(''); flavorSearch.focus()"
+              >
+                <svg lucideX aria-hidden="true"></svg>
+              </button>
             }
           </div>
+        </div>
+      </div>
 
-          @if (active.id === 'clasicos') {
-            <p class="text-white/40 font-nunito text-xs mt-6 italic">
-              * Sujeto a disponibilidad de temporada. Consulta tus sabores favoritos al agendar.
-            </p>
+      @if (catalog.loading()) {
+        <div class="menu-loading" role="status" aria-busy="true">
+          <svg lucideDroplets aria-hidden="true"></svg>
+          <h3>Preparando algo refrescante…</h3>
+          <p>Estamos consultando nuestros sabores y precios.</p>
+          <div class="skeleton-row" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+      } @else if (catalog.error()) {
+        <div class="menu-empty" role="region" aria-label="Menú no disponible">
+          <svg lucideGlassWater aria-hidden="true"></svg>
+          <h3>No pudimos cargar el menú</h3>
+          <p>Intenta de nuevo para consultar los sabores y precios actuales.</p>
+          <button class="menu-button forest" type="button" (click)="catalog.load()">
+            Volver a intentar <svg lucideArrowRight aria-hidden="true"></svg>
+          </button>
+        </div>
+      } @else if (!flavorCount()) {
+        <div class="menu-empty">
+          <svg lucideGlassWater aria-hidden="true"></svg>
+          <h3>Aún no hay sabores publicados</h3>
+          <p>Contáctanos para ayudarte a preparar tu pedido.</p>
+          <a class="menu-button forest" href="tel:3318041630"
+            >Llamar a Piña Palmera <svg lucideArrowRight aria-hidden="true"></svg
+          ></a>
+        </div>
+      } @else {
+        <div class="category-filters" role="group" aria-label="Filtrar sabores por categoría">
+          @for (category of catalog.categories(); track category.id) {
+            <button
+              type="button"
+              (click)="selectCategory(category.id)"
+              [attr.aria-pressed]="activeCategory() === category.id"
+              [class.active]="activeCategory() === category.id"
+            >
+              <span>{{ category.name }}</span
+              ><span class="filter-count">{{ category.flavors.length }}</span>
+            </button>
+          }
+          <button
+            type="button"
+            (click)="selectCategory('todos')"
+            [attr.aria-pressed]="activeCategory() === 'todos'"
+            [class.active]="activeCategory() === 'todos'"
+          >
+            Todo el menú <span class="filter-count">{{ flavorCount() }}</span>
+          </button>
+        </div>
+        <div class="results-meta">
+          <p aria-live="polite">
+            {{ resultCount() }}
+            {{ resultCount() === 1 ? 'sabor para elegir' : 'sabores para elegir' }}
+            @if (query().trim()) {
+              <span> · Resultados para “{{ query().trim() }}”</span>
+            }
+          </p>
+          <span>Precios en MXN · Vitrolero de 20 L</span>
+        </div>
+        <p class="add-notice" role="status" aria-live="polite">
+          @if (notice()) {
+            <svg lucideCheck aria-hidden="true"></svg>{{ notice() }}
+          }
+        </p>
+        @if (cart.lineas().length >= 50) {
+          <p class="limit-notice" role="status">
+            Tu pedido llegó al límite de 50 vitroleros. Puedes ajustar las cantidades en tu carrito.
+          </p>
+        }
+        <div id="flavor-results" class="flavor-results">
+          @for (category of results(); track category.id) {
+            <app-menu-collection
+              [category]="category"
+              [sweetener]="sweetener(category)"
+              [disabled]="!canOrder(category)"
+              [lastAdded]="lastAdded()"
+              (sweetenerChange)="selectSweetener(category.id, $event)"
+              (flavorAdd)="addFlavor(category, $event)"
+            />
+          } @empty {
+            <div class="menu-empty">
+              <svg lucideSearch aria-hidden="true"></svg>
+              <h3>Ese sabor todavía no aparece por aquí</h3>
+              <p>Prueba con otro ingrediente o descubre todas nuestras mezclas.</p>
+              <button type="button" class="menu-button forest" (click)="selectCategory('todos')">
+                Ver todo el menú <svg lucideArrowRight aria-hidden="true"></svg>
+              </button>
+            </div>
           }
         </div>
+        <div class="menu-footnote">
+          <svg lucideLeaf aria-hidden="true"></svg>
+          <p>
+            Sabores sujetos a disponibilidad de temporada. El envío, los servicios adicionales y la
+            disponibilidad de tu fecha se confirman al continuar tu pedido.
+          </p>
+        </div>
+      }
 
+      <div class="celebration-banner">
+        <div>
+          <p class="menu-eyebrow">TÚ PONES EL MOTIVO</p>
+          <h2>Nosotros, <em>lo refrescante.</em></h2>
+          <p>Combina tus sabores favoritos y arma un pedido a tu medida.</p>
+        </div>
+        <a class="menu-button yellow" routerLink="/tienda"
+          >Armar mi pedido <svg lucideArrowRight aria-hidden="true"></svg></a
+        ><svg class="banner-leaf" lucideLeaf aria-hidden="true"></svg>
       </div>
     </div>
+  </section>
 
-    } @else { <p class="text-center text-white/70">{{ catalog.loading() ? "Cargando menú…" : "El menú no está disponible en este momento." }}</p> }
-  </div>
-</section>
+  @if (cart.lineas().length > 0 && !catalog.loading() && !catalog.error()) {
+    <aside class="menu-order-bar" aria-label="Resumen de tu pedido">
+      <span class="order-icon"
+        ><svg lucideShoppingBag aria-hidden="true"></svg><b>{{ cart.lineas().length }}</b></span
+      >
+      <div>
+        <strong
+          >{{ cart.lineas().length }}
+          {{
+            cart.lineas().length === 1 ? 'vitrolero en tu pedido' : 'vitroleros en tu pedido'
+          }}</strong
+        >
+        <p>
+          Subtotal de aguas <span>{{ catalog.money(cart.precioBase() * 100) }}</span>
+        </p>
+      </div>
+      <a class="menu-button yellow" routerLink="/tienda"
+        >Ver pedido <svg lucideArrowRight aria-hidden="true"></svg
+      ></a>
+    </aside>
+  }
+</div>

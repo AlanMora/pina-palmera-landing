@@ -4,7 +4,7 @@ import { MenuComponent } from '../../components/menu/menu.component';
 @Component({
   selector: 'app-menu-page',
   imports: [MenuComponent],
-  template: `<app-menu />`,
+  template: `<main><app-menu /></main>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuPageComponent {}
