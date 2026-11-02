@@ -2,14 +2,14 @@
   <div
     class="glass-strong mx-auto max-w-7xl rounded-2xl transition-all duration-500"
     [class]="scrolled() ? '!bg-night/85 shadow-[0_18px_50px_-18px_rgba(0,0,0,0.75)]' : ''">
-    <div class="flex h-14 items-center justify-between gap-4 px-3 sm:px-4">
+    <div class="flex h-14 items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4">
 
       <!-- Logo -->
       <a routerLink="/" class="group flex shrink-0 items-center gap-2" aria-label="Piña Palmera — inicio">
         <span class="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-yellow to-brand-orange text-lg shadow-[0_0_20px_rgba(232,212,77,0.35)] transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-105">
           🍍
         </span>
-        <span class="font-pacifico text-xl text-brand-yellow sm:text-2xl">Piña Palmera</span>
+        <span class="font-pacifico text-lg text-brand-yellow min-[380px]:text-xl sm:text-2xl">Piña Palmera</span>
       </a>
 
       <!-- Desktop nav links -->
@@ -50,7 +50,7 @@
       <!-- Mobile: botón pedido + hamburger -->
       <div class="flex items-center gap-2 lg:hidden">
         <button type="button" (click)="sidebar.open()"
-                class="rounded-xl bg-brand-yellow px-3.5 py-2 font-nunito text-xs font-extrabold text-night shadow-[0_0_18px_rgba(232,212,77,0.35)]">
+                class="shrink-0 whitespace-nowrap rounded-xl bg-brand-yellow px-2.5 py-2 font-nunito text-xs font-extrabold text-night min-[380px]:px-3.5 shadow-[0_0_18px_rgba(232,212,77,0.35)]">
           🛒 Pedido
         </button>
         <button type="button" (click)="toggleMenu()"
