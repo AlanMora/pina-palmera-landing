@@ -42,7 +42,9 @@ export class MenuComponent {
   readonly query = signal('');
   readonly searchActive = signal(false);
   readonly notice = signal('');
-  readonly lastAdded = signal('');
+  readonly quantityByVariant = computed(() =>
+    Object.fromEntries(this.cart.grouped().map((group) => [group.key, group.quantity])),
+  );
   private readonly sweeteners = signal<Partial<Record<CategoryId, Endulzante>>>({});
 
   readonly flavorCount = computed(() =>
@@ -124,11 +126,31 @@ export class MenuComponent {
     const count = this.cart.lineas().length;
     this.cart.addProduct(category.id, flavor, this.sweetener(category));
     if (this.cart.lineas().length > count) {
-      this.lastAdded.set(`${category.id}:${flavor}`);
       this.notice.set(
         `Agregaste ${flavor}. Tu pedido lleva ${count + 1} ${count === 0 ? 'vitrolero' : 'vitroleros'}.`,
       );
     }
+  }
+
+  removeFlavor(category: CatalogCategory, flavor: string) {
+    const line = this.cart
+      .lineas()
+      .slice()
+      .reverse()
+      .find(
+        (line) =>
+          line.categoria === category.id &&
+          line.sabor === flavor &&
+          line.endulzante === this.sweetener(category),
+      );
+    if (!line) return;
+    this.cart.eliminarLinea(line.id);
+    const count = this.cart.lineas().length;
+    this.notice.set(
+      count
+        ? `Quitaste un vitrolero de ${flavor}. Tu pedido lleva ${count} ${count === 1 ? 'vitrolero' : 'vitroleros'}.`
+        : `Quitaste el último vitrolero de ${flavor}. Tu pedido está vacío.`,
+    );
   }
 
   private normalize(value: string) {

@@ -1,0 +1,204 @@
+:host {
+  display: block;
+  height: 100%;
+  min-width: 0;
+}
+.flavor-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 224px;
+  padding: 20px;
+  border: 1px solid #d4dcc9;
+  border-radius: 18px;
+  color: #193d30;
+  background: var(--fruit-wash, #edf0df);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.fruit-background {
+  position: absolute;
+  inset: -25px;
+  z-index: -2;
+  background-repeat: repeat;
+  background-size:
+    160px 160px,
+    135px 135px;
+  background-position:
+    110px -10px,
+    -12px 85px;
+  transform: rotate(-12deg);
+  opacity: 0.63;
+  pointer-events: none;
+}
+.flavor-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, #fffdf4f0 5%, #fffdf4ba 45%, #fffdf44d 100%);
+  pointer-events: none;
+}
+.flavor-card:hover {
+  border-color: #839b72;
+  box-shadow: 0 8px 24px #1f472b0e;
+}
+.flavor-card.in-cart {
+  border-color: #789269;
+  box-shadow: inset 0 0 0 1px #789269;
+}
+.flavor-category {
+  color: #54664b;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.3px;
+}
+h4 {
+  font-size: 17px;
+  line-height: 1.45;
+  font-weight: 850;
+  margin: 14px 0 20px;
+  text-wrap: pretty;
+  text-shadow: 0 1px 8px #fffdf4;
+}
+.flavor-price {
+  margin-top: auto;
+  font-size: 15px;
+  font-weight: 900;
+  padding-block: 4px 14px;
+  text-shadow: 0 1px 8px #fffdf4;
+}
+.flavor-price small {
+  font-size: 11px;
+  color: #4f6248;
+  font-weight: 700;
+}
+.quantity-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 138px;
+  max-width: 100%;
+  border: 1px solid #a5b698;
+  border-radius: 28px;
+  background: #fffdf4f5;
+  padding: 3px;
+  box-shadow: 0 3px 10px #20442d08;
+}
+.quantity-picker button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #30563b;
+  background: #e8eddd;
+  transition: background 0.15s;
+  touch-action: manipulation;
+}
+.quantity-picker .add {
+  color: #fffdf4;
+  background: #245038;
+}
+.quantity-picker button:hover:not(:disabled) {
+  background: #d4e0c7;
+  color: #193d30;
+}
+.quantity-picker button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.quantity-picker svg {
+  width: 18px;
+  height: 18px;
+}
+.quantity-picker output {
+  min-width: 22px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.quantity-picker button:focus-visible {
+  outline: 3px solid #a67d23;
+  outline-offset: 3px;
+}
+@media (max-width: 800px) {
+  .flavor-card {
+    padding: 17px;
+  }
+}
+@media (max-width: 560px) {
+  .flavor-card {
+    padding: 14px 12px;
+    min-height: 238px;
+  }
+  h4 {
+    font-size: 15px;
+    margin-block: 12px 16px;
+  }
+  .flavor-price {
+    font-size: 14px;
+  }
+  .quantity-picker {
+    width: 100%;
+  }
+  .fruit-background {
+    background-size:
+      145px 145px,
+      120px 120px;
+    background-position:
+      65px -8px,
+      -18px 100px;
+  }
+}
+@media (max-width: 360px) {
+  .flavor-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 130px;
+    column-gap: 10px;
+    min-height: 144px;
+    padding: 16px;
+  }
+  .flavor-category,
+  h4 {
+    grid-column: 1;
+  }
+  h4 {
+    margin-block: 10px 0;
+    font-size: 15px;
+    align-self: start;
+  }
+  .flavor-price {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    text-align: right;
+    padding: 0 0 8px;
+  }
+  .quantity-picker {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+  }
+  .fruit-background {
+    background-size:
+      160px 160px,
+      135px 135px;
+    background-position:
+      60px -15px,
+      -40px 60px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

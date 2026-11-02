@@ -48,34 +48,16 @@
   </aside>
   <div class="flavor-grid">
     @for (flavor of c.flavors; track flavor) {
-      <article class="flavor-card" [class.just-added]="lastAdded() === c.id + ':' + flavor">
-        <div class="flavor-top">
-          <span class="flavor-mark" aria-hidden="true"><svg lucideDroplets></svg></span
-          ><span>{{ c.name }}</span>
-        </div>
-        <h4>{{ flavor }}</h4>
-        <div class="flavor-bottom">
-          <p>{{ catalog.money(price()) }}<small> / 20 L</small></p>
-          <button
-            type="button"
-            [disabled]="disabled()"
-            (click)="flavorAdd.emit(flavor)"
-            [attr.aria-label]="
-              'Agregar ' +
-              flavor +
-              ' con ' +
-              (sweetener() === 'splenda' ? 'Splenda' : 'morena / base') +
-              ' al carrito'
-            "
-          >
-            @if (lastAdded() === c.id + ':' + flavor) {
-              <svg lucideCheck aria-hidden="true"></svg>
-            } @else {
-              <svg lucidePlus aria-hidden="true"></svg>
-            }
-          </button>
-        </div>
-      </article>
+      <app-menu-flavor-card
+        [flavor]="flavor"
+        [categoryName]="c.name"
+        [priceCents]="price()"
+        [sweetener]="sweetener()"
+        [quantity]="quantity(flavor)"
+        [addDisabled]="disabled()"
+        (flavorAdd)="flavorAdd.emit(flavor)"
+        (flavorRemove)="flavorRemove.emit(flavor)"
+      />
     }
   </div>
 </section>

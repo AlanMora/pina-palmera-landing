@@ -119,9 +119,10 @@
               [category]="category"
               [sweetener]="sweetener(category)"
               [disabled]="!canOrder(category)"
-              [lastAdded]="lastAdded()"
+              [quantities]="quantityByVariant()"
               (sweetenerChange)="selectSweetener(category.id, $event)"
               (flavorAdd)="addFlavor(category, $event)"
+              (flavorRemove)="removeFlavor(category, $event)"
             />
           } @empty {
             <div class="menu-empty">

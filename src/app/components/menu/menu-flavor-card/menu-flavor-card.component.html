@@ -1,0 +1,38 @@
+<article
+  class="flavor-card"
+  [class.in-cart]="quantity() > 0"
+  [style.--fruit-wash]="artwork().wash"
+  [attr.data-ingredients]="artwork().ingredients.join(',')"
+>
+  <div
+    class="fruit-background"
+    [style.background-image]="artwork().background"
+    aria-hidden="true"
+  ></div>
+  <p class="flavor-category">{{ categoryName() }}</p>
+  <h4>{{ flavor() }}</h4>
+  <p class="flavor-price">{{ catalog.money(priceCents()) }}<small> / 20 L</small></p>
+  <div class="quantity-picker" role="group" [attr.aria-label]="'Cantidad de ' + variantLabel()">
+    <button
+      class="remove"
+      type="button"
+      [disabled]="quantity() === 0"
+      (click)="flavorRemove.emit()"
+      [attr.aria-label]="'Quitar ' + variantLabel() + ' del carrito'"
+    >
+      <svg lucideMinus aria-hidden="true"></svg>
+    </button>
+    <output [attr.aria-label]="'Vitroleros de ' + variantLabel() + ' en tu pedido'">{{
+      quantity()
+    }}</output>
+    <button
+      class="add"
+      type="button"
+      [disabled]="addDisabled()"
+      (click)="flavorAdd.emit()"
+      [attr.aria-label]="'Agregar ' + variantLabel() + ' al carrito'"
+    >
+      <svg lucidePlus aria-hidden="true"></svg>
+    </button>
+  </div>
+</article>
