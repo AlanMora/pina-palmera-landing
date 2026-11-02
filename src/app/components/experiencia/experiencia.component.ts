@@ -1,44 +1,64 @@
-import { Component, ChangeDetectionStrategy, afterNextRender, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import {
+  LucideArrowDown,
+  LucideArrowRight,
+  LucideGlassWater,
+  LucideLeaf,
+  LucideSnowflake,
+  LucideSparkles,
+  LucideTag,
+} from '@lucide/angular';
+import { ExperienceGalleryComponent } from './experience-gallery/experience-gallery.component';
+import { ExperiencePlanningComponent } from './experience-planning/experience-planning.component';
 
 @Component({
   selector: 'app-experiencia',
+  imports: [
+    RouterLink,
+    LucideArrowDown,
+    LucideArrowRight,
+    LucideGlassWater,
+    LucideLeaf,
+    LucideSnowflake,
+    LucideSparkles,
+    LucideTag,
+    ExperienceGalleryComponent,
+    ExperiencePlanningComponent,
+  ],
   templateUrl: './experiencia.component.html',
+  styleUrls: ['./experience-shared.css', './experiencia.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExperienciaComponent implements OnDestroy {
-  private readonly platformId = inject(PLATFORM_ID);
-
-  readonly includes = [
-    { emoji: '🫙', texto: 'Vitrolero de vidrio templado de 20 litros' },
-    { emoji: '🥄', texto: 'Cucharón dosificador incluido' },
-    { emoji: '🧊', texto: 'Hielo suficiente para mantener la temperatura' },
-    { emoji: '🥃', texto: 'Vasos de 1L para llevar (disponibles)' },
-    { emoji: '🧃', texto: 'Presentación en vasos de 550ml estándar' },
-    { emoji: '🍵', texto: 'Opción mini en vasos de 300ml' },
-    { emoji: '🌿', texto: 'Decoración natural con frutas y hierbas frescas' },
-    { emoji: '📋', texto: 'Etiqueta personalizada con tu nombre de evento' },
+export class ExperienciaComponent {
+  readonly details = [
+    {
+      icon: 'glass',
+      title: 'Un sabor para compartir',
+      text: 'Vitrolero de vidrio templado de 20 litros. Tu mezcla favorita, al centro de la celebración.',
+      art: 'limon',
+      note: 'EL CORAZÓN DE LA FIESTA',
+    },
+    {
+      icon: 'ice',
+      title: 'Fresco, de principio a fin',
+      text: 'Hielo para mantener la temperatura y cucharón dosificador para servir a tus invitados.',
+      art: 'menta',
+      note: 'LISTO PARA DISFRUTARSE',
+    },
+    {
+      icon: 'leaf',
+      title: 'El detalle tropical',
+      text: 'Frutas y hierbas frescas que acompañan la presentación y le dan vida a tu mesa.',
+      art: 'pina',
+      note: 'TAMBIÉN ENTRA POR LOS OJOS',
+    },
+    {
+      icon: 'tag',
+      title: 'Un toque muy tuyo',
+      text: 'Etiqueta personalizada con el nombre de tu evento. Porque los pequeños detalles cuentan.',
+      art: 'fresa',
+      note: 'HECHO PARA TU MOMENTO',
+    },
   ];
-
-  constructor() {
-    afterNextRender(() => {
-      requestAnimationFrame(() => {
-        this.initAnimations();
-      });
-    });
-  }
-
-  private initAnimations() {
-    // Float continuo en stat cards (bobbing diferente para cada una)
-    gsap.to('.stat-card:nth-child(1)', { y: -8, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-    gsap.to('.stat-card:nth-child(2)', { y: -10, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 0.5 });
-    gsap.to('.stat-card:nth-child(3)', { y: -7, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1 });
-  }
-
-  ngOnDestroy() {
-    if (isPlatformBrowser(this.platformId)) {
-      gsap.killTweensOf('.stat-card');
-    }
-  }
 }

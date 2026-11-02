@@ -1,0 +1,99 @@
+:host {
+  display: block;
+}
+.exp-wrap {
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+}
+.exp-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 2px;
+  line-height: 1.6;
+  color: #667d5b;
+}
+.exp-heading {
+  font-size: clamp(30px, 3.5vw, 44px);
+  line-height: 1.2;
+  font-weight: 850;
+  letter-spacing: -1.5px;
+  margin: 12px 0 18px;
+  color: #193d30;
+}
+.exp-heading em {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+}
+.exp-copy {
+  color: #65725f;
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: 580px;
+}
+.exp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 14px 22px;
+  font-size: 14px;
+  font-weight: 850;
+  border-radius: 12px;
+  transition: background 0.2s;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.exp-button.yellow {
+  color: #193d30;
+  background: #e8d878;
+}
+.exp-button.yellow:hover {
+  background: #f4e5a0;
+}
+.exp-button.outline {
+  color: #e8eddf;
+  border: 1px solid #ffffff40;
+  background: #ffffff08;
+}
+.exp-button.outline:hover {
+  background: #ffffff15;
+}
+.exp-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+:host svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+:host :is(a, button, summary):focus-visible {
+  outline: 3px solid #bd9635;
+  outline-offset: 5px;
+}
+@media (max-width: 800px) {
+  .exp-wrap {
+    width: calc(100% - 40px);
+  }
+  .exp-heading {
+    font-size: 34px;
+  }
+}
+@media (max-width: 360px) {
+  .exp-wrap {
+    width: calc(100% - 28px);
+  }
+  .exp-heading {
+    font-size: 30px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :host * {
+    transition: none !important;
+  }
+}

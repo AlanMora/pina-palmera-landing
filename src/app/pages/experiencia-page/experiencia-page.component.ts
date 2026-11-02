@@ -4,7 +4,7 @@ import { ExperienciaComponent } from '../../components/experiencia/experiencia.c
 @Component({
   selector: 'app-experiencia-page',
   imports: [ExperienciaComponent],
-  template: `<app-experiencia />`,
+  template: `<main><app-experiencia /></main>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperienciaPageComponent {}

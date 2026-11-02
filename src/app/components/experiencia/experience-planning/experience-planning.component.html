@@ -1,0 +1,111 @@
+<section class="planning-section" aria-labelledby="event-cart-title">
+  <div class="exp-wrap">
+    <div class="event-cart">
+      <figure>
+        <img
+          src="/assets/images/experience-2-480.webp"
+          srcset="
+            /assets/images/experience-2-480.webp 480w,
+            /assets/images/experience-2-960.webp 960w
+          "
+          sizes="(max-width: 800px) 90vw, 45vw"
+          width="1199"
+          height="1199"
+          loading="lazy"
+          decoding="async"
+          alt="Carrito de madera Piña Palmera con cuatro vitroleros para un evento"
+        />
+        <figcaption><svg lucideLeaf aria-hidden="true"></svg> UN RINCÓN CON MUCHO SABOR</figcaption>
+      </figure>
+      <div class="event-cart-copy">
+        <p class="exp-eyebrow">HAZLO PARTE DE TU EVENTO</p>
+        <h2 id="event-cart-title" class="exp-heading">El carrito que <em>reúne a todos.</em></h2>
+        <p class="exp-copy">
+          Un punto de encuentro para tus invitados, con tus sabores favoritos y una presentación que
+          se disfruta desde que la ves.
+        </p>
+        <ul>
+          <li><svg lucideCheck aria-hidden="true"></svg> Hasta 4 vitroleros en el montaje</li>
+          <li><svg lucideCheck aria-hidden="true"></svg> Decoración con un toque tropical</li>
+          <li><svg lucideCheck aria-hidden="true"></svg> Combina los sabores de tu pedido</li>
+        </ul>
+        <div class="cart-price">
+          <div>
+            <span>Servicio adicional de carrito</span
+            ><strong>{{
+              cart.catalog.loading() ? 'Consultando…' : cart.catalog.money(cartPrice())
+            }}</strong
+            ><small>MXN · Adicional a los vitroleros</small>
+          </div>
+          @if (cart.incluirCarrito()) {
+            <span class="selected-badge"
+              ><svg lucideCheck aria-hidden="true"></svg> En tu pedido</span
+            >
+          }
+        </div>
+        <button
+          type="button"
+          class="exp-button yellow cart-toggle"
+          [attr.aria-pressed]="cart.incluirCarrito()"
+          [disabled]="!cart.incluirCarrito() && !canAddCart()"
+          (click)="toggleCart()"
+        >
+          @if (cart.incluirCarrito()) {
+            <svg lucideMinus aria-hidden="true"></svg> Quitar carrito del pedido
+          } @else {
+            <svg lucidePlus aria-hidden="true"></svg> Agregar carrito al pedido
+          }
+        </button>
+        <p class="cart-notice" role="status" aria-live="polite">{{ notice() }}</p>
+        <p class="cart-note">
+          La disponibilidad del carrito se confirma al elegir la fecha de tu evento.
+        </p>
+      </div>
+    </div>
+
+    <div class="how-to" aria-labelledby="planning-title">
+      <div class="planning-heading">
+        <p class="exp-eyebrow">DE TU ANTOJO A TU EVENTO</p>
+        <h2 id="planning-title" class="exp-heading">Así de fácil <em>empieza la fiesta.</em></h2>
+      </div>
+      <ol class="steps-grid">
+        @for (step of steps; track step.title; let i = $index) {
+          <li>
+            <span class="step-number">0{{ i + 1 }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.text }}</p>
+          </li>
+        }
+      </ol>
+    </div>
+
+    <div class="experience-faq">
+      <div>
+        <p class="exp-eyebrow">POR SI TE LO PREGUNTABAS</p>
+        <h2 class="exp-heading">Lo que te ayuda <em>a decidir.</em></h2>
+        <p class="exp-copy">Los detalles de tu pedido, claros desde el principio.</p>
+      </div>
+      <div class="faq-list">
+        @for (faq of faqs; track faq.question) {
+          <details>
+            <summary>{{ faq.question }}<svg lucideChevronDown aria-hidden="true"></svg></summary>
+            <p>{{ faq.answer }}</p>
+          </details>
+        }
+      </div>
+    </div>
+
+    <div class="experience-closing">
+      <svg lucideCalendarDays aria-hidden="true"></svg>
+      <p class="exp-eyebrow">TÚ PONES EL MOTIVO</p>
+      <h2>Nosotros, <em>lo refrescante.</em></h2>
+      <p>Tu próximo gran momento empieza con una buena mezcla.</p>
+      <div>
+        <a class="exp-button yellow" routerLink="/tienda"
+          ><svg lucideShoppingBag aria-hidden="true"></svg> Armar mi pedido
+          <svg lucideArrowRight aria-hidden="true"></svg></a
+        ><a class="exp-button outline" routerLink="/menu">Explorar sabores</a>
+      </div>
+    </div>
+  </div>
+</section>

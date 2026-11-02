@@ -1,0 +1,350 @@
+.planning-section {
+  background: #f7f5ec;
+  color: #193d30;
+  padding-block: 0 70px;
+}
+.event-cart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid #dbe1ce;
+  background: #fffaf0;
+}
+.event-cart figure {
+  position: relative;
+  min-height: 520px;
+  background: #d4dcc8;
+}
+.event-cart figure > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.event-cart figcaption {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f5f1dd;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid #ffffff24;
+  background: #123b2bd9;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+}
+.event-cart-copy {
+  padding: 42px;
+}
+.event-cart-copy .exp-heading {
+  font-size: 38px;
+}
+.event-cart-copy .exp-copy {
+  font-size: 14px;
+}
+.event-cart ul {
+  display: grid;
+  gap: 12px;
+  padding-block: 24px;
+}
+.event-cart li {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #53674c;
+}
+.event-cart li svg {
+  width: 16px;
+  height: 16px;
+  color: #6c8a55;
+  margin-top: 2px;
+}
+.cart-price {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  border-top: 1px solid #dce2d1;
+  padding-top: 20px;
+}
+.cart-price > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cart-price span,
+.cart-price small {
+  font-size: 10px;
+  color: #607554;
+}
+.cart-price strong {
+  font-size: 38px;
+  font-weight: 850;
+  letter-spacing: -1px;
+}
+.selected-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border-radius: 20px;
+  color: #315638 !important;
+  background: #e1ebd5;
+  font-weight: 850;
+}
+.selected-badge svg {
+  width: 12px;
+  height: 12px;
+}
+.cart-toggle {
+  margin-top: 24px;
+  width: 100%;
+}
+.cart-toggle[aria-pressed='true'] {
+  background: #e5ebdb;
+  border: 1px solid #b2c19e;
+}
+.cart-notice {
+  min-height: 31px;
+  padding-top: 8px;
+  font-size: 11px;
+  color: #476f40;
+  font-weight: 750;
+  line-height: 1.6;
+}
+.cart-note {
+  font-size: 10px;
+  color: #6a795f;
+  line-height: 1.8;
+}
+.how-to {
+  padding-top: 75px;
+}
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+.steps-grid li {
+  padding: 26px;
+  border-top: 1px solid #b8c6aa;
+}
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: #53714a;
+  background: #e7ecdb;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 850;
+  margin-bottom: 20px;
+}
+.steps-grid h3 {
+  font-size: 20px;
+  font-weight: 850;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+.steps-grid p {
+  color: #647259;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.experience-faq {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 60px;
+  border-top: 1px solid #d8decc;
+  padding-block: 55px;
+  margin-top: 35px;
+}
+.experience-faq .exp-heading {
+  font-size: 35px;
+}
+.experience-faq .exp-copy {
+  font-size: 14px;
+}
+.faq-list details {
+  border-bottom: 1px solid #d6ddc9;
+}
+.faq-list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+  min-height: 48px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 850;
+  list-style: none;
+}
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+.faq-list summary svg {
+  width: 17px;
+  height: 17px;
+  color: #6b805b;
+}
+.faq-list details[open] summary svg {
+  transform: rotate(180deg);
+}
+.faq-list details > p {
+  padding-bottom: 22px;
+  font-size: 13px;
+  color: #607354;
+  line-height: 1.9;
+}
+.experience-closing {
+  text-align: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 50px 25px;
+  border: 1px solid #426247;
+  background: #183d2b;
+  border-radius: 24px;
+  color: #f3f0de;
+}
+.experience-closing::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.1;
+  background: url('/assets/illustrations/flavors/hoja.svg') repeat 40px 10px / 170px;
+}
+.experience-closing > svg {
+  width: 28px;
+  height: 28px;
+  color: #cbd08e;
+  margin: 0 auto 20px;
+}
+.experience-closing .exp-eyebrow {
+  justify-content: center;
+  color: #bfc99a;
+}
+.experience-closing h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 850;
+  line-height: 1.25;
+  letter-spacing: -1.5px;
+  margin-block: 14px;
+}
+.experience-closing h2 em {
+  color: #e8d878;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.experience-closing > p:not(.exp-eyebrow) {
+  color: #cad3bd;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.experience-closing > div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+@media (max-width: 1100px) {
+  .event-cart-copy {
+    padding: 30px;
+  }
+  .event-cart-copy .exp-heading {
+    font-size: 33px;
+  }
+}
+@media (max-width: 800px) {
+  .event-cart {
+    grid-template-columns: 1fr;
+  }
+  .event-cart figure {
+    min-height: 350px;
+  }
+  .event-cart-copy {
+    padding: 28px;
+  }
+  .steps-grid {
+    gap: 12px;
+  }
+  .steps-grid li {
+    padding: 20px 12px;
+  }
+  .steps-grid h3 {
+    font-size: 17px;
+  }
+  .experience-faq {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-block: 40px;
+  }
+}
+@media (max-width: 560px) {
+  .planning-section {
+    padding-bottom: 45px;
+  }
+  .event-cart figure {
+    min-height: 270px;
+  }
+  .event-cart-copy {
+    padding: 25px 20px;
+  }
+  .event-cart-copy .exp-heading {
+    font-size: 32px;
+  }
+  .event-cart figcaption {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    font-size: 8px;
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .steps-grid li {
+    padding: 24px 0 24px 52px;
+    position: relative;
+  }
+  .step-number {
+    position: absolute;
+    left: 0;
+    top: 24px;
+  }
+  .steps-grid h3 {
+    font-size: 19px;
+  }
+  .how-to {
+    padding-top: 50px;
+  }
+  .experience-faq {
+    margin-top: 10px;
+  }
+  .experience-faq .exp-heading {
+    font-size: 31px;
+  }
+  .experience-closing {
+    padding: 35px 20px;
+  }
+  .experience-closing > div {
+    flex-direction: column;
+  }
+}
