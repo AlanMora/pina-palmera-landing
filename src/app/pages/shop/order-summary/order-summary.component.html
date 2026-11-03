@@ -1,0 +1,92 @@
+<aside class="cart-summary" aria-labelledby="order-title">
+  <span id="pedido" class="summary-scroll-target" aria-hidden="true"></span>
+  <div class="summary-title">
+    <div>
+      <p>TU CELEBRACIÓN TOMA FORMA</p>
+      <h2 id="order-title">Tu pedido</h2>
+    </div>
+    <span
+      >{{ cart.lineas().length }}
+      {{ cart.lineas().length === 1 ? 'vitrolero' : 'vitroleros' }}</span
+    >
+  </div>
+  @for (g of cart.grouped(); track g.key) {
+    <div class="cart-line">
+      <div>
+        <strong>{{ g.line.sabor }}</strong>
+        <p>
+          {{ g.line.endulzante === 'splenda' ? 'Splenda' : 'Morena / base' }} ·
+          {{ cart.catalog.money(cart.getPrecioLinea(g.line) * 100) }} c/u
+        </p>
+      </div>
+      <div class="quantity">
+        <div class="line-counter">
+          <button
+            type="button"
+            (click)="cart.eliminarLinea(g.ids[g.ids.length - 1])"
+            [attr.aria-label]="'Quitar una unidad de ' + g.line.sabor + ' con ' + g.line.endulzante"
+          >
+            <svg lucideMinus aria-hidden="true"></svg></button
+          ><output [attr.aria-label]="'Cantidad de ' + g.line.sabor">{{ g.quantity }}</output
+          ><button
+            type="button"
+            (click)="cart.addProduct(g.line.categoria, g.line.sabor, g.line.endulzante)"
+            [disabled]="!canAddLine(g.line)"
+            [attr.aria-label]="
+              'Agregar una unidad de ' + g.line.sabor + ' con ' + g.line.endulzante
+            "
+          >
+            <svg lucidePlus aria-hidden="true"></svg>
+          </button>
+        </div>
+        <button
+          type="button"
+          class="remove-line"
+          (click)="cart.removeGroup(g.ids)"
+          [attr.aria-label]="'Eliminar ' + g.line.sabor + ' con ' + g.line.endulzante"
+        >
+          <svg lucideTrash2 aria-hidden="true"></svg>
+        </button>
+      </div>
+    </div>
+  } @empty {
+    <div class="empty-cart">
+      <svg lucideShoppingBag aria-hidden="true"></svg>
+      <h3>Aquí empieza algo bueno.</h3>
+      <p>Agrega tu primer sabor y prepara una mezcla para compartir.</p>
+      <a routerLink="/menu">Explorar los sabores <svg lucideArrowRight aria-hidden="true"></svg></a>
+    </div>
+  }
+  <label class="check-field"
+    ><input
+      type="checkbox"
+      [ngModel]="cart.incluirCarrito()"
+      (ngModelChange)="cart.incluirCarrito.set($event)"
+      [disabled]="!cart.incluirCarrito() && !extraAvailable()"
+    /><span
+      >Agregar carrito para el evento<small>Servicio adicional a los vitroleros</small
+      ><strong>{{ cart.catalog.money(cart.catalog.settings()?.cartCents) }}</strong></span
+    ></label
+  >
+  <div class="summary-total">
+    <span>Subtotal</span><strong>{{ cart.catalog.money(cart.subtotalCents()) }}</strong>
+  </div>
+  <p class="summary-note">
+    El envío se calcula con tu código postal. Disponibilidad, entrega y total se confirman al
+    continuar.
+  </p>
+  @if (cart.pedidoValido()) {
+    <a class="checkout-button" routerLink="/reservar"
+      >Elegir fecha y continuar <svg lucideArrowRight aria-hidden="true"></svg
+    ></a>
+  } @else if (cart.lineas().length) {
+    <p role="alert" class="invalid-cart">
+      Hay sabores o precios que cambiaron. Revisa tu pedido para continuar.
+    </p>
+  } @else {
+    <p class="empty-note">Agrega al menos un vitrolero para elegir tu fecha.</p>
+  }
+  <a class="experience-link" routerLink="/experiencia"
+    >¿Qué incluye mi pedido? <svg lucideArrowRight aria-hidden="true"></svg
+  ></a>
+</aside>
