@@ -1,246 +1,156 @@
-<main class="commerce-page">
-  <div class="commerce-wrap">
-    <a routerLink="/tienda" class="back-link"><svg lucideArrowLeft></svg> Volver a mi carrito</a>
-    <header class="commerce-heading">
-      <span class="eyebrow">UN PASO MÁS CERCA DE TU EVENTO</span>
-      <h1>Todo listo para<br /><em>celebrar contigo.</em></h1>
-      <p>Fecha, entrega y pago. Tu reserva se confirma al recibir el importe requerido.</p>
+<main class="reservation-page">
+  <div class="reservation-wrap">
+    <a routerLink="/tienda" class="back-link"
+      ><svg lucideArrowLeft aria-hidden="true"></svg> Volver a mi pedido</a
+    >
+    <header class="reservation-heading">
+      <div>
+        <p class="eyebrow">
+          <svg lucideCalendarDays aria-hidden="true"></svg> HAGAMOS ESPACIO PARA CELEBRAR
+        </p>
+        <h1>Tu evento, <em>sin complicaciones.</em></h1>
+        <p>Elige la fecha, cuéntanos dónde y nosotros ponemos la mezcla.</p>
+      </div>
+      <span class="heading-badge"
+        ><svg lucideShieldCheck aria-hidden="true"></svg> Revisa el total antes de pagar</span
+      >
     </header>
-    @if (error()) {
-      <p role="alert" class="commerce-error">{{ error() }}</p>
-    }
     @if (!cart.lineas().length) {
-      <section class="glass-surface">
-        <h2>Tu carrito está vacío</h2>
-        <a routerLink="/tienda" class="commerce-button">Elegir mis sabores</a>
+      <section class="empty-reservation">
+        <span><svg lucideShoppingBag aria-hidden="true"></svg></span>
+        <h2>Todo empieza con tus sabores.</h2>
+        <p>Agrega tus aguas favoritas al pedido y después elige la fecha de tu evento.</p>
+        <a routerLink="/tienda" class="primary-button"
+          >Armar mi pedido <svg lucideArrowRight aria-hidden="true"></svg
+        ></a>
         @if (lastOrder()) {
-          <a [routerLink]="lastOrder()" class="commerce-button secondary">Ver mi último pedido</a>
+          <a [routerLink]="lastOrder()" class="last-order">Consultar mi último pedido</a>
         }
       </section>
     } @else {
-      <form [formGroup]="form" (ngSubmit)="review()" class="commerce-layout">
-        <div class="checkout-sections">
-          <section class="glass-surface">
-            <h2><span class="step">01</span>Fecha y servicio <svg lucideCalendarDays></svg></h2>
-            <p class="muted">
-              Hora de Guadalajara. Solo puedes elegir fechas con capacidad para tu carrito.
-            </p>
-            @if (calendarReady()) {
-              <div class="field-grid">
-                <mat-form-field appearance="outline" class="date-field"
-                  ><mat-label>Fecha del evento</mat-label
-                  ><input
-                    matInput
-                    [matDatepicker]="picker"
-                    formControlName="date"
-                    [min]="minDate"
-                    [max]="maxDate"
-                    [matDatepickerFilter]="dateFilter"
-                    readonly /><mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="picker"
-                  ></mat-datepicker-toggle
-                  ><mat-datepicker #picker></mat-datepicker></mat-form-field
-                ><label
-                  >Hora<select formControlName="time">
-                    <option value="">Elige un horario</option>
-                    @for (slot of slots(); track slot) {
-                      <option [value]="slot">{{ slot }}</option>
-                    }
-                  </select></label
-                >
-              </div>
-            } @else {
-              <p class="muted">Consultando disponibilidad…</p>
-              <button type="button" class="commerce-button secondary" (click)="loadCalendar()">
-                Actualizar calendario
-              </button>
-            }
-            <div class="field-grid">
-              <label
-                >Invitados<input type="number" min="10" max="500" formControlName="guests" /></label
-              ><label>Tipo de evento<input formControlName="eventType" maxlength="100" /></label>
-            </div>
-            <label class="check-field"
-              ><input type="checkbox" formControlName="cart" />Agregar carrito para el evento ·
-              {{ cart.catalog.money(cart.catalog.settings()?.cartCents) }}</label
-            >
-            <label class="check-field"
-              ><input type="checkbox" formControlName="delivery" />Quiero envío a domicilio</label
-            >
-            @if (form.controls.delivery.value) {
-              <div class="field-grid">
-                <label
-                  >Código postal<input
-                    formControlName="postalCode"
-                    inputmode="numeric"
-                    maxlength="5"
-                    autocomplete="postal-code" /></label
-                ><label
-                  >Dirección completa<input
-                    formControlName="address"
-                    maxlength="500"
-                    autocomplete="street-address"
-                /></label>
-              </div>
-              <p class="muted">
-                Calcularemos el costo y validaremos la cobertura al revisar tu total.
-              </p>
-            } @else {
-              <p class="pickup">
-                <svg lucideMapPin></svg> Recolección en Midtown Jalisco · Sin costo de envío
-              </p>
-            }
-          </section>
-          <section class="glass-surface">
-            <h2><span class="step">02</span>Tus datos</h2>
-            <label
-              >Nombre completo<input formControlName="name" autocomplete="name" maxlength="100"
-            /></label>
-            <div class="field-grid">
-              <label
-                >Teléfono (10 dígitos)<input
-                  formControlName="phone"
-                  inputmode="tel"
-                  autocomplete="tel-national"
-                  maxlength="10" /></label
-              ><label
-                >Correo electrónico<input
-                  type="email"
-                  formControlName="email"
-                  autocomplete="email"
-                  maxlength="200"
-              /></label>
-            </div>
-            <label
-              >Notas para tu evento<textarea
-                formControlName="notes"
-                rows="3"
-                maxlength="2000"
-              ></textarea>
-            </label>
-            <label class="check-field"
-              ><input type="checkbox" formControlName="recoveryConsent" />Quiero recibir un
-              recordatorio por correo si no termino esta compra.</label
-            >
-            <p class="muted">
-              Recibirás el enlace de seguimiento y las actualizaciones de tu pedido en este correo.
-            </p>
-          </section>
-        </div>
-        <aside class="glass-surface review-card">
-          <h2><span class="step">03</span>Revisa tu compra</h2>
-          <div class="review-lines">
-            @for (g of cart.grouped(); track g.key) {
-              <div>
-                <span
-                  >{{ g.quantity }} × {{ g.line.sabor }}<small>{{ g.line.endulzante }}</small></span
-                ><strong>{{
-                  cart.catalog.money(cart.getPrecioLinea(g.line) * g.quantity * 100)
-                }}</strong>
-              </div>
-            }
-          </div>
-          <label
-            >Código promocional (opcional)<input
-              formControlName="promoCode"
-              maxlength="30"
-              placeholder="Tu código"
-          /></label>
-          @if (quote(); as q) {
-            @if (q.merchant) {
-              <p class="mt-3 text-sm text-white/80">
-                Venta y facturación: {{ q.merchant.legalName }} · RFC {{ q.merchant.taxId }}
-              </p>
-            }
-            <dl>
-              <div>
-                <dt>Envío</dt>
-                <dd>{{ cart.catalog.money(q.shippingCents) }}</dd>
-              </div>
-              <div>
-                <dt>Carrito para el evento</dt>
-                <dd>{{ cart.catalog.money(q.cartCents) }}</dd>
-              </div>
-              @if (q.discountCents) {
-                <div>
-                  <dt>Descuento · {{ q.promoCode }}</dt>
-                  <dd>−{{ cart.catalog.money(q.discountCents) }}</dd>
-                </div>
-              }
-              <div class="quote-total">
-                <dt>Total MXN</dt>
-                <dd>{{ cart.catalog.money(q.totalCents) }}</dd>
-              </div>
-              <div>
-                <dt>Para confirmar hoy</dt>
-                <dd>{{ cart.catalog.money(q.depositCents) }}</dd>
-              </div>
-            </dl>
-            <p class="muted">
-              @if (q.balanceTiming === 'AFTER_EVENT') {
-                Anticipo hoy y saldo {{ q.balanceAfterHours }} horas después de finalizar el evento.
-                Fecha estimada: {{ q.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}; se
-                confirma al finalizar.
+      <nav aria-label="Pasos de la reserva" class="reservation-steps">
+        @for (item of steps; track item.number) {
+          <button
+            type="button"
+            [class.current]="step() === item.number"
+            [class.complete]="completed() >= item.number && step() !== item.number"
+            [attr.aria-current]="step() === item.number ? 'step' : null"
+            [disabled]="busy() || item.number > completed() + 1"
+            (click)="navigate(item.number)"
+          >
+            <span class="step-number">
+              @if (completed() >= item.number && step() !== item.number) {
+                <svg lucideCheck aria-hidden="true"></svg>
               } @else {
-                Saldo a liquidar antes del
-                {{ q.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}.
+                0{{ item.number }}
               }
-              Devolución de equipos: {{ q.returnDate }}.
-            </p>
-            <p class="muted">
-              Cancelaciones hasta {{ q.cancellationDeadline | date: 'dd/MM/yyyy HH:mm' : '-0600' }}:
-              {{ q.refundPercent }}% del importe pagado es elegible para devolución. Después de ese
-              plazo no aplica devolución automática.
-            </p>
-            @if (q.balanceTiming !== 'AFTER_EVENT') {
-              <p class="muted">
-                Si no liquidas a tiempo, la entrega se bloquea. Plazo de gracia:
-                {{ q.lateBalanceGraceHours }} horas. Después:
-                {{
-                  q.overduePolicy === 'CANCEL'
-                    ? 'cancelación automática, sujeta a resolución de pagos pendientes'
-                    : 'revisión por nuestro equipo'
-                }}.
+            </span>
+            <span
+              >{{ item.label }}<small>{{ item.detail }}</small></span
+            >
+          </button>
+        }
+      </nav>
+      <div class="reservation-layout">
+        <form [formGroup]="form" (ngSubmit)="next()" class="reservation-main" novalidate>
+          <fieldset [disabled]="busy()">
+            <div class="form-heading">
+              <div>
+                <p class="eyebrow">PASO 0{{ step() }} DE 03</p>
+                <h2 id="reservation-step-title" tabindex="-1">
+                  {{
+                    step() === 1
+                      ? '¿Cuándo celebramos?'
+                      : step() === 2
+                        ? '¿Cómo te contactamos?'
+                        : 'Tu celebración, en orden.'
+                  }}
+                </h2>
+                <p>
+                  {{
+                    step() === 1
+                      ? 'Elige el servicio para ver las fechas que podemos atender.'
+                      : step() === 2
+                        ? 'Solo necesitamos los datos para coordinar tu pedido.'
+                        : 'Confirma los detalles y el importe antes de elegir cómo pagar.'
+                  }}
+                </p>
+              </div>
+              <svg lucideCalendarDays aria-hidden="true"></svg>
+            </div>
+            @if (error()) {
+              <p role="alert" class="reservation-error">
+                <svg lucideCircleAlert aria-hidden="true"></svg>{{ error() }}
               </p>
             }
-            <label class="check-field"
-              ><input type="checkbox" [formControl]="form.controls.whatsappConsent" />Acepto
-              mensajes de Piña Palmera por WhatsApp sobre este evento, la encuesta y sus pagos.
-              Puedo darme de baja después.</label
-            >
-            <p class="quote-expiry">
-              Total válido hasta {{ q.expiresAt | date: 'HH:mm' : '-0600' }}. La disponibilidad se
-              reserva al continuar.
+            @if (step() === 1) {
+              <app-reservation-schedule
+                [form]="form"
+                [calendarReady]="calendarReady()"
+                [calendarLoading]="calendarLoading()"
+                [calendarError]="calendarError()"
+                [dateFilter]="dateFilter()"
+                [slots]="slots()"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                (dateSelected)="selectDate($event)"
+                (retryCalendar)="loadCalendar()"
+              />
+            } @else if (step() === 2) {
+              <app-reservation-contact [form]="form" />
+            } @else {
+              <app-reservation-review
+                [form]="form"
+                [quote]="quote()"
+                [expired]="quoteExpired()"
+                (editStep)="navigate($event)"
+              />
+            }
+            <div class="form-actions">
+              @if (step() > 1) {
+                <button
+                  type="button"
+                  class="previous-button"
+                  (click)="navigate(step() === 3 ? 2 : 1)"
+                >
+                  <svg lucideArrowLeft aria-hidden="true"></svg> Atrás
+                </button>
+              }
+              <button
+                type="submit"
+                class="primary-button"
+                [disabled]="
+                  busy() ||
+                  (step() === 1 && !calendarReady()) ||
+                  (step() === 3 && quote() && !quoteExpired() && !form.controls.accepted.value)
+                "
+              >
+                @if (busy()) {
+                  <span class="button-spinner" aria-hidden="true"></span>{{ busyLabel() }}
+                } @else {
+                  {{
+                    step() === 1
+                      ? 'Continuar con mis datos'
+                      : step() === 2
+                        ? 'Revisar mi total'
+                        : !quote() || quoteExpired()
+                          ? 'Actualizar total'
+                          : 'Reservar y elegir pago'
+                  }}<svg lucideArrowRight aria-hidden="true"></svg>
+                }
+              </button>
+            </div>
+            <p class="action-hint">
+              {{
+                step() === 3 && quote() && !quoteExpired()
+                  ? 'Al continuar crearemos tu pedido. La reserva se confirma con el pago requerido.'
+                  : 'Puedes regresar y ajustar tus datos antes de confirmar.'
+              }}
             </p>
-            <label class="check-field"
-              ><input
-                type="checkbox"
-                [checked]="form.controls.accepted.value"
-                (change)="accept($event)"
-              />Acepto el total, las fechas de pago y las condiciones de cancelación.</label
-            ><button
-              type="button"
-              class="commerce-button"
-              [disabled]="busy() || !form.controls.accepted.value"
-              (click)="place()"
-            >
-              {{ busy() ? 'Creando tu pedido…' : 'Reservar y elegir pago' }}
-            </button>
-          } @else {
-            <p class="muted">
-              Confirmaremos precios, cobertura y disponibilidad antes de crear tu pedido.
-            </p>
-            <button class="commerce-button" [disabled]="busy() || !calendarReady()">
-              {{ busy() ? 'Verificando…' : 'Revisar total y disponibilidad' }}
-            </button>
-          }
-          <p class="secure-note">
-            <svg lucideShieldCheck></svg> Pago seguro con Stripe. También puedes consultar las
-            opciones de transferencia.
-          </p>
-        </aside>
-      </form>
+          </fieldset>
+        </form>
+        <app-reservation-summary [values]="formSnapshot()" [quote]="quote()" [step]="step()" />
+      </div>
     }
   </div>
 </main>

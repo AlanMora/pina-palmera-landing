@@ -1,0 +1,186 @@
+<div [formGroup]="form()">
+  <fieldset class="service-choice">
+    <legend>¿Cómo quieres recibir tu pedido?</legend>
+    <div class="service-grid">
+      <label class="service-option"
+        ><input type="radio" formControlName="delivery" [value]="false" /><svg
+          lucideMapPin
+          aria-hidden="true"
+        ></svg
+        ><span>Recoger mi pedido<small>Midtown Jalisco · Sin costo de envío</small></span
+        ><span class="radio-dot" aria-hidden="true"></span
+      ></label>
+      <label class="service-option"
+        ><input type="radio" formControlName="delivery" [value]="true" /><svg
+          lucideTruck
+          aria-hidden="true"
+        ></svg
+        ><span>Entrega a domicilio<small>Costo y cobertura según tu código postal</small></span
+        ><span class="radio-dot" aria-hidden="true"></span
+      ></label>
+    </div>
+  </fieldset>
+  @if (form().controls.delivery.value) {
+    <div class="delivery-fields field-grid">
+      <div class="field">
+        <label for="reservation-postal">Código postal</label
+        ><input
+          id="reservation-postal"
+          formControlName="postalCode"
+          inputmode="numeric"
+          autocomplete="postal-code"
+          maxlength="5"
+          placeholder="Ej. 44630"
+          [attr.aria-invalid]="!!fieldError(form(), 'postalCode')"
+          aria-describedby="postal-error postal-hint"
+        />
+        <p id="postal-hint" class="field-hint">Validaremos la cobertura al revisar el total.</p>
+        @if (fieldError(form(), 'postalCode'); as message) {
+          <p class="field-error" id="postal-error">{{ message }}</p>
+        }
+      </div>
+      <div class="field">
+        <label for="reservation-address">Dirección de entrega</label
+        ><input
+          id="reservation-address"
+          formControlName="address"
+          autocomplete="street-address"
+          maxlength="500"
+          placeholder="Calle, número, colonia y municipio"
+          [attr.aria-invalid]="!!fieldError(form(), 'address')"
+          aria-describedby="address-error"
+        />
+        @if (fieldError(form(), 'address'); as message) {
+          <p class="field-error" id="address-error">{{ message }}</p>
+        }
+      </div>
+    </div>
+  }
+  <label class="check-option event-extra"
+    ><input type="checkbox" formControlName="cart" /><svg lucideSparkles aria-hidden="true"></svg
+    ><span
+      >Agregar carrito para el evento<small
+        >Servicio adicional · {{ cart.catalog.money(cart.catalog.settings()?.cartCents) }}</small
+      ></span
+    ></label
+  >
+  <div class="section-divider"></div>
+  <div class="calendar-title">
+    <svg lucideCalendarDays aria-hidden="true"></svg>
+    <div>
+      <h3>Elige tu fecha</h3>
+      <p>Las fechas habilitadas tienen capacidad para tu pedido y servicio.</p>
+    </div>
+  </div>
+  @if (calendarReady()) {
+    <div class="date-time-grid">
+      <div
+        class="calendar-box"
+        [class.invalid]="!!fieldError(form(), 'date')"
+        [attr.aria-invalid]="!!fieldError(form(), 'date')"
+        tabindex="-1"
+        aria-describedby="date-error"
+      >
+        <mat-calendar
+          [selected]="form().controls.date.value"
+          [minDate]="minDate()"
+          [maxDate]="maxDate()"
+          [dateFilter]="dateFilter()"
+          (selectedChange)="dateSelected.emit($event)"
+          aria-label="Fecha del evento"
+        />
+        <p class="calendar-legend">
+          <span aria-hidden="true"></span> Fecha elegida
+          <small>Los días atenuados no están disponibles</small>
+        </p>
+      </div>
+      <div class="time-panel">
+        <p class="field-title"><svg lucideClock3 aria-hidden="true"></svg> Horario del servicio</p>
+        <p class="selected-date">{{ dateLabel(form().controls.date.value) }}</p>
+        @if (form().controls.date.value && dateFilter()(form().controls.date.value)) {
+          <fieldset
+            class="time-slots"
+            tabindex="-1"
+            [attr.aria-invalid]="!!fieldError(form(), 'time')"
+            aria-describedby="time-error"
+          >
+            <legend class="sr-only">Elige un horario</legend>
+            @for (slot of slots(); track slot) {
+              <label
+                ><input type="radio" formControlName="time" [value]="slot" /><span>{{
+                  slot
+                }}</span></label
+              >
+            }
+          </fieldset>
+        } @else {
+          <p class="time-placeholder">
+            Selecciona una fecha disponible para consultar los horarios.
+          </p>
+        }
+        @if (fieldError(form(), 'time'); as message) {
+          <p class="field-error" id="time-error">{{ message }}</p>
+        }
+        <p class="timezone-note">Todos los horarios corresponden a Guadalajara.</p>
+      </div>
+    </div>
+    @if (fieldError(form(), 'date'); as message) {
+      <p class="field-error" id="date-error" role="alert">{{ message }}</p>
+    }
+  } @else {
+    <div class="calendar-state" role="status">
+      <svg lucideCalendarDays aria-hidden="true"></svg>
+      <h3>{{ calendarLoading() ? 'Buscando un buen día…' : 'Vamos a consultar las fechas' }}</h3>
+      <p>{{ calendarError() || 'Estamos consultando la disponibilidad real para tu evento.' }}</p>
+      @if (!calendarLoading()) {
+        <button type="button" (click)="retryCalendar.emit()">
+          <svg lucideRefreshCw aria-hidden="true"></svg> Cargar calendario
+        </button>
+      }
+    </div>
+  }
+  <div class="section-divider"></div>
+  <div class="field-grid">
+    <div class="field">
+      <label for="reservation-guests">Número de invitados</label
+      ><input
+        id="reservation-guests"
+        type="number"
+        formControlName="guests"
+        min="10"
+        max="500"
+        step="1"
+        inputmode="numeric"
+        [attr.aria-invalid]="!!fieldError(form(), 'guests')"
+        aria-describedby="guests-error guests-hint"
+      />
+      <p id="guests-hint" class="field-hint">
+        De 10 a 500 personas. Nos ayuda a coordinar el servicio.
+      </p>
+      @if (fieldError(form(), 'guests'); as message) {
+        <p class="field-error" id="guests-error">{{ message }}</p>
+      }
+    </div>
+    <div class="field">
+      <label for="reservation-event">Tipo de evento</label
+      ><input
+        id="reservation-event"
+        formControlName="eventType"
+        maxlength="100"
+        list="event-suggestions"
+        placeholder="Ej. Cumpleaños, boda, reunión"
+        [attr.aria-invalid]="!!fieldError(form(), 'eventType')"
+        aria-describedby="event-error"
+      /><datalist id="event-suggestions">
+        <option value="Cumpleaños"></option>
+        <option value="Boda"></option>
+        <option value="Reunión familiar"></option>
+        <option value="Evento empresarial"></option>
+        <option value="Celebración"></option>
+      </datalist>
+      @if (fieldError(form(), 'eventType'); as message) {
+        <p class="field-error" id="event-error">{{ message }}</p>
+      }
+    </div>
+  </div>
+</div>

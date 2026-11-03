@@ -1,0 +1,135 @@
+<div [formGroup]="form()">
+  <div class="review-details">
+    <section>
+      <div class="detail-title">
+        <svg lucideCalendarDays aria-hidden="true"></svg>
+        <h3>Tu evento</h3>
+        <button type="button" (click)="editStep.emit(1)">
+          Editar fecha y entrega <svg lucideArrowRight aria-hidden="true"></svg>
+        </button>
+      </div>
+      <strong
+        >{{ dateLabel(form().controls.date.value) }} · {{ form().controls.time.value }}</strong
+      >
+      <p>
+        {{
+          form().controls.delivery.value ? 'Entrega a domicilio' : 'Recolección en Midtown Jalisco'
+        }}
+      </p>
+      @if (form().controls.delivery.value) {
+        <p>{{ form().controls.address.value }} · CP {{ form().controls.postalCode.value }}</p>
+      }
+      <p>{{ form().controls.guests.value }} invitados · {{ form().controls.eventType.value }}</p>
+    </section>
+    <section>
+      <div class="detail-title">
+        <svg lucideUserRound aria-hidden="true"></svg>
+        <h3>Tus datos</h3>
+        <button type="button" (click)="editStep.emit(2)">
+          Editar contacto <svg lucideArrowRight aria-hidden="true"></svg>
+        </button>
+      </div>
+      <strong>{{ form().controls.name.value }}</strong>
+      <p>{{ form().controls.phone.value }}</p>
+      <p>{{ form().controls.email.value }}</p>
+    </section>
+  </div>
+  @if (quote(); as q) {
+    <section class="payment-plan">
+      <p class="plan-eyebrow">
+        <svg lucideShieldCheck aria-hidden="true"></svg> IMPORTES CONFIRMADOS
+      </p>
+      <div class="final-total">
+        <span>Total del pedido<small>MXN · Incluye los servicios seleccionados</small></span
+        ><strong>{{ cart.catalog.money(q.totalCents) }}</strong>
+      </div>
+      <div class="payment-split">
+        <div>
+          <span class="payment-number">01</span>
+          <p>
+            Para confirmar<strong>{{ cart.catalog.money(q.depositCents) }}</strong
+            ><small>Pago requerido para tu reserva</small>
+          </p>
+        </div>
+        <div>
+          <span class="payment-number">02</span>
+          <p>
+            Saldo restante<strong>{{ cart.catalog.money(q.totalCents - q.depositCents) }}</strong
+            ><small>{{
+              q.balanceTiming === 'AFTER_EVENT' ? 'Después del evento' : 'Antes del evento'
+            }}</small>
+          </p>
+        </div>
+      </div>
+      @if (q.balanceTiming === 'AFTER_EVENT') {
+        <p class="balance-note">
+          El saldo se solicita {{ q.balanceAfterHours }} horas después de finalizar el evento. Fecha
+          estimada: {{ q.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}; se confirma al
+          finalizar.
+        </p>
+      } @else {
+        <p class="balance-note">
+          Liquida el saldo antes del {{ q.balanceDueAt | date: 'dd/MM/yyyy HH:mm' : '-0600' }}.
+        </p>
+      }
+      @if (q.merchant) {
+        <p class="merchant-note">
+          Venta y facturación: {{ q.merchant.legalName }} · RFC {{ q.merchant.taxId }}
+        </p>
+      }
+    </section>
+    <details class="booking-conditions">
+      <summary>
+        Condiciones de reserva y cancelación <svg lucideArrowRight aria-hidden="true"></svg>
+      </summary>
+      <p>
+        Cancelaciones hasta {{ q.cancellationDeadline | date: 'dd/MM/yyyy HH:mm' : '-0600' }}:
+        {{ q.refundPercent }}% del importe pagado es elegible para devolución. Después de ese plazo
+        no aplica devolución automática.
+      </p>
+      <p>Devolución de equipos: {{ q.returnDate }}.</p>
+      @if (q.balanceTiming !== 'AFTER_EVENT') {
+        <p>
+          Si no liquidas a tiempo, la entrega se bloquea. Plazo de gracia:
+          {{ q.lateBalanceGraceHours }} horas. Después:
+          {{
+            q.overduePolicy === 'CANCEL'
+              ? 'cancelación automática, sujeta a resolución de pagos pendientes'
+              : 'revisión por nuestro equipo'
+          }}.
+        </p>
+      }
+    </details>
+    <label class="check-option whatsapp-consent"
+      ><input type="checkbox" formControlName="whatsappConsent" /><span
+        >Quiero recibir mensajes por WhatsApp sobre mi evento.<small
+          >Opcional. Incluye coordinación, encuesta y pagos. Puedes darte de baja después.</small
+        ></span
+      ></label
+    >
+    <p class="quote-validity" [class.expired]="expired()" role="status">
+      <svg lucideClock3 aria-hidden="true"></svg
+      >{{
+        expired()
+          ? 'Este total venció. Actualízalo para confirmar precios y disponibilidad.'
+          : 'Total válido hasta las ' +
+            (q.expiresAt | date: 'HH:mm' : '-0600') +
+            ' h. Al continuar se solicita la reserva de disponibilidad.'
+      }}
+    </p>
+    <label class="check-option accept-conditions"
+      ><input type="checkbox" formControlName="accepted" /><span
+        >Acepto el total, las fechas de pago y las condiciones de cancelación.</span
+      ></label
+    >
+  } @else {
+    <div class="refresh-quote">
+      <svg lucideClock3 aria-hidden="true"></svg>
+      <h3>Vamos a confirmar tu total.</h3>
+      <p>
+        Tu pedido cambió. Actualiza el total para verificar los precios y la disponibilidad antes de
+        reservar.
+      </p>
+    </div>
+  }
+</div>

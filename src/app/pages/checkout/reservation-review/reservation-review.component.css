@@ -1,0 +1,260 @@
+.review-details {
+  display: grid;
+  gap: 16px;
+}
+.review-details section {
+  padding: 20px;
+  border: 1px solid #dbe2cc;
+  border-radius: 16px;
+  background: #f5f6ec;
+}
+.detail-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 13px;
+}
+.detail-title > svg {
+  width: 16px;
+  height: 16px;
+  color: #7b9168;
+}
+.detail-title h3 {
+  font-size: 12px;
+  font-weight: 800;
+}
+.detail-title button {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-left: auto;
+  min-height: 44px;
+  cursor: pointer;
+}
+.detail-title button svg {
+  width: 12px;
+  height: 12px;
+}
+.review-details strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.review-details p {
+  color: #718266;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.payment-plan {
+  padding: 26px;
+  background: radial-gradient(ellipse at top right, #71874d44, transparent 80%), #224833;
+  border-radius: 20px;
+  color: #fbf4da;
+  margin-top: 24px;
+}
+.plan-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  color: #d6d59d;
+}
+.plan-eyebrow svg {
+  width: 15px;
+  height: 15px;
+}
+.final-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  margin-block: 24px;
+}
+.final-total > span {
+  font-size: 14px;
+  font-weight: 700;
+}
+.final-total small {
+  display: block;
+  color: #c6d2b6;
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 5px;
+  line-height: 1.7;
+}
+.final-total > strong {
+  font-size: 32px;
+  font-weight: 850;
+  letter-spacing: -1px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.payment-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-top: 1px solid #ffffff26;
+  padding-top: 22px;
+}
+.payment-split > div {
+  display: flex;
+  gap: 9px;
+  align-items: start;
+}
+.payment-number {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1px solid #ffffff40;
+  color: #e7d982;
+  flex: 0 0 24px;
+  font-size: 9px;
+  font-weight: 750;
+}
+.payment-split p {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #d6dec9;
+}
+.payment-split strong {
+  display: block;
+  font-size: 23px;
+  font-weight: 850;
+  color: #f0e2a0;
+  margin-block: 7px;
+}
+.payment-split small {
+  font-size: 10px;
+}
+.balance-note,
+.merchant-note {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #d3ddc4;
+  margin-top: 22px;
+}
+.merchant-note {
+  padding-top: 16px;
+  border-top: 1px solid #ffffff26;
+}
+.booking-conditions {
+  margin-top: 20px;
+  border: 1px solid #dbe2cc;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.booking-conditions summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.6;
+  cursor: pointer;
+  min-height: 44px;
+  list-style: none;
+}
+.booking-conditions summary::-webkit-details-marker {
+  display: none;
+}
+.booking-conditions summary svg {
+  width: 16px;
+  height: 16px;
+  transform: rotate(90deg);
+}
+.booking-conditions[open] summary svg {
+  transform: rotate(-90deg);
+}
+.booking-conditions p {
+  font-size: 11px;
+  color: #748468;
+  line-height: 1.8;
+  margin-top: 14px;
+}
+.whatsapp-consent {
+  margin-top: 22px;
+}
+.quote-validity {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  margin-block: 20px;
+  font-size: 11px;
+  color: #76845f;
+  line-height: 1.8;
+}
+.quote-validity svg {
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+}
+.quote-validity.expired {
+  color: #9b4d31;
+}
+.accept-conditions {
+  background: #fcf8e7;
+  border-color: #dfd5ae;
+}
+.refresh-quote {
+  padding: 30px 18px;
+  text-align: center;
+  border: 1px dashed #bdcba9;
+  border-radius: 18px;
+  margin-top: 24px;
+}
+.refresh-quote > svg {
+  margin: 0 auto 15px;
+  color: #82996b;
+  width: 28px;
+  height: 28px;
+}
+.refresh-quote h3 {
+  font-size: 18px;
+  font-weight: 850;
+}
+.refresh-quote p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #738465;
+  margin-top: 10px;
+}
+@media (max-width: 600px) {
+  .payment-plan {
+    padding: 22px 18px;
+  }
+  .final-total {
+    flex-direction: column;
+    align-items: start;
+    gap: 12px;
+  }
+  .final-total > strong {
+    font-size: 34px;
+  }
+  .payment-split {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .detail-title {
+    flex-wrap: wrap;
+  }
+  .detail-title button {
+    justify-content: start;
+    margin-left: 0;
+  }
+  .review-details section {
+    padding: 18px;
+  }
+}

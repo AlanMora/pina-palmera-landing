@@ -1,0 +1,121 @@
+<div [formGroup]="form()">
+  <div class="contact-intro">
+    <span><svg lucideUserRound aria-hidden="true"></svg></span>
+    <p>
+      Una persona, un evento, una buena mezcla.<br /><strong
+        >Así podremos coordinar todo contigo.</strong
+      >
+    </p>
+  </div>
+  <div class="field">
+    <label for="reservation-name">Nombre completo</label
+    ><input
+      id="reservation-name"
+      formControlName="name"
+      autocomplete="name"
+      maxlength="100"
+      placeholder="¿A nombre de quién va el pedido?"
+      [attr.aria-invalid]="!!fieldError(form(), 'name')"
+      aria-describedby="name-error"
+    />
+    @if (fieldError(form(), 'name'); as message) {
+      <p class="field-error" id="name-error">{{ message }}</p>
+    }
+  </div>
+  <div class="field-grid">
+    <div class="field">
+      <label for="reservation-phone"
+        ><svg lucidePhone aria-hidden="true"></svg> Teléfono de contacto</label
+      ><input
+        id="reservation-phone"
+        type="tel"
+        formControlName="phone"
+        inputmode="tel"
+        autocomplete="tel-national"
+        maxlength="24"
+        placeholder="Ej. 33 1234 5678"
+        [attr.aria-invalid]="!!fieldError(form(), 'phone')"
+        aria-describedby="phone-error phone-hint"
+      />
+      <p class="field-hint" id="phone-hint">10 dígitos. También puedes pegar tu número con +52.</p>
+      @if (fieldError(form(), 'phone'); as message) {
+        <p class="field-error" id="phone-error">{{ message }}</p>
+      }
+    </div>
+    <div class="field">
+      <label for="reservation-email"
+        ><svg lucideMail aria-hidden="true"></svg> Correo electrónico</label
+      ><input
+        id="reservation-email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        inputmode="email"
+        autocapitalize="none"
+        spellcheck="false"
+        maxlength="200"
+        placeholder="nombre@correo.com"
+        [attr.aria-invalid]="!!fieldError(form(), 'email')"
+        aria-describedby="email-error email-hint"
+      />
+      <p class="field-hint" id="email-hint">
+        Aquí recibirás el enlace de seguimiento de tu pedido.
+      </p>
+      @if (fieldError(form(), 'email'); as message) {
+        <p class="field-error" id="email-error">{{ message }}</p>
+      }
+    </div>
+  </div>
+  <details class="optional-notes">
+    <summary>
+      <svg lucideMessageSquare aria-hidden="true"></svg>
+      <span class="optional-label">¿Hay algo que debamos saber?</span
+      ><span class="optional-tag">Opcional</span>
+    </summary>
+    <div class="field">
+      <label for="reservation-notes">Notas para tu evento</label
+      ><textarea
+        id="reservation-notes"
+        formControlName="notes"
+        rows="3"
+        maxlength="2000"
+        placeholder="Indicaciones de acceso o detalles para coordinar la entrega…"
+        [attr.aria-invalid]="!!fieldError(form(), 'notes')"
+        aria-describedby="notes-error"
+      ></textarea>
+      @if (fieldError(form(), 'notes'); as message) {
+        <p class="field-error" id="notes-error">{{ message }}</p>
+      }
+    </div>
+  </details>
+  <label class="check-option contact-consent"
+    ><input type="checkbox" formControlName="recoveryConsent" /><span
+      >Envíame un recordatorio si no termino esta compra.<small
+        >Opcional. Lo recibirás en tu correo electrónico.</small
+      ></span
+    ></label
+  >
+  <details class="optional-notes" [open]="!!fieldError(form(), 'promoCode')">
+    <summary>
+      <span class="optional-label">¿Tienes un código promocional?</span
+      ><span class="optional-tag">Opcional</span>
+    </summary>
+    <div class="field">
+      <label for="reservation-promo">Código promocional</label
+      ><input
+        id="reservation-promo"
+        formControlName="promoCode"
+        maxlength="30"
+        placeholder="Escribe tu código"
+        autocapitalize="characters"
+        spellcheck="false"
+        [attr.aria-invalid]="!!fieldError(form(), 'promoCode')"
+        aria-describedby="promo-error"
+      />
+      @if (fieldError(form(), 'promoCode'); as message) {
+        <p class="field-error" id="promo-error">{{ message }}</p>
+      }
+      <p class="field-hint">Se validará al revisar tu total.</p>
+    </div>
+  </details>
+</div>

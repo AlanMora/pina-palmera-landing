@@ -1,0 +1,108 @@
+<aside class="reservation-summary" aria-label="Resumen de tu pedido">
+  <details class="summary-expand" [open]="wide() || step() === 3">
+    <summary class="summary-heading">
+      <p>LA MEZCLA PARA TU EVENTO</p>
+      <div>
+        <h2><svg lucideShoppingBag aria-hidden="true"></svg> Tu pedido</h2>
+        <span>{{ cart.lineas().length }} × 20 L</span>
+      </div>
+      <span class="mobile-summary-total"
+        >{{ cart.catalog.money(quote()?.totalCents ?? subtotal())
+        }}<small
+          >{{ quote() ? 'Total' : 'Subtotal' }} · Ver pedido
+          <svg lucideChevronDown aria-hidden="true"></svg></small
+      ></span>
+    </summary>
+    <div class="summary-body">
+      <details class="order-detail" [open]="step() === 3">
+        <summary>
+          <span
+            >{{ cart.lineas().length }}
+            {{ cart.lineas().length === 1 ? 'vitrolero' : 'vitroleros' }} · Ver detalle</span
+          ><svg lucideChevronDown aria-hidden="true"></svg>
+        </summary>
+        <div class="order-lines">
+          @for (g of cart.grouped(); track g.key) {
+            <div class="summary-line">
+              <span
+                class="flavor-art"
+                [style.background-color]="artwork(g.line.sabor).wash"
+                [style.background-image]="artwork(g.line.sabor).background"
+                aria-hidden="true"
+              ></span>
+              <p>
+                <strong>{{ g.quantity }} × {{ g.line.sabor }}</strong
+                ><small>{{ g.line.endulzante === 'splenda' ? 'Splenda' : 'Morena / base' }}</small>
+              </p>
+              <span>{{ cart.catalog.money(cart.getPrecioLinea(g.line) * g.quantity * 100) }}</span>
+            </div>
+          }
+        </div>
+      </details>
+      <a routerLink="/tienda" class="edit-flavors"
+        >Editar sabores y cantidades <svg lucideArrowRight aria-hidden="true"></svg
+      ></a>
+      <dl class="service-overview">
+        <div>
+          <dt>Fecha</dt>
+          <dd>{{ dateLabel(values().date ?? null) }}</dd>
+        </div>
+        @if (values().time) {
+          <div>
+            <dt>Horario</dt>
+            <dd>{{ values().time }} h</dd>
+          </div>
+        }
+        <div>
+          <dt>Servicio</dt>
+          <dd>{{ values().delivery ? 'Entrega a domicilio' : 'Recolección en Midtown' }}</dd>
+        </div>
+        @if (values().cart) {
+          <div>
+            <dt>Carrito de eventos</dt>
+            <dd>Incluido como extra</dd>
+          </div>
+        }
+      </dl>
+      @if (quote(); as q) {
+        <dl class="amount-lines">
+          <div>
+            <dt>Vitroleros</dt>
+            <dd>{{ cart.catalog.money(cart.precioBase() * 100) }}</dd>
+          </div>
+          <div>
+            <dt>Envío</dt>
+            <dd>{{ cart.catalog.money(q.shippingCents) }}</dd>
+          </div>
+          @if (q.cartCents) {
+            <div>
+              <dt>Carrito de eventos</dt>
+              <dd>{{ cart.catalog.money(q.cartCents) }}</dd>
+            </div>
+          }
+          @if (q.discountCents) {
+            <div>
+              <dt>Descuento · {{ q.promoCode }}</dt>
+              <dd>−{{ cart.catalog.money(q.discountCents) }}</dd>
+            </div>
+          }
+        </dl>
+      }
+      <div class="summary-total">
+        <span>{{ quote() ? 'Total MXN' : 'Subtotal MXN' }}</span
+        ><strong>{{ cart.catalog.money(quote()?.totalCents ?? subtotal()) }}</strong>
+      </div>
+      <p class="summary-note">
+        {{
+          quote()
+            ? 'Confirma el importe y las condiciones en el último paso.'
+            : 'Incluye productos y extras seleccionados. El envío, descuentos y total se confirman al revisar.'
+        }}
+      </p>
+    </div>
+    <p class="secure-note">
+      <svg lucideShieldCheck aria-hidden="true"></svg> Primero revisas, después eliges tu pago.
+      Stripe y opciones de transferencia disponibles al continuar.
+    </p>
+  </details>
+</aside>
