@@ -59,7 +59,13 @@ export class CalculadoraService {
     });
   }
   addProduct(categoria: Categoria, sabor: string, endulzante: Endulzante, quantity = 1) {
+    const category = this.catalog.categories().find((item) => item.id === categoria);
     if (
+      this.catalog.loading() ||
+      this.catalog.error() ||
+      !category?.available ||
+      !Number.isInteger(quantity) ||
+      quantity < 1 ||
       !this.getSabores(categoria).includes(sabor) ||
       !Number.isFinite(this.catalog.price(categoria, endulzante))
     )
@@ -102,10 +108,17 @@ export class CalculadoraService {
   readonly pedidoValido = computed(
     () =>
       !!this.catalog.data() &&
+      !this.catalog.loading() &&
+      !this.catalog.error() &&
+      (!this.incluirCarrito() ||
+        (Number.isFinite(this.catalog.settings()?.cartCents) &&
+          (this.catalog.settings()?.cartCents ?? -1) >= 0)) &&
       this.lineas().length > 0 &&
       this.lineasPedido().every(
         (l) =>
-          this.getSabores(l.categoria).includes(l.sabor) && Number.isFinite(this.getPrecioLinea(l)),
+          !!this.catalog.categories().find((c) => c.id === l.categoria)?.available &&
+          this.getSabores(l.categoria).includes(l.sabor) &&
+          Number.isFinite(this.getPrecioLinea(l)),
       ),
   );
   readonly lineasPedido = computed(() => this.lineas());
@@ -159,6 +172,10 @@ export class CalculadoraService {
 
   readonly mostrarEndulzante = computed(
     () => this.catalog.categories().find((c) => c.id === this.categoria())?.priceSplenda != null,
+  );
+
+  readonly subtotalCents = computed(() =>
+    Math.round((this.precioBase() + (this.incluirCarrito() ? this.precioCarrito() : 0)) * 100),
   );
 
   readonly datosFormulario = computed(() => ({
