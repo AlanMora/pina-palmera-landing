@@ -1,84 +1,158 @@
-<section id="concentrados" class="concentrados py-24 bg-white overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <!-- Section title -->
-    <div class="text-center mb-14">
-      <h2 class="section-title font-pacifico text-brand-green-dark text-4xl sm:text-5xl mb-3">
-        Concentrados
-      </h2>
-      <div class="w-24 h-1 bg-brand-yellow mx-auto rounded-full mb-4"></div>
-      <p class="text-brand-green-dark/70 font-nunito text-base max-w-xl mx-auto">
-        La buena vibra líquida, ahora en tu casa. Prepara el agua de Piña Palmera
-        cuando quieras con nuestros concentrados naturales.
+<div class="story-page">
+  <section class="story-hero" aria-labelledby="concentrates-title">
+    <div class="story-wrap story-hero-inner">
+      <div>
+        <p class="story-eyebrow">
+          <svg lucideDroplets aria-hidden="true"></svg> CONCENTRADOS PIÑA PALMERA
+        </p>
+        <h1 id="concentrates-title">El sabor se queda.<br /><em>Tú pones el momento.</em></h1>
+        <p class="story-copy">
+          Lleva el toque Piña Palmera a casa y prepara tu bebida cuando se te antoje. Consulta los
+          sabores, las presentaciones y sus precios.
+        </p>
+        <div class="story-actions">
+          <a class="story-button" href="tel:3318041630"
+            ><svg lucidePhone aria-hidden="true"></svg> Consultar concentrados</a
+          ><a class="story-text-link" [routerLink]="[]" fragment="preparar"
+            >Así los preparas <svg lucideArrowDown aria-hidden="true"></svg
+          ></a>
+        </div>
+      </div>
+      <figure class="story-photo concentrate-photo">
+        <img
+          src="/assets/images/concentrates-864.webp"
+          srcset="
+            /assets/images/concentrates-480.webp 480w,
+            /assets/images/concentrates-864.webp 864w
+          "
+          sizes="(max-width:800px) 90vw, 45vw"
+          width="864"
+          height="1152"
+          fetchpriority="high"
+          decoding="async"
+          alt="Ambientación ilustrada de bebidas y concentrados Piña Palmera entre plantas tropicales"
+        />
+        <figcaption>Un poquito de Piña Palmera, en tu casa.</figcaption>
+      </figure>
+    </div>
+    <div class="story-wrap story-strip">
+      <span><svg lucideGlassWater aria-hidden="true"></svg> Para preparar en casa</span
+      ><span><svg lucideLeaf aria-hidden="true"></svg> Consulta sabores disponibles</span
+      ><span><svg lucidePhone aria-hidden="true"></svg> Atención directa para tu pedido</span>
+    </div>
+  </section>
+  <section class="story-section">
+    <div class="story-wrap">
+      <div class="story-section-header">
+        <div>
+          <p class="story-eyebrow">LA FRESCURA VA CONTIGO</p>
+          <h2 class="story-heading">Buenas mezclas.<br /><em>A tu manera.</em></h2>
+        </div>
+        <p class="story-copy">
+          Para la comida, la reunión o ese antojo de algo fresco. Elige lo que va con tu momento.
+        </p>
+      </div>
+      <div class="story-grid">
+        @for (benefit of benefits; track benefit.title) {
+          <article
+            class="story-card"
+            [style.--card-art]="'url(/assets/illustrations/flavors/' + benefit.art + '.svg)'"
+          >
+            <span class="story-icon"><svg lucideLeaf aria-hidden="true"></svg></span>
+            <h3>{{ benefit.title }}</h3>
+            <p>{{ benefit.text }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+  <section class="story-section prepare-section">
+    <span id="preparar" class="prepare-target" aria-hidden="true"></span>
+    <div class="story-wrap story-split">
+      <div class="concentrate-illustration" aria-hidden="true">
+        <div class="pouch">
+          <span>PIÑA PALMERA</span
+          ><img
+            src="/assets/illustrations/flavors/fresa.svg"
+            alt=""
+            width="120"
+            height="120"
+          /><strong>El toque<br />de tu momento.</strong><small>Concentrados</small>
+        </div>
+        <img
+          class="floating-fruit"
+          src="/assets/illustrations/flavors/limon.svg"
+          alt=""
+          width="120"
+          height="120"
+        />
+      </div>
+      <div>
+        <p class="story-eyebrow">DE LA MEZCLA AL PRIMER SORBO</p>
+        <h2 class="story-heading">Prepararlo es parte <em>del gusto.</em></h2>
+        <ol class="story-steps">
+          @for (step of steps; track step.title; let i = $index) {
+            <li>
+              <span>0{{ i + 1 }}</span>
+              <div>
+                <h3>{{ step.title }}</h3>
+                <p>{{ step.text }}</p>
+              </div>
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+  <section class="story-section">
+    <div class="story-wrap story-faq">
+      <div>
+        <p class="story-eyebrow">ANTES DE TU PEDIDO</p>
+        <h2 class="story-heading">Todo claro,<br /><em>todo a tu gusto.</em></h2>
+        <p class="story-copy">Te ayudamos a elegir la presentación que necesitas.</p>
+      </div>
+      <div>
+        @for (faq of faqs; track faq.question) {
+          <details>
+            <summary>{{ faq.question }}<svg lucideChevronDown aria-hidden="true"></svg></summary>
+            <p>{{ faq.answer }}</p>
+          </details>
+        }
+      </div>
+    </div>
+  </section>
+  <section class="story-section">
+    <div class="story-wrap story-closing">
+      <p class="story-eyebrow">¿SE TE ANTOJÓ?</p>
+      <h2 class="story-heading">Hablemos de <em>tu próxima mezcla.</em></h2>
+      <p class="story-copy">
+        Confirma sabores, presentaciones y precio por unidad con nuestro equipo.
       </p>
-    </div>
-
-    <!-- Jars image strip ──────────────────────────────────────────────────────
-         TODO: Reemplazar cada jar-slot con:
-         <img ngSrc="assets/images/concentrado-N.jpg" width="280" height="320"
-              alt="Concentrado Piña Palmera sabor X"
-              class="w-full h-full object-cover rounded-2xl">
-         ─────────────────────────────────────────────────────────────────────  -->
-    <div class="jars-strip grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-14">
-      <div class="jar-slot relative overflow-hidden rounded-2xl aspect-[7/8]
-                  bg-brand-green-dark/5 border-2 border-dashed border-brand-green-mid/35
-                  flex flex-col items-center justify-center gap-2">
-        <div class="text-3xl">🫙</div>
-        <p class="font-nunito text-brand-green-dark/40 text-xs text-center px-2">Frasco concentrado 1<br>280×320</p>
-      </div>
-      <div class="jar-slot relative overflow-hidden rounded-2xl aspect-[7/8]
-                  bg-brand-yellow/8 border-2 border-dashed border-brand-yellow/40
-                  flex flex-col items-center justify-center gap-2">
-        <div class="text-3xl">🫙</div>
-        <p class="font-nunito text-brand-green-dark/40 text-xs text-center px-2">Frasco concentrado 2<br>280×320</p>
-      </div>
-      <div class="jar-slot relative overflow-hidden rounded-2xl aspect-[7/8]
-                  bg-brand-pink/8 border-2 border-dashed border-brand-pink/30
-                  flex flex-col items-center justify-center gap-2">
-        <div class="text-3xl">🫙</div>
-        <p class="font-nunito text-brand-green-dark/40 text-xs text-center px-2">Frasco concentrado 3<br>280×320</p>
+      <div class="story-actions">
+        <a class="story-button" href="tel:3318041630"
+          ><svg lucidePhone aria-hidden="true"></svg> 33 1804 1630</a
+        ><a
+          class="story-button"
+          href="https://www.instagram.com/aguas_pina_palmera/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Ver en Instagram <svg lucideArrowRight aria-hidden="true"></svg
+        ></a>
       </div>
     </div>
-
-    <!-- Feature cards -->
-    <div class="concentrados-grid grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-
-      <div class="concentrado-card bg-brand-green-dark/5 border border-brand-green-light/30 rounded-3xl p-7 text-center will-change-transform cursor-default">
-        <div class="text-4xl mb-4">🌿</div>
-        <h3 class="font-pacifico text-brand-green-dark text-xl mb-3">100% Natural</h3>
-        <p class="font-nunito text-brand-green-dark/70 text-sm leading-relaxed">
-          Sin conservadores, sin colorantes. Los mismos ingredientes que usamos en los vitroleros.
-        </p>
+  </section>
+  <section class="story-section">
+    <div class="story-wrap story-callout">
+      <p class="story-eyebrow">¿ORGANIZAS UN EVENTO?</p>
+      <h2 class="story-heading">También los llevamos <em>listos para servir.</em></h2>
+      <p class="story-copy">
+        Conoce nuestras aguas frescas en vitroleros de 20 litros y arma tu combinación de sabores.
+      </p>
+      <div class="story-actions">
+        <a class="story-button forest" routerLink="/aguas"
+          >Conocer las aguas <svg lucideArrowRight aria-hidden="true"></svg></a
+        ><a class="story-button outline" routerLink="/menu">Ver menú y precios</a>
       </div>
-
-      <div class="concentrado-card bg-brand-yellow/10 border border-brand-yellow/40 rounded-3xl p-7 text-center will-change-transform cursor-default">
-        <div class="text-4xl mb-4">🏠</div>
-        <h3 class="font-pacifico text-brand-green-dark text-xl mb-3">Para preparar en casa</h3>
-        <p class="font-nunito text-brand-green-dark/70 text-sm leading-relaxed">
-          Fácil de preparar: mezcla con agua fría al gusto y listo. Rinde varios litros por frasco.
-        </p>
-      </div>
-
-      <div class="concentrado-card bg-brand-pink/10 border border-brand-pink/30 rounded-3xl p-7 text-center will-change-transform cursor-default">
-        <div class="text-4xl mb-4">🫙</div>
-        <h3 class="font-pacifico text-brand-green-dark text-xl mb-3">Sabores favoritos</h3>
-        <p class="font-nunito text-brand-green-dark/70 text-sm leading-relaxed">
-          Disponibles en los sabores más populares. Consulta variedad y precios al contactarnos.
-        </p>
-      </div>
-
     </div>
-
-    <div class="text-center mt-12">
-      <a href="tel:3318041630"
-         class="cta-btn inline-block bg-brand-green-dark text-white font-bold font-nunito px-8 py-3 rounded-full hover:bg-brand-green-mid transition-colors duration-200 mr-4">
-        📞 Preguntar por concentrados
-      </a>
-      <a href="https://instagram.com/aguas_pina_palmera" target="_blank" rel="noopener"
-         class="cta-btn inline-block border-2 border-brand-green-dark text-brand-green-dark font-bold font-nunito px-8 py-3 rounded-full hover:bg-brand-green-dark hover:text-white transition-colors duration-200">
-        Ver en Instagram
-      </a>
-    </div>
-
-  </div>
-</section>
+  </section>
+</div>

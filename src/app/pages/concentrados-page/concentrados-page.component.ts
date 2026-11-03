@@ -4,7 +4,7 @@ import { ConcentradosComponent } from '../../components/concentrados/concentrado
 @Component({
   selector: 'app-concentrados-page',
   imports: [ConcentradosComponent],
-  template: `<app-concentrados />`,
+  template: `<main><app-concentrados /></main>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConcentradosPageComponent {}
