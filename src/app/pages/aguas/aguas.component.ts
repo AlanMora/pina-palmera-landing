@@ -4,7 +4,7 @@ import { NuestrasAguasComponent } from '../../components/nuestras-aguas/nuestras
 @Component({
   selector: 'app-aguas-page',
   imports: [NuestrasAguasComponent],
-  template: `<app-nuestras-aguas />`,
+  template: `<main><app-nuestras-aguas /></main>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AguasPageComponent {}

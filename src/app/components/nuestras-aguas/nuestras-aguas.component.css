@@ -1,0 +1,88 @@
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.collection-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 260px;
+  border: 1px solid #d6dfcb;
+  border-radius: 20px;
+  padding: 26px;
+  background: var(--collection-wash, #eef0df);
+}
+.collection-card::before {
+  position: absolute;
+  content: '';
+  z-index: -2;
+  inset: 0;
+  background: var(--collection-art) repeat center / 150px;
+  opacity: 0.25;
+}
+.collection-card::after {
+  position: absolute;
+  content: '';
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(125deg, #fffaf0ed, #fffaf04d);
+}
+.collection-card > span {
+  font-size: 10px;
+  font-weight: 800;
+  color: #607453;
+}
+.collection-card h3 {
+  font-size: 27px;
+  font-weight: 850;
+  letter-spacing: -0.6px;
+  margin: 35px 0 14px;
+}
+.collection-card p {
+  color: #526a49;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.collection-card small {
+  display: block;
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.collection-cta {
+  margin-top: 25px;
+}
+@media (max-width: 1100px) {
+  .collections-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .collections-grid {
+    gap: 10px;
+  }
+  .collection-card {
+    padding: 18px 14px;
+    min-height: 250px;
+  }
+  .collection-card h3 {
+    font-size: 21px;
+    margin-top: 28px;
+  }
+  .collection-card p {
+    font-size: 12px;
+  }
+  .story-hero h1 {
+    font-size: 35px;
+  }
+}
+@media (max-width: 360px) {
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+  .collection-card {
+    min-height: 210px;
+  }
+}
