@@ -2,16 +2,17 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {
-  LucideShoppingBag,
   LucidePlus,
   LucideMinus,
   LucideArrowRight,
   LucideCheck,
   LucideLeaf,
+  LucideGlassWater,
 } from '@lucide/angular';
 import { CalculadoraService, Endulzante } from '../../services/calculadora.service';
 import { CatalogCategory, CategoryId } from '../../services/catalog';
 import { flavorArtwork } from '../../components/menu/menu-flavor-card/flavor-artwork';
+import { ShopIntroComponent } from './shop-intro/shop-intro.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 @Component({
@@ -19,13 +20,14 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
   imports: [
     RouterLink,
     FormsModule,
-    LucideShoppingBag,
     LucidePlus,
     LucideMinus,
     LucideArrowRight,
     LucideCheck,
     LucideLeaf,
+    LucideGlassWater,
     OrderSummaryComponent,
+    ShopIntroComponent,
   ],
   templateUrl: './shop.html',
   styleUrl: './shop.css',

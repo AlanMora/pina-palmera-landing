@@ -12,14 +12,25 @@
   </div>
   @for (g of cart.grouped(); track g.key) {
     <div class="cart-line">
-      <div>
-        <strong>{{ g.line.sabor }}</strong>
-        <p>
-          {{ g.line.endulzante === 'splenda' ? 'Splenda' : 'Morena / base' }} ·
-          {{ cart.catalog.money(cart.getPrecioLinea(g.line) * 100) }} c/u
-        </p>
+      <div class="line-detail">
+        <span
+          class="line-art"
+          [style.background-color]="artwork(g.line.sabor).wash"
+          [style.background-image]="artwork(g.line.sabor).background"
+          aria-hidden="true"
+        ></span>
+        <div>
+          <strong>{{ g.line.sabor }}</strong>
+          <p>
+            {{ g.line.endulzante === 'splenda' ? 'Splenda' : 'Morena / base' }} ·
+            {{ cart.catalog.money(cart.getPrecioLinea(g.line) * 100) }} c/u
+          </p>
+        </div>
       </div>
       <div class="quantity">
+        <strong class="line-total">{{
+          cart.catalog.money(cart.getPrecioLinea(g.line) * 100 * g.quantity)
+        }}</strong>
         <div class="line-counter">
           <button
             type="button"
@@ -57,7 +68,7 @@
       <a routerLink="/menu">Explorar los sabores <svg lucideArrowRight aria-hidden="true"></svg></a>
     </div>
   }
-  <label class="check-field"
+  <label class="check-field" [class.selected]="cart.incluirCarrito()"
     ><input
       type="checkbox"
       [ngModel]="cart.incluirCarrito()"
@@ -68,6 +79,20 @@
       ><strong>{{ cart.catalog.money(cart.catalog.settings()?.cartCents) }}</strong></span
     ></label
   >
+  @if (cart.lineas().length) {
+    <dl class="summary-breakdown">
+      <div>
+        <dt>Vitroleros · {{ cart.lineas().length * 20 }} L</dt>
+        <dd>{{ cart.catalog.money(cart.precioBase() * 100) }}</dd>
+      </div>
+      @if (cart.incluirCarrito()) {
+        <div>
+          <dt>Carrito para el evento</dt>
+          <dd>{{ cart.catalog.money(cart.catalog.settings()?.cartCents) }}</dd>
+        </div>
+      }
+    </dl>
+  }
   <div class="summary-total">
     <span>Subtotal</span><strong>{{ cart.catalog.money(cart.subtotalCents()) }}</strong>
   </div>
@@ -77,7 +102,8 @@
   </p>
   @if (cart.pedidoValido()) {
     <a class="checkout-button" routerLink="/reservar"
-      >Elegir fecha y continuar <svg lucideArrowRight aria-hidden="true"></svg
+      ><svg lucideCalendarDays aria-hidden="true"></svg>Elegir fecha y continuar
+      <svg lucideArrowRight aria-hidden="true"></svg
     ></a>
   } @else if (cart.lineas().length) {
     <p role="alert" class="invalid-cart">

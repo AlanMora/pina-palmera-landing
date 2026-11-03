@@ -7,8 +7,10 @@ import {
   LucidePlus,
   LucideShoppingBag,
   LucideTrash2,
+  LucideCalendarDays,
 } from '@lucide/angular';
 import { CalculadoraService, VitroleroLinea } from '../../../services/calculadora.service';
+import { flavorArtwork } from '../../../components/menu/menu-flavor-card/flavor-artwork';
 @Component({
   selector: 'app-order-summary',
   imports: [
@@ -19,6 +21,7 @@ import { CalculadoraService, VitroleroLinea } from '../../../services/calculador
     LucidePlus,
     LucideShoppingBag,
     LucideTrash2,
+    LucideCalendarDays,
   ],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.css',
@@ -26,6 +29,7 @@ import { CalculadoraService, VitroleroLinea } from '../../../services/calculador
 })
 export class OrderSummaryComponent {
   readonly cart = inject(CalculadoraService);
+  readonly artwork = flavorArtwork;
   canAddLine(line: VitroleroLinea) {
     return (
       this.cart.lineas().length < 50 &&

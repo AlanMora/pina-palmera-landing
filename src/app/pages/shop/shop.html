@@ -1,166 +1,180 @@
 <main class="shop-page" [class.has-order]="cart.lineas().length > 0">
   <div class="shop-wrap">
-    <header class="shop-heading">
-      <div>
-        <p class="shop-eyebrow">
-          <svg lucideShoppingBag aria-hidden="true"></svg> TU PEDIDO A TU MANERA
-        </p>
-        <h1>Arma tu evento.<br /><em>Disfruta la mezcla.</em></h1>
-        <p>Elige sabores, ajusta las cantidades y dale forma a tu celebración.</p>
-      </div>
-      <a routerLink="/menu" class="back-to-menu"
-        >Seguir explorando sabores <svg lucideArrowRight aria-hidden="true"></svg
-      ></a>
-    </header>
-    <ol class="shop-progress" aria-label="Pasos para preparar tu pedido">
-      <li class="active"><span>1</span> Elige tus aguas</li>
-      <li><span>2</span> Revisa tu pedido</li>
-      <li><span>3</span> Confirma fecha y entrega</li>
-    </ol>
+    <app-shop-intro />
     <p class="shop-notice" role="status" aria-live="polite">
       @if (notice()) {
         <svg lucideCheck aria-hidden="true"></svg>{{ notice() }}
       }
     </p>
     <div class="shop-layout">
-      <section aria-label="Configurar vitroleros" class="product-grid">
-        @for (c of cart.catalog.categories(); track c.id) {
-          <article class="product-card">
-            <div class="product-visual" [style.--product-wash]="artwork(c).wash">
-              <div
-                class="product-fruits"
-                [style.background-image]="artwork(c).background"
+      <div class="shop-catalog">
+        <div class="catalog-heading">
+          <div>
+            <p class="shop-eyebrow">TU COMBINACIÓN PERFECTA</p>
+            <h2>Elige tu mezcla.</h2>
+          </div>
+          <span><svg lucideGlassWater aria-hidden="true"></svg>Presentación de 20 L</span>
+        </div>
+        @if (cart.catalog.categories().length) {
+          <nav class="collection-nav" aria-label="Ir a una colección">
+            @for (c of cart.catalog.categories(); track c.id) {
+              <a [routerLink]="[]" [fragment]="'coleccion-' + c.id"
+                >{{ c.name }}<svg lucideArrowRight aria-hidden="true"></svg
+              ></a>
+            }
+          </nav>
+        }
+        <section aria-label="Configurar vitroleros" class="product-grid">
+          @for (c of cart.catalog.categories(); track c.id) {
+            <article class="product-card">
+              <span
+                class="collection-scroll-target"
+                [id]="'coleccion-' + c.id"
                 aria-hidden="true"
-              ></div>
-              <span class="product-format">VITROLERO · 20 L</span>
-              <h2>{{ c.name }}</h2>
-              <p>{{ selectedFlavor(c) }}</p>
-              @if (!c.available) {
-                <span class="stock-label">Temporalmente no disponible</span>
-              }
-            </div>
-            <div class="product-body">
-              <p class="product-price">
-                {{ cart.catalog.money(cart.catalog.price(c.id, selectedSweetener(c))) }}
-                <small>MXN / 20 L</small>
-              </p>
-              <label
-                >Sabor<select
-                  [ngModel]="selectedFlavor(c)"
-                  [attr.aria-label]="'Sabor de ' + c.name"
-                  (ngModelChange)="flavors[c.id] = $event; clearMessage(c.id)"
-                  [disabled]="!c.available"
+              ></span>
+              <div class="product-visual" [style.--product-wash]="artwork(c).wash">
+                <div
+                  class="product-fruits"
+                  [style.background-image]="artwork(c).background"
+                  aria-hidden="true"
+                ></div>
+                <span class="product-format">VITROLERO · 20 L</span>
+                <span class="flavor-count"
+                  >{{ c.flavors.length }} {{ c.flavors.length === 1 ? 'sabor' : 'sabores' }}</span
                 >
-                  @for (flavor of c.flavors; track flavor) {
-                    <option [value]="flavor">{{ flavor }}</option>
-                  }
-                </select></label
-              >
-              <div class="product-fields">
+                <h2>{{ c.name }}</h2>
+                <p>{{ selectedFlavor(c) }}</p>
+                <svg lucideGlassWater class="product-glass" aria-hidden="true"></svg>
+                @if (!c.available) {
+                  <span class="stock-label">Temporalmente no disponible</span>
+                }
+              </div>
+              <div class="product-body">
+                <p class="product-price">
+                  {{ cart.catalog.money(cart.catalog.price(c.id, selectedSweetener(c))) }}
+                  <small>MXN / 20 L</small>
+                </p>
                 <label
-                  >Endulzante<select
-                    [ngModel]="selectedSweetener(c)"
-                    [attr.aria-label]="'Endulzante de ' + c.name"
-                    (ngModelChange)="sweeteners[c.id] = $event; clearMessage(c.id)"
+                  >Sabor<select
+                    [ngModel]="selectedFlavor(c)"
+                    [attr.aria-label]="'Sabor de ' + c.name"
+                    (ngModelChange)="flavors[c.id] = $event; clearMessage(c.id)"
                     [disabled]="!c.available"
                   >
-                    <option value="morena">Morena / base</option>
-                    @if (c.priceSplenda !== null) {
-                      <option value="splenda">Splenda</option>
+                    @for (flavor of c.flavors; track flavor) {
+                      <option [value]="flavor">{{ flavor }}</option>
                     }
                   </select></label
                 >
-                <div class="quantity-field">
-                  <span class="field-label">Cantidad</span>
-                  <div class="product-quantity">
-                    <button
-                      type="button"
-                      (click)="adjustQuantity(c, -1)"
-                      [disabled]="!c.available || (quantityValue(c) || 1) <= 1"
-                      [attr.aria-label]="'Reducir cantidad de ' + c.name"
-                    >
-                      <svg lucideMinus aria-hidden="true"></svg></button
-                    ><input
-                      type="number"
-                      min="1"
-                      [max]="remaining()"
-                      inputmode="numeric"
-                      enterkeyhint="done"
-                      [ngModel]="quantityValue(c)"
-                      (ngModelChange)="quantities[c.id] = $event; clearMessage(c.id)"
-                      (keydown.enter)="$any($event.target).blur()"
+                <div class="product-fields">
+                  <label
+                    >Endulzante<select
+                      [ngModel]="selectedSweetener(c)"
+                      [attr.aria-label]="'Endulzante de ' + c.name"
+                      (ngModelChange)="sweeteners[c.id] = $event; clearMessage(c.id)"
                       [disabled]="!c.available"
-                      [attr.aria-label]="'Cantidad de ' + c.name"
-                    /><button
-                      type="button"
-                      (click)="adjustQuantity(c, 1)"
-                      [disabled]="!c.available || (quantityValue(c) || 1) >= remaining()"
-                      [attr.aria-label]="'Aumentar cantidad de ' + c.name"
                     >
-                      <svg lucidePlus aria-hidden="true"></svg>
-                    </button>
+                      <option value="morena">Morena / base</option>
+                      @if (c.priceSplenda !== null) {
+                        <option value="splenda">Splenda</option>
+                      }
+                    </select></label
+                  >
+                  <div class="quantity-field">
+                    <span class="field-label">Cantidad</span>
+                    <div class="product-quantity">
+                      <button
+                        type="button"
+                        (click)="adjustQuantity(c, -1)"
+                        [disabled]="!c.available || (quantityValue(c) || 1) <= 1"
+                        [attr.aria-label]="'Reducir cantidad de ' + c.name"
+                      >
+                        <svg lucideMinus aria-hidden="true"></svg></button
+                      ><input
+                        type="number"
+                        min="1"
+                        [max]="remaining()"
+                        inputmode="numeric"
+                        enterkeyhint="done"
+                        [ngModel]="quantityValue(c)"
+                        (ngModelChange)="quantities[c.id] = $event; clearMessage(c.id)"
+                        (keydown.enter)="$any($event.target).blur()"
+                        [disabled]="!c.available"
+                        [attr.aria-label]="'Cantidad de ' + c.name"
+                      /><button
+                        type="button"
+                        (click)="adjustQuantity(c, 1)"
+                        [disabled]="!c.available || (quantityValue(c) || 1) >= remaining()"
+                        [attr.aria-label]="'Aumentar cantidad de ' + c.name"
+                      >
+                        <svg lucidePlus aria-hidden="true"></svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <button
+                  type="button"
+                  class="shop-button add-product"
+                  (click)="add(c)"
+                  [disabled]="!canAdd(c)"
+                >
+                  <svg lucidePlus aria-hidden="true"></svg> Agregar al pedido
+                </button>
+                <p
+                  class="product-message"
+                  [class.error]="messages()[c.id]?.error"
+                  [attr.role]="messages()[c.id]?.error ? 'alert' : 'status'"
+                >
+                  {{
+                    messages()[c.id]?.text ||
+                      (!c.available ? 'Consulta la disponibilidad de esta colección.' : '')
+                  }}
+                </p>
               </div>
-              <button
-                type="button"
-                class="shop-button add-product"
-                (click)="add(c)"
-                [disabled]="!canAdd(c)"
-              >
-                <svg lucidePlus aria-hidden="true"></svg> Agregar al pedido
-              </button>
-              <p
-                class="product-message"
-                [class.error]="messages()[c.id]?.error"
-                [attr.role]="messages()[c.id]?.error ? 'alert' : 'status'"
-              >
+            </article>
+          } @empty {
+            <div class="catalog-state">
+              <svg lucideLeaf aria-hidden="true"></svg>
+              <h2>
                 {{
-                  messages()[c.id]?.text ||
-                    (!c.available ? 'Consulta la disponibilidad de esta colección.' : '')
+                  cart.catalog.loading()
+                    ? 'Preparando tus opciones…'
+                    : 'El menú está tomando un respiro'
+                }}
+              </h2>
+              <p>
+                {{
+                  cart.catalog.loading()
+                    ? 'Estamos consultando los sabores y precios actuales.'
+                    : 'Vuelve a intentar para consultar nuestros sabores.'
                 }}
               </p>
+              @if (!cart.catalog.loading()) {
+                <button class="shop-button" type="button" (click)="cart.catalog.load()">
+                  Actualizar menú <svg lucideArrowRight aria-hidden="true"></svg>
+                </button>
+              }
             </div>
-          </article>
-        } @empty {
-          <div class="catalog-state">
-            <svg lucideLeaf aria-hidden="true"></svg>
-            <h2>
-              {{
-                cart.catalog.loading()
-                  ? 'Preparando tus opciones…'
-                  : 'El menú está tomando un respiro'
-              }}
-            </h2>
-            <p>
-              {{
-                cart.catalog.loading()
-                  ? 'Estamos consultando los sabores y precios actuales.'
-                  : 'Vuelve a intentar para consultar nuestros sabores.'
-              }}
-            </p>
-            @if (!cart.catalog.loading()) {
-              <button class="shop-button" type="button" (click)="cart.catalog.load()">
-                Actualizar menú <svg lucideArrowRight aria-hidden="true"></svg>
-              </button>
-            }
-          </div>
-        }
-        <p class="catalog-note">
-          Precios en MXN por vitrolero de 20 litros. El envío y la disponibilidad de tu evento se
-          confirman al continuar. Puedes combinar hasta 50 vitroleros por pedido.
-        </p>
-      </section>
+          }
+          <p class="catalog-note">
+            Precios en MXN por vitrolero de 20 litros. El envío y la disponibilidad de tu evento se
+            confirman al continuar. Puedes combinar hasta 50 vitroleros por pedido.
+          </p>
+        </section>
+      </div>
       <app-order-summary />
     </div>
     <div class="shop-help">
-      <svg lucideLeaf aria-hidden="true"></svg>
-      <p>
-        ¿Prefieres preparar tus aguas en casa?
-        <a routerLink="/concentrados"
-          >Conoce los concentrados <svg lucideArrowRight aria-hidden="true"></svg
-        ></a>
-      </p>
+      <span class="help-icon"><svg lucideLeaf aria-hidden="true"></svg></span>
+      <div>
+        <strong>También hay una mezcla para casa.</strong>
+        <p>
+          ¿Prefieres preparar tus aguas en casa?
+          <a routerLink="/concentrados"
+            >Conoce los concentrados <svg lucideArrowRight aria-hidden="true"></svg
+          ></a>
+        </p>
+      </div>
     </div>
   </div>
   @if (cart.lineas().length > 0) {
