@@ -13,7 +13,7 @@
       </a>
 
       <!-- Desktop nav links -->
-      <div class="hidden items-center gap-1 rounded-xl border border-white/5 bg-white/[0.03] p-1 lg:flex">
+      <div class="hidden items-center gap-1 rounded-xl border border-white/5 bg-white/[0.03] p-1 xl:flex">
         @for (link of links; track link.path) {
           <a [routerLink]="link.path"
              routerLinkActive="!bg-white/10 !text-brand-yellow"
@@ -29,7 +29,7 @@
       </div>
 
       <!-- CTA: Teléfono + Pedido -->
-      <div class="hidden items-center gap-2 lg:flex">
+      <div class="hidden items-center gap-2 xl:flex">
         <a href="tel:3318041630"
            class="flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 font-nunito text-sm font-semibold text-white/75 transition-colors duration-200 hover:text-brand-yellow">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -48,7 +48,7 @@
       </div>
 
       <!-- Mobile: botón pedido + hamburger -->
-      <div class="flex items-center gap-2 lg:hidden">
+      <div class="flex items-center gap-2 xl:hidden">
         <button type="button" (click)="sidebar.open()"
                 class="shrink-0 whitespace-nowrap rounded-xl bg-brand-yellow px-2.5 py-2 font-nunito text-xs font-extrabold text-night min-[380px]:px-3.5 shadow-[0_0_18px_rgba(232,212,77,0.35)]">
           🛒 Pedido
@@ -74,7 +74,7 @@
 
     <!-- Mobile menu -->
     @if (menuOpen()) {
-      <div id="menu-movil" class="flex flex-col gap-1 border-t border-white/10 px-3 pb-4 pt-3 lg:hidden">
+      <div id="menu-movil" class="flex flex-col gap-1 border-t border-white/10 px-3 pb-4 pt-3 xl:hidden">
         @for (link of links; track link.path) {
           <a [routerLink]="link.path" (click)="closeMenu()"
              routerLinkActive="!bg-white/10 !text-brand-yellow"
