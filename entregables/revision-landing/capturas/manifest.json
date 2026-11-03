@@ -1,0 +1,54 @@
+{
+  "capturedAt": "2026-11-03T02:41:53.990Z",
+  "commit": "cab94f1d91cd290d38e5c1f57a663331e8eda5b6",
+  "routes": [
+    {
+      "path": "/",
+      "mode": "desktop"
+    },
+    {
+      "path": "/",
+      "mode": "mobile"
+    },
+    {
+      "path": "/menu",
+      "mode": "desktop"
+    },
+    {
+      "path": "/menu",
+      "mode": "mobile"
+    },
+    {
+      "path": "/aguas",
+      "mode": "desktop"
+    },
+    {
+      "path": "/aguas",
+      "mode": "mobile"
+    },
+    {
+      "path": "/experiencia",
+      "mode": "desktop"
+    },
+    {
+      "path": "/experiencia",
+      "mode": "mobile"
+    },
+    {
+      "path": "/concentrados",
+      "mode": "desktop"
+    },
+    {
+      "path": "/concentrados",
+      "mode": "mobile"
+    },
+    {
+      "path": "/tienda",
+      "mode": "desktop"
+    },
+    {
+      "path": "/tienda",
+      "mode": "mobile"
+    }
+  ]
+}
